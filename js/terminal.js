@@ -70,17 +70,33 @@ I build software with hardware-level empathy and an artist's obsession with colo
 `,
 
   fetch: () => `
-<div class="mono" style="color:var(--cyan);line-height:1.3;margin:0.25rem 0;">
-<span style="color:var(--amber);font-weight:700;">   __        __   </span><span style="color:var(--title-highlight);font-weight:700;">levi</span>@<span style="color:var(--cyan);font-weight:700;">aarch64</span>
-<span style="color:var(--amber);font-weight:700;">  /  \\      /  \\  </span><span style="color:var(--text-muted);">-------------------------</span>
-<span style="color:var(--amber);font-weight:700;"> / /\\ \\    / /\\ \\ </span><span style="color:var(--text-muted);">OS:</span> Darwin / macOS (Apple Silicon ARM64e)
-<span style="color:var(--amber);font-weight:700;">/ /  \\ \\  / /  \\ \\</span><span style="color:var(--text-muted);">Testbeds:</span> Google Pixel + Galaxy S22 (aarch64 / LADB)
-<span style="color:var(--amber);font-weight:700;">\\ \\  / /  \\ \\  / /</span><span style="color:var(--text-muted);">Toolchain:</span> Zig 0.16 (bleeding), Rust, Swift/Metal
-<span style="color:var(--amber);font-weight:700;"> \\ \\/ /    \\ \\/ / </span><span style="color:var(--text-muted);">Editor:</span> Zed (GPU) / Ghostty / Fleet
-<span style="color:var(--amber);font-weight:700;">  \\__/      \\__/  </span><span style="color:var(--text-muted);">Theme:</span> Gruvbox Material [★ Daily Driver]
-                  <span style="color:var(--text-muted);">Status:</span> <span style="color:var(--amber);font-weight:600;">:bowtie: procrastinating</span>
-
-  <span style="display:inline-block;width:14px;height:14px;background:#ea6962;border-radius:2px;margin-right:4px;"></span><span style="display:inline-block;width:14px;height:14px;background:#e78a4e;border-radius:2px;margin-right:4px;"></span><span style="display:inline-block;width:14px;height:14px;background:#d8a657;border-radius:2px;margin-right:4px;"></span><span style="display:inline-block;width:14px;height:14px;background:#a9b665;border-radius:2px;margin-right:4px;"></span><span style="display:inline-block;width:14px;height:14px;background:#7daea3;border-radius:2px;margin-right:4px;"></span><span style="display:inline-block;width:14px;height:14px;background:#d3869b;border-radius:2px;"></span>
+<div class="terminal-fetch">
+  <pre class="fetch-ascii">   __        __   
+  /  \\      /  \\  
+ / /\\ \\    / /\\ \\ 
+/ /  \\ \\  / /  \\ \\
+\\ \\  / /  \\ \\  / /
+ \\ \\/ /    \\ \\/ / 
+  \\__/      \\__/  </pre>
+  <div class="fetch-info">
+    <div class="fetch-title"><span style="color:var(--title-highlight);font-weight:700;">levi</span>@<span style="color:var(--cyan);font-weight:700;">aarch64</span></div>
+    <div class="fetch-sep">-----------------------------</div>
+    <div><span class="fetch-label">OS:</span> Darwin / macOS (Apple Silicon ARM64e)</div>
+    <div><span class="fetch-label">Host:</span> MacBook Pro + Pixel &amp; Galaxy S22</div>
+    <div><span class="fetch-label">Testbeds:</span> aarch64 bare-metal (LADB / Shizuku)</div>
+    <div><span class="fetch-label">Toolchain:</span> Zig 0.16 (bleeding), Rust, Swift/Metal</div>
+    <div><span class="fetch-label">Editor:</span> Zed (GPU-accelerated) / Ghostty</div>
+    <div><span class="fetch-label">Theme:</span> Gruvbox Material <span style="color:var(--amber);font-weight:700;">[★ Daily Driver]</span></div>
+    <div><span class="fetch-label">Status:</span> <span style="color:var(--amber);font-weight:600;">:bowtie: procrastinating</span></div>
+    <div class="fetch-palette">
+      <span style="background:#ea6962"></span>
+      <span style="background:#e78a4e"></span>
+      <span style="background:#d8a657"></span>
+      <span style="background:#a9b665"></span>
+      <span style="background:#7daea3"></span>
+      <span style="background:#d3869b"></span>
+    </div>
+  </div>
 </div>
 `,
 
@@ -265,7 +281,7 @@ export class Terminal {
   appendOutput(html) {
     const line = document.createElement("div");
     line.className = "terminal-line terminal-output";
-    line.innerHTML = html;
+    line.innerHTML = typeof html === "string" ? html.trim() : html;
     this.historyEl.appendChild(line);
     this.scrollToBottom();
   }
