@@ -1123,7 +1123,7 @@ a:hover {
 /* Neofetch / Fastfetch Layout */
 .terminal-fetch {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 1.85rem;
   margin: 0.5rem 0;
   font-family: var(--font-mono);

@@ -70,7 +70,7 @@ I build software with hardware-level empathy and an artist's obsession with colo
 `,
 
   fetch: () => `
-<div class="terminal-fetch" style="display:flex;align-items:flex-start;gap:1.85rem;margin:0.5rem 0;font-family:var(--font-mono);white-space:normal;">
+<div class="terminal-fetch" style="display:flex;align-items:center;gap:1.85rem;margin:0.5rem 0;font-family:var(--font-mono);white-space:normal;">
   <img src="assets/avatar.png" alt="levi@aarch64" class="fetch-image" style="width:190px;height:190px;border-radius:10px;object-fit:cover;border:1.5px solid var(--border-amber);box-shadow:0 6px 20px rgba(0,0,0,0.45);flex-shrink:0;display:block;">
   <div class="fetch-info" style="display:flex;flex-direction:column;gap:0.3rem;font-size:0.875rem;line-height:1.48;">
     <div class="fetch-title" style="font-size:0.95rem;margin-bottom:0.1rem;">
