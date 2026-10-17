@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { projects, repositoryLink, music, anime } from '../site/js/content.js';
+import { projects, repositoryLink, projectStatus, music, anime } from '../site/js/content.js';
 import { runCommand, completeCommand, parseRoute } from '../site/js/commands.js';
 import { themes, resolveTheme, readTheme, saveTheme } from '../site/js/themes.js';
 import { projectPage, escapeHTML } from '../site/js/pages.js';
@@ -28,6 +28,14 @@ test('local projects gain a repository link with a single data edit', () => {
 
 test('terminal-like text is escaped rather than interpreted as markup', () => {
   assert.equal(escapeHTML('<script>"&\'</script>'), '&lt;script&gt;&quot;&amp;&#39;&lt;/script&gt;');
+});
+
+test('experimental project status stays consistent in pages and shell output', () => {
+  const project = projects.find(project => project.status === 'Experimental');
+  assert.equal(projectStatus(project), 'Local / in development · Experimental');
+  assert.match(runCommand(`cat projects/${project.id}.md`).text, /Local \/ in development · Experimental/);
+  assert.match(projectPage(project), /Local \/ in development · Experimental/);
+  assert.doesNotMatch(projectPage(project), /Experimental · Experimental/);
 });
 
 test('commands navigate to the same routes as workspace links', () => {

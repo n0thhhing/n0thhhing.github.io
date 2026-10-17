@@ -44,3 +44,12 @@ test('completion follows the current directory and relative paths', () => {
   assert.deepEqual(completeCommand('cat ../abo', '~/projects'), ['cat ../about.md']);
   assert.deepEqual(completeCommand('cat dra', '~/themes'), ['cat dracula.json']);
 });
+
+test('git command reports repository branch and working tree status', () => {
+  assert.match(runCommand('git').text, /clean/);
+  assert.match(runCommand('git status').text, /On branch main/);
+  assert.match(runCommand('git branch').text, /\* main/);
+  assert.match(runCommand('git log').text, /commit/);
+  assert.equal(runCommand('git checkout').error, true);
+  assert.deepEqual(completeCommand('git st'), ['git status']);
+});

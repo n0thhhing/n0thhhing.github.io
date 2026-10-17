@@ -1,25 +1,74 @@
-import { pages, projects, repositoryLink } from './content.js';
+import { pages, projects, repositoryLink, gitCommits } from './content.js';
 import { themes, readTheme, saveTheme } from './themes.js';
-import { parseRoute } from './commands.js';
 import { initTerminal } from './terminal.js';
 import { findFiles } from './files.js';
-import { escapeHTML as e, renderPage } from './pages.js';
+import { escapeHTML as e } from './pages.js';
+import { initEditor } from './editor.js';
 
 const $ = selector => document.querySelector(selector);
 const root = document.documentElement;
-const content = $('#content');
-let category = 'All';
+let content;
 let drawer = null;
 let drawerTrigger = null;
 let storage;
 let fileIndex = 0;
+let activeGitFilter = 'all';
+let activeGitTab = 'history';
 try { storage = window.localStorage; } catch { /* The workspace also works without storage. */ }
+
+function renderGitCommits() {
+  const list = $('#git-commit-list');
+  if (!list) return;
+  const filtered = activeGitFilter === 'all'
+    ? gitCommits
+    : gitCommits.filter(c => c.repo === activeGitFilter);
+  list.innerHTML = filtered.map(c => `
+    <${c.url ? `a href="${e(c.url)}" target="_blank" rel="noopener noreferrer"` : 'div'} class="git-commit-row" data-repo="${e(c.repo)}" data-hash="${e(c.hash)}">
+      <div class="git-commit-msg" title="${e(c.message)}">${e(c.message)}</div>
+      <div class="git-commit-meta">
+        <img src="./assets/avatar.jpg" alt="" class="git-avatar-mini" width="14" height="14">
+        <span class="git-author">${e(c.author)}</span>
+        <span class="git-sep">·</span>
+        <span class="git-time">${e(c.time)}</span>
+        <span class="git-sep">·</span>
+        <span class="git-repo-pill">${e(c.repo)}</span>
+        <span class="git-sep">·</span>
+        <span class="git-hash">${e(c.hash)}</span>
+      </div>
+      <div class="git-tooltip">${c.url ? 'View on GitHub ↗' : `View Commit Diff ${e(c.hash)}`}</div>
+    </${c.url ? 'a' : 'div'}>
+  `).join('');
+}
+
+function switchGitTab(tab) {
+  activeGitTab = tab;
+  document.querySelectorAll('.git-tab').forEach(btn => {
+    const isActive = btn.dataset.gitTab === tab;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-selected', isActive);
+  });
+  const historyView = $('#git-history-view');
+  const changesView = $('#git-changes-view');
+  if (historyView && changesView) {
+    historyView.hidden = tab !== 'history';
+    changesView.hidden = tab !== 'changes';
+  }
+}
+
+function filterGitCommits(repo) {
+  activeGitFilter = repo;
+  document.querySelectorAll('.git-filter-pill').forEach(btn => {
+    const isActive = btn.dataset.filterRepo === repo;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', isActive);
+  });
+  renderGitCommits();
+}
 
 function fileLink(page, className) {
   return `<a class="${className}" href="#${page.id}" data-page="${page.id}"><span class="file-icon ${page.id}" aria-hidden="true">${page.icon}</span>${page.file}</a>`;
 }
 $('#file-nav').innerHTML = pages.map(page => fileLink(page, 'file-link')).join('');
-$('#tabs').innerHTML = pages.map(page => fileLink(page, 'tab')).join('');
 $('#project-count').textContent = String(projects.length).padStart(2, '0');
 $('#project-nav').innerHTML = projects.map(project => `<a class="file-link project-file" href="#projects/${e(project.id)}" data-project="${e(project.id)}"><span class="language-icon language-${e(project.tech[0].toLowerCase())}" aria-hidden="true">${e(project.tech[0] === 'TypeScript' ? 'TS' : project.tech[0].slice(0, 1))}</span><span class="project-file-name">${e(project.name)}</span>${repositoryLink(project) ? '' : '<span class="local-marker" title="Local / in development">local</span>'}</a>`).join('');
 $('#theme-options').innerHTML = themes.map((theme, index) => `<button class="theme-option" data-theme-id="${theme.id}" aria-pressed="false"><span class="theme-option-top"><span>${theme.name}</span><span class="theme-check" aria-hidden="true">✓</span></span><span class="theme-chips">${theme.colors.map(color => `<span class="theme-chip" style="background:${color}" aria-hidden="true"></span>`).join('')}${index === 0 ? '<span class="favorite-label">♡ my favorite</span>' : ''}</span></button>`).join('');
@@ -36,67 +85,53 @@ function applyTheme(value, notify = true) {
   const statusThemeName = $('#status-theme-name');
   if (statusThemeName) statusThemeName.textContent = theme.name;
   else $('#status-theme').textContent = theme.name;
-  const titlebarThemeLabel = $('#titlebar-theme-label');
-  if (titlebarThemeLabel) titlebarThemeLabel.textContent = theme.name;
   $('#theme-source').href = theme.source;
   document.querySelector('meta[name="theme-color"]').content = getComputedStyle(root).getPropertyValue('--bg').trim();
   if (notify) announce(`Theme changed to ${theme.name}`);
 }
 applyTheme(readTheme(storage), false);
 requestAnimationFrame(() => requestAnimationFrame(() => root.classList.add('theme-ready')));
+renderGitCommits();
 
-function renderRoute(focus = false) {
-  const route = parseRoute(location.hash);
-  const [page, id] = route.split('/');
-  const project = projects.find(project => project.id === id);
-  content.innerHTML = renderPage(route, category);
-  content.scrollTop = 0;
-  if (project && !document.querySelector(`[data-project-tab="${id}"]`)) {
-    const tab = document.createElement('div');
-    tab.className = 'project-tab';
-    tab.innerHTML = `<a class="tab" href="#projects/${e(id)}" data-project-tab="${e(id)}"><span class="file-icon" aria-hidden="true">M↓</span>${e(project.name)}.md</a><button class="tab-close" data-close-project="${e(id)}" aria-label="Close ${e(project.name)} tab">×</button>`;
-    $('#tabs').append(tab);
-  }
-  document.querySelectorAll('[data-page]').forEach(link => {
-    const active = link.dataset.page === page && !project;
-    link.classList.toggle('active', active);
-    if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
-  });
-  document.querySelectorAll('[data-project-tab]').forEach(link => {
-    const active = link.dataset.projectTab === id;
-    link.classList.toggle('active', active);
-    if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
-  });
-  document.querySelector('#tabs .active')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-  document.querySelectorAll('[data-project]').forEach(link => {
-    link.classList.toggle('active', link.dataset.project === id);
-    if (link.dataset.project === id) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
-  });
-  const file = pages.find(entry => entry.id === page)?.file ?? 'README.md';
-  $('#breadcrumb').textContent = `website  ›  site  ›  ${project ? `projects  ›  ${project.name}` : file}`;
-  if (project) $('#project-tree').open = true;
-  document.title = `${project?.name ?? (page === 'home' ? 'Levi’s workspace' : file)} · levi.napz`;
-  if (focus) content.focus({ preventScroll: true });
-}
-window.addEventListener('hashchange', () => renderRoute(true));
-renderRoute();
-
-$('#history-back')?.addEventListener('click', () => window.history.back());
-$('#history-forward')?.addEventListener('click', () => window.history.forward());
+const editor = initEditor({
+  openFiles: trigger => openPicker('file-picker', trigger),
+  announce,
+  onActive: element => { content = element; },
+});
 
 function syncControls() {
-  const mobileExplorer = matchMedia('(max-width: 760px)').matches;
-  const explorerOpen = mobileExplorer ? drawer === 'explorer' : !document.body.classList.contains('explorer-hidden');
-  $('#explorer-toggle').setAttribute('aria-expanded', explorerOpen);
-  $('#explorer-toggle').classList.toggle('selected', explorerOpen);
-  document.querySelectorAll('[data-terminal-toggle]').forEach(button => button.setAttribute('aria-expanded', !$('#terminal').hidden));
+  const mobile = matchMedia('(max-width: 760px)').matches;
+  const explorerOpen = mobile ? drawer === 'explorer' : !document.body.classList.contains('explorer-hidden');
+  const explorerToggle = $('#explorer-toggle');
+  if (explorerToggle) {
+    explorerToggle.setAttribute('aria-expanded', String(explorerOpen));
+    explorerToggle.classList.toggle('selected', explorerOpen);
+  }
+  const terminal = $('#terminal');
+  const terminalOpen = terminal ? !terminal.hidden : false;
+  document.querySelectorAll('[data-terminal-toggle]').forEach(button => {
+    button.setAttribute('aria-expanded', String(terminalOpen));
+    button.classList.toggle('selected', terminalOpen);
+  });
+  const gitPanel = $('#git-panel');
+  const gitOpen = gitPanel ? !gitPanel.hidden : false;
+  const gitToggle = $('#git-toggle');
+  if (gitToggle) {
+    gitToggle.setAttribute('aria-expanded', String(gitOpen));
+    gitToggle.classList.toggle('selected', gitOpen);
+  }
 }
 
 function closeDrawer(restore = true) {
   if (!drawer) return;
   $(`#${drawer}`).removeAttribute('role');
   $(`#${drawer}`).removeAttribute('aria-modal');
-  document.body.classList.remove('explorer-open');
+  document.body.classList.remove('explorer-open', 'git-panel-open');
+  if (drawer === 'git-panel') {
+    const gitPanel = $('#git-panel');
+    if (gitPanel) gitPanel.hidden = true;
+  }
+  document.querySelectorAll('.editor, .titlebar, .statusbar').forEach(element => { element.inert = false; });
   $('#drawer-backdrop').hidden = true;
   drawer = null;
   if (restore && drawerTrigger) drawerTrigger.focus();
@@ -109,16 +144,45 @@ function toggleExplorer(trigger) {
     syncControls();
     return;
   }
-  if (drawer) { closeDrawer(); return; }
+  if (drawer === 'explorer') { closeDrawer(); return; }
+  if (drawer) closeDrawer(false);
   drawer = 'explorer';
   drawerTrigger = trigger;
   const element = $('#explorer');
   element.setAttribute('role', 'dialog');
   element.setAttribute('aria-modal', 'true');
   document.body.classList.add('explorer-open');
+  document.querySelectorAll('.editor, .titlebar, .statusbar').forEach(element => { element.inert = true; });
   $('#drawer-backdrop').hidden = false;
   syncControls();
   element.querySelector('button, a').focus();
+}
+
+function toggleGitPanel(trigger) {
+  const panel = $('#git-panel');
+  if (!panel) return;
+  const mobile = matchMedia('(max-width: 760px)').matches;
+  if (!mobile) {
+    const willOpen = panel.hidden;
+    panel.hidden = !willOpen;
+    document.body.classList.toggle('git-panel-open', willOpen);
+    syncControls();
+    if (willOpen) panel.querySelector('a, button')?.focus();
+    else if (trigger?.focus) trigger.focus();
+    return;
+  }
+  if (drawer === 'git-panel') { closeDrawer(); return; }
+  if (drawer) closeDrawer(false);
+  drawer = 'git-panel';
+  drawerTrigger = trigger;
+  panel.hidden = false;
+  panel.setAttribute('role', 'dialog');
+  panel.setAttribute('aria-modal', 'true');
+  document.body.classList.add('git-panel-open');
+  document.querySelectorAll('.editor, .titlebar, .statusbar').forEach(element => { element.inert = true; });
+  $('#drawer-backdrop').hidden = false;
+  syncControls();
+  panel.querySelector('a, button')?.focus();
 }
 
 function openPicker(id, trigger) {
@@ -147,23 +211,41 @@ function selectFile(index) {
   if (buttons.length) $('#file-result-status').textContent = `${buttons.length} matching files. ${buttons[fileIndex].querySelector('.file-result-name').textContent} selected.`;
 }
 
+function highlightMatch(value, positions = []) {
+  return [...value].map((char, index) => positions.includes(index) ? `<mark>${e(char)}</mark>` : e(char)).join('');
+}
+
 function updateFiles() {
-  const matches = findFiles($('#file-query').value);
-  $('#file-results').innerHTML = matches.length ? matches.map(file => `<button class="file-result" data-open-route="${e(file.route)}"><span class="file-icon" aria-hidden="true">${file.route.includes('/') ? '⌑' : 'M↓'}</span><span><span class="file-result-name">${e(file.name)}</span><span class="file-result-path">${e(file.path)}</span></span><span class="file-result-enter" aria-hidden="true">↵</span></button>`).join('') : '<p class="empty-files">No matching files. Try a project name or “about”.</p>';
+  const query = $('#file-query').value;
+  const matches = findFiles(query);
+  if (!query.trim()) matches.sort((a, b) => {
+    const recent = editor.state.recent;
+    return (recent.indexOf(a.route) < 0 ? Infinity : recent.indexOf(a.route)) - (recent.indexOf(b.route) < 0 ? Infinity : recent.indexOf(b.route));
+  });
+  $('#file-results').innerHTML = matches.length ? matches.map(file => `<button class="file-result" data-open-route="${e(file.route)}"><span class="file-icon" aria-hidden="true">${file.route.includes('/') ? '⌑' : 'M↓'}</span><span><span class="file-result-name">${highlightMatch(file.name, file.nameMatches)}</span><span class="file-result-path">${highlightMatch(file.path, file.pathMatches)}</span></span><span class="file-result-enter" aria-hidden="true">↵</span></button>`).join('') : '<p class="empty-files">No matching files. Try a project name or “about”.</p>';
   $('#file-result-status').textContent = `${matches.length} matching files`;
   selectFile(0);
 }
 
+function openSelectedFile(split = false) {
+  const selected = document.querySelector('#file-results .file-result.active');
+  if (!selected) return;
+  if (split) {
+    $('#file-picker').close('selected');
+    editor.split('right', selected.dataset.openRoute);
+  } else selected.click();
+}
+$('#file-open-split').addEventListener('click', () => openSelectedFile(true));
 $('#file-query').addEventListener('input', updateFiles);
 $('#file-picker').addEventListener('keydown', event => {
   if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
     event.preventDefault();
     selectFile(fileIndex + (event.key === 'ArrowDown' ? 1 : -1));
-    if (event.target !== $('#file-query')) document.querySelector('.file-result.active')?.focus();
+    if (event.target !== $('#file-query')) document.querySelector('#file-results .file-result.active')?.focus();
   }
-  if (event.key === 'Enter' && event.target === $('#file-query')) {
+  if (event.key === 'Enter' && (event.target === $('#file-query') || event.metaKey || event.ctrlKey)) {
     event.preventDefault();
-    document.querySelector('.file-result.active')?.click();
+    openSelectedFile(event.metaKey || event.ctrlKey);
   }
 });
 $('#palette').addEventListener('keydown', event => {
@@ -174,22 +256,37 @@ $('#palette').addEventListener('keydown', event => {
   buttons[(index + (event.key === 'ArrowDown' ? 1 : -1) + buttons.length) % buttons.length].focus();
 });
 document.querySelectorAll('dialog').forEach(picker => picker.addEventListener('click', event => {
-  if (event.target === picker) picker.close();
+  const rect = picker.getBoundingClientRect();
+  if (event.target === picker && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) picker.close();
 }));
-if (!navigator.platform.includes('Mac')) $('[data-file-shortcut]').textContent = 'Ctrl P';
 
 initTerminal({
-  navigate: route => {
-    if (location.hash === `#${route}`) renderRoute(); else location.hash = route;
-  },
+  navigate: route => editor.navigate(route),
   applyTheme,
 });
 
-// Explorer sidebar resizer (drag without visual highlight, only cursor change)
 function initExplorerResizer() {
   const resizer = $('#explorer-resizer');
-  if (!resizer) return;
   let drag = null;
+  let preferredWidth = null;
+  try {
+    const saved = storage?.getItem('levi-explorer-width');
+    if (/^\d+px$/.test(saved)) preferredWidth = Number.parseInt(saved, 10);
+  } catch { /* Storage is optional. */ }
+  function setWidth(width = preferredWidth) {
+    if (matchMedia('(max-width: 760px)').matches) return;
+    const max = Math.min(500, window.innerWidth - 400);
+    const defaultWidth = Number.parseInt(getComputedStyle(root).getPropertyValue('--explorer-default-width'), 10);
+    const value = Math.round(Math.max(160, Math.min(max, width ?? defaultWidth)));
+    root.style.setProperty('--explorer-width', `${value}px`);
+    resizer.setAttribute('aria-valuenow', value);
+    resizer.setAttribute('aria-valuemax', max);
+    resizer.setAttribute('aria-valuetext', `Project panel width ${value} pixels`);
+  }
+  function saveWidth() {
+    preferredWidth = $('#explorer').getBoundingClientRect().width;
+    try { storage?.setItem('levi-explorer-width', `${preferredWidth}px`); } catch { /* Storage is optional. */ }
+  }
   resizer.addEventListener('pointerdown', event => {
     if (event.button !== 0) return;
     drag = { startX: event.clientX, initialWidth: $('#explorer').getBoundingClientRect().width };
@@ -199,31 +296,34 @@ function initExplorerResizer() {
   });
   resizer.addEventListener('pointermove', event => {
     if (!drag) return;
-    const newWidth = Math.max(160, Math.min(500, Math.round(drag.initialWidth + (event.clientX - drag.startX))));
-    document.documentElement.style.setProperty('--explorer-width', `${newWidth}px`);
-    resizer.setAttribute('aria-valuenow', newWidth);
+    setWidth(drag.initialWidth + event.clientX - drag.startX);
   });
   const endDrag = () => {
     if (drag) {
       drag = null;
       document.body.classList.remove('explorer-resizing');
-      try { storage?.setItem('levi-explorer-width', getComputedStyle(document.documentElement).getPropertyValue('--explorer-width')); } catch {}
+      saveWidth();
     }
   };
   resizer.addEventListener('pointerup', endDrag);
   resizer.addEventListener('pointercancel', endDrag);
-  resizer.addEventListener('dblclick', () => {
-    document.documentElement.style.setProperty('--explorer-width', '240px');
-    try { storage?.removeItem('levi-explorer-width'); } catch {}
+  resizer.addEventListener('lostpointercapture', endDrag);
+  resizer.addEventListener('keydown', event => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    setWidth(event.key === 'Home' ? 160 : event.key === 'End' ? 500 : $('#explorer').getBoundingClientRect().width + (event.key === 'ArrowRight' ? 25 : -25));
+    saveWidth();
   });
-  try {
-    const saved = storage?.getItem('levi-explorer-width');
-    if (saved) document.documentElement.style.setProperty('--explorer-width', saved.trim());
-  } catch {}
+  resizer.addEventListener('dblclick', () => {
+    preferredWidth = null;
+    setWidth();
+    try { storage?.removeItem('levi-explorer-width'); } catch { /* Storage is optional. */ }
+  });
+  window.addEventListener('resize', () => { drag = null; document.body.classList.remove('explorer-resizing'); setWidth(); });
+  setWidth();
 }
 initExplorerResizer();
 
-// Movable / draggable windows (Theme Picker, File Picker, Notifications)
 function makeDraggable(dialog, handle) {
   if (!dialog || !handle) return;
   let drag = null;
@@ -254,6 +354,8 @@ function makeDraggable(dialog, handle) {
     dialog.style.left = `${newLeft}px`;
     dialog.style.top = `${newTop}px`;
     dialog.style.margin = '0';
+    dialog.style.right = 'auto';
+    dialog.style.bottom = 'auto';
   });
   const endDrag = () => {
     drag = null;
@@ -261,110 +363,66 @@ function makeDraggable(dialog, handle) {
   };
   handle.addEventListener('pointerup', endDrag);
   handle.addEventListener('pointercancel', endDrag);
+  handle.addEventListener('lostpointercapture', endDrag);
+  const resetPosition = () => {
+    endDrag();
+    for (const property of ['position', 'left', 'top', 'right', 'bottom', 'margin']) dialog.style.removeProperty(property);
+  };
+  window.addEventListener('resize', resetPosition);
+  dialog.addEventListener('close', resetPosition);
 }
 
 makeDraggable($('#palette'), $('#palette .picker-heading'));
 makeDraggable($('#file-picker'), $('#file-picker .file-picker-search'));
-makeDraggable($('#notification-popover'), $('#notification-popover .notification-popover-header'));
-
-// Notifications panel
-const notifPopover = $('#notification-popover');
-const bellBtn = $('#status-bell');
-const bellCount = $('.bell-count');
-
-function toggleNotifications() {
-  if (!notifPopover) return;
-  const isHidden = notifPopover.hidden;
-  notifPopover.hidden = !isHidden;
-  bellBtn?.setAttribute('aria-expanded', isHidden);
-}
-
-function closeNotifications() {
-  if (!notifPopover || notifPopover.hidden) return;
-  notifPopover.hidden = true;
-  bellBtn?.setAttribute('aria-expanded', 'false');
-}
-
-function updateNotificationBadge() {
-  const remaining = $('#notification-list')?.querySelectorAll('.notification-card').length ?? 0;
-  if (remaining === 0) {
-    if (bellCount) bellCount.style.display = 'none';
-    bellBtn?.setAttribute('title', '0 Notifications');
-    bellBtn?.setAttribute('aria-label', 'Notifications (0)');
-    const list = $('#notification-list');
-    if (list) list.innerHTML = '<div class="notification-empty">No notifications</div>';
-  } else {
-    if (bellCount) {
-      bellCount.style.display = 'grid';
-      bellCount.textContent = String(remaining);
-    }
-    bellBtn?.setAttribute('title', `${remaining} Notification${remaining > 1 ? 's' : ''}`);
-    bellBtn?.setAttribute('aria-label', `Notifications (${remaining})`);
-  }
-}
 
 document.addEventListener('click', event => {
   const target = event.target.closest('button, a');
-  if (notifPopover && !notifPopover.hidden && !notifPopover.contains(event.target) && !event.target.closest('#status-bell, .status-bell')) {
-    closeNotifications();
-  }
   if (!target) return;
-  if (target.matches('#status-bell, .status-bell, .status-bell *')) {
-    toggleNotifications();
-    return;
-  }
-  if (target.matches('#notification-close, .notification-close-btn')) {
-    closeNotifications();
-    return;
-  }
-  if (target.matches('#notification-clear, .notification-clear-btn')) {
-    const list = $('#notification-list');
-    if (list) list.innerHTML = '';
-    updateNotificationBadge();
-    return;
-  }
-  if (target.matches('[data-dismiss-id]')) {
-    $(`#${target.dataset.dismissId}`)?.remove();
-    updateNotificationBadge();
+  if (target.matches('.skip-link')) {
+    event.preventDefault();
+    content.focus({ preventScroll: true });
     return;
   }
   if (target.matches('[data-theme-id]')) applyTheme(target.dataset.themeId);
-  if (target.matches('[data-filter]')) {
-    category = target.dataset.filter;
-    renderRoute();
-    [...document.querySelectorAll('[data-filter]')].find(button => button.dataset.filter === category)?.focus();
-  }
   if (target.matches('#explorer-toggle')) toggleExplorer(target);
+  if (target.matches('#git-toggle')) toggleGitPanel(target);
+  if (target.matches('#git-panel-close')) toggleGitPanel($('#git-toggle'));
+  if (target.matches('[data-git-tab]')) { switchGitTab(target.dataset.gitTab); return; }
+  if (target.matches('[data-filter-repo]')) { filterGitCommits(target.dataset.filterRepo); return; }
   if (target.matches('#status-theme, [data-open-palette]')) openPicker('palette', target);
   if (target.matches('[data-open-files]')) openPicker('file-picker', target);
   if (target.matches('[data-close-dialog]')) target.closest('dialog').close();
   if (target.matches('[data-open-route]')) {
     $('#file-picker').close('selected');
-    if (location.hash === `#${target.dataset.openRoute}`) renderRoute(true);
-    else location.hash = target.dataset.openRoute;
-  }
-  if (target.matches('[data-close-project]')) {
-    const id = target.dataset.closeProject;
-    target.closest('.project-tab').remove();
-    if (parseRoute(location.hash) === `projects/${id}`) location.hash = 'projects';
-    else $('#tabs .active')?.focus();
+    editor.navigate(target.dataset.openRoute);
   }
   if (target.matches('a[href^="#"]') && !target.classList.contains('skip-link')) {
+    const hadDrawer = Boolean(drawer);
     closeDrawer(false);
-    if (target.hash === location.hash) renderRoute(true);
+    if (hadDrawer && event.defaultPrevented) content.focus({ preventScroll: true });
   }
 });
 $('#drawer-backdrop').addEventListener('click', () => closeDrawer());
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') {
-    closeNotifications();
-  }
   if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'p' && !event.shiftKey && !event.altKey) {
     event.preventDefault();
-    if (!document.querySelector('dialog[open]')) openPicker('file-picker', document.activeElement);
+    if ($('#file-picker').open) selectFile(fileIndex + 1);
+    else if (!document.querySelector('dialog[open]')) openPicker('file-picker', document.activeElement);
+  }
+  if (event.key === 'Escape' && !document.querySelector('dialog[open]')) {
+    if (drawer) { event.preventDefault(); closeDrawer(); return; }
+    const gitPanel = $('#git-panel');
+    if (gitPanel && !gitPanel.hidden) {
+      event.preventDefault();
+      toggleGitPanel($('#git-toggle'));
+      return;
+    }
+  }
+  if ((event.metaKey || event.ctrlKey) && !event.altKey && !document.querySelector('dialog[open]')) {
+    if (event.key.toLowerCase() === 'b') { event.preventDefault(); toggleExplorer($('#explorer-toggle')); }
+    if (event.key.toLowerCase() === 'j') { event.preventDefault(); $('.statusbar [data-terminal-toggle]').click(); }
   }
   if (!drawer) return;
-  if (event.key === 'Escape') { event.preventDefault(); closeDrawer(); }
   if (event.key === 'Tab') {
     const controls = [...$(`#${drawer}`).querySelectorAll('a, button, summary')].filter(element => element.getClientRects().length);
     const first = controls[0], last = controls.at(-1);
@@ -372,5 +430,17 @@ document.addEventListener('keydown', event => {
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
   }
 });
-window.addEventListener('resize', () => { closeDrawer(false); syncControls(); });
+window.addEventListener('resize', () => {
+  if (drawer && !matchMedia('(max-width: 760px)').matches) closeDrawer();
+  syncControls();
+});
 syncControls();
+
+$('.statusbar').addEventListener('keydown', event => {
+  if (!['ArrowLeft', 'ArrowRight'].includes(event.key) || event.metaKey || event.ctrlKey || event.altKey) return;
+  const buttons = [...document.querySelectorAll('.statusbar button')].filter(button => button.getClientRects().length);
+  const index = buttons.indexOf(document.activeElement);
+  if (index < 0) return;
+  event.preventDefault();
+  buttons[(index + (event.key === 'ArrowRight' ? 1 : -1) + buttons.length) % buttons.length].focus();
+});

@@ -1,10 +1,11 @@
 import { pages, projects, profile, repositoryLink, projectStatus, music, anime } from './content.js';
 import { themes } from './themes.js';
 
-export const commands = ['help', 'ls', 'cd', 'pwd', 'cat', 'open', 'fetch', 'neofetch', 'fastfetch', 'whoami', 'about', 'projects', 'project', 'art', 'music', 'anime', 'themes', 'theme', 'history', 'echo', 'clear'];
+export const commands = ['help', 'ls', 'cd', 'pwd', 'cat', 'open', 'git', 'fetch', 'neofetch', 'fastfetch', 'whoami', 'about', 'projects', 'project', 'art', 'music', 'anime', 'themes', 'theme', 'history', 'echo', 'clear'];
 const help = [
   ['ls', 'list files in the current directory'], ['cd projects', 'move around the workspace'],
   ['cat about.md', 'read a file right here'], ['open README.md', 'open a file in the editor'],
+  ['git', 'repository and working tree status'],
   ['pwd', 'show the current directory'], ['fetch', 'the short version of me'],
   ['projects', 'browse all projects'], ['project zeon', 'inspect a specific project'],
   ['about', 'the longer introduction'], ['art', 'art, color & Instagram'],
@@ -124,6 +125,21 @@ export function runCommand(input, context = {}) {
       const theme = themes.find(theme => theme.id === arg || theme.name.toLowerCase() === arg || theme.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') === arg);
       return theme ? { text: `Theme → ${theme.name}. Make yourself comfortable.`, theme: theme.id } : failure(`Unknown theme: ${value}. Type themes for the full list.`);
     }
+    case 'git': {
+      const sub = (args[0] || 'status').toLowerCase();
+      if (sub === 'status') {
+        return {
+          text: `On branch main\nYour branch is up to date with 'origin/main'.\n\nnothing to commit, working tree clean\n\nOverall Git status: 12 repositories tracked on github.com/n0thhhing (all clean)`
+        };
+      }
+      if (sub === 'branch') return { text: '* main' };
+      if (sub === 'log') {
+        return {
+          text: `commit 3c118f8 (HEAD -> main, origin/main)\nAuthor: Levi <levi.napz>\n\n    fix(ui): format titlebar as project/worktree/branch and remove duplicate git from statusbar\n\ncommit e3c9bf0\nAuthor: Levi <levi.napz>\n\n    fix: adjust explorer scrollbar and add breathing room for...\n\ncommit 5d95593\nAuthor: Levi <levi.napz>\n\n    fix: indent projects tree, add movable windows/resizers...`
+        };
+      }
+      return failure(`git: '${value}' is not a git command. Try: git status, git branch, git log`);
+    }
     case 'clear': return { text: '', clear: true };
     default: return failure(`Command not found: ${rawCommand}. Type help to look around.`);
   }
@@ -134,6 +150,7 @@ export function completeCommand(input, cwd = '~') {
   if (!value.includes(' ')) return commands.filter(command => command.startsWith(value));
   const [command, ...args] = value.split(/\s+/);
   const partial = args.join(' ');
+  if (command === 'git') return ['git status', 'git branch', 'git log'].filter(candidate => candidate.startsWith(value));
   if (command === 'project') return projects.map(project => `project ${project.id}`).filter(candidate => candidate.startsWith(value));
   if (command === 'theme') return themes.map(theme => `theme ${theme.id}`).filter(candidate => candidate.startsWith(value));
   if (!['cd', 'cat', 'ls', 'open'].includes(command)) return [];

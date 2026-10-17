@@ -11,6 +11,9 @@ export const profile = {
 export const music = ['redize', 'NEET', 'spawncamped', 'overtonight', 'lantern', 'wifiskeleton'];
 export const anime = ['Tokyo Ghoul', 'Steins;Gate', 'Terror in Resonance'];
 
+export { gitCommits } from './commits.js';
+
+
 export const pages = [
   { id: 'home', file: 'README.md', icon: 'M↓' },
   { id: 'about', file: 'about.md', icon: 'M↓' },
@@ -114,5 +117,6 @@ export function repositoryLink(project) {
 }
 
 export function projectStatus(project) {
-  return repositoryLink(project) ? project.status : 'Local / in development';
+  const status = repositoryLink(project) ? project.status : 'Local / in development';
+  return project.status === 'Experimental' && status !== 'Experimental' ? `${status} · Experimental` : status;
 }

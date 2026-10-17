@@ -1,74 +1,56 @@
-# Levi’s workspace
+# Levi (@n0thhhing) — Personal Portfolio & Systems Showcase
 
-A personal portfolio as a Zed-inspired workspace: a project tree, file tabs, Markdown-style pages, a terminal, and native file/theme picker dialogs. Static HTML, CSS, and JavaScript, with no build step, runtime dependencies, or API keys.
+Zero-dependency personal portfolio website and low-level systems showcase for **Levi (`@n0thhhing`)**.
 
-## Preview
+## Features
 
-From the repository directory:
+- **Zero External Dependencies**: Pure modern HTML5, CSS3, and vanilla ES6 modules. No npm, no node_modules, no webpack/vite bundle step needed.
+- **Cyber-Glass Aesthetics**: Dark void palette, neon cyan & electric emerald accents, CRT scanlines, memory address gutters, and glassmorphism.
+- **Interactive Low-Level Sandbox**:
+  - **Live ARM64 Disassembler & Hex Inspector**: Real disassembly from `rarm64`, `zeon`, and `il2cpp` with interactive opcode breakdown and register inspectors.
+  - **Terminal CLI**: Interactive command prompt supporting `help`, `about`, `projects`, `skills`, `disasm`, `simd`, and `clear`.
+  - **NEON SIMD Vector Visualizer**: 4x32-bit vector lane computer simulating parallel arithmetic from `zeon`.
+- **Featured Projects Grid**: Interactive filtering across `rarm64`, `zeon`, `il2cpp`, `lwasm`, `wallify`, `hexer`, `Offset-updater`, and `Discord-rich-presence`.
+- **GitHub Profile README**: Ready-to-use matching profile markdown in [`github-profile/README.md`](github-profile/README.md).
 
-```sh
-npm run dev
+## Local Preview
+
+You can preview the site locally using any simple HTTP server:
+
+```bash
+# Python 3
+python3 -m http.server 8080
+
+# Or using Bun / Node
+npx serve .
 ```
 
-Open http://127.0.0.1:4173. Requires Python 3 for the local server. If that port is occupied, use `python3 -m http.server 4187 --bind 127.0.0.1 --directory site` instead. Serve the directory over HTTP; ES modules do not work by opening `index.html` as a file.
+Then open [http://localhost:8080](http://localhost:8080) in your browser.
 
-```sh
-npm test
-```
+## Deployment to GitHub Pages
 
-Tests use Node’s built-in test runner (Node 22+). No `npm install` is needed.
+The repository includes a ready-to-use GitHub Actions workflow in [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
 
-## Edit the content
+1. Push this repository to GitHub: `https://github.com/n0thhhing/website`.
+2. In your repository settings: **Settings** -> **Pages** -> **Source**, select **GitHub Actions**.
+3. The site will automatically build and publish to `https://n0thhhing.github.io/website`.
 
-- **Projects, social links, music, anime:** `site/js/content.js`. The explorer, project pages, filters, and terminal share this data.
-- **About and other page copy:** `site/js/pages.js`.
-- **Theme names, swatches, and sources:** `site/js/themes.js`. Theme colors are semantic variables in `site/styles.css`.
+## Updating Your GitHub Profile README
 
-To publish a local project’s repository link, set its `repoUrl` in `content.js` to its public `https://github.com/n0thhhing/repository-name` URL. No template edits are needed. Keep it `null` until the repository is public. Local projects remain readable with no repository button. The site does not poll GitHub, so verify URLs when editing them.
+To update your main GitHub profile (`https://github.com/n0thhhing`):
+1. Copy the contents of [`github-profile/README.md`](github-profile/README.md).
+2. Paste it into your special [`n0thhhing/n0thhhing`](https://github.com/n0thhhing/n0thhhing) repository's `README.md`.
 
-Set `featured: true` to include a project on Home. Add a project entry with `id`, `name`, `category`, `description`, `tech`, `status`, `repoUrl`, and `details`; `snippet` is optional. Keep identifiers stable because `#projects/<id>` links are shareable.
+## Zed-style workspace
 
-Theme preferences are saved locally when browser storage is available. If you add a seventh theme, also add its ID to the early theme loader in `site/js/theme-init.js`. Theme transitions respect reduced-motion preferences. Neutral secondary-text colors are adjusted for readability; accent swatches follow the published palettes.
+The portfolio keeps rendered pages inside independent, nested editor panes. Split in any direction from the pane menu, resize separators with the mouse or arrow keys, drag tabs between panes, or use a tab’s context menu to move it. Explorer clicks open preview tabs; double-click keeps a tab. On phones, the pane selector switches views without discarding the desktop layout.
 
-## Interactions
+Cmd/Ctrl+P finds files by fuzzy name/path. Cmd/Ctrl+F searches the active page with case, whole-word, and regex options. The outline button jumps to page headings. Reload opens just the requested URL; layouts are not saved.
 
-Use the explorer or file tabs to navigate, or type `help` in the terminal. The portfolio shell has a virtual home directory containing the page files, `projects/`, and `themes/`. It reads the same content as the website.
+Run `npm run dev` to serve `site/` on port 4173. Run `npm test` for unit checks and `npm run test:browser` with an existing Playwright installation for browser regressions. Set `PLAYWRIGHT_MODULE` to that installation’s module path when it is not locally installed, and `SCREENSHOT_DIR` to capture desktop/mobile theme screenshots.
 
-```text
-ls                        list the page files and directories
-cd projects               explore the project directory
-cat rarm64.md              read a local project without opening a tab
-open rarm64                open its project tab
-cd ../themes              inspect the theme directory
-cat panda.json             read a published palette
-fetch                      show a themed personal profile
-history                    review this session’s commands
-```
+The pinned upstream commit and source references are documented in [docs/zed-reference.md](docs/zed-reference.md).
 
-`pwd`, `echo`, `whoami`, `about`, `projects`, `project <name>`, `art`, `music`, `anime`, `themes`, `theme <name>`, and `clear` are also available. `neofetch` and `fastfetch` are aliases for `fetch`. History and the current directory last for the current page session. The current directory appears in the prompt. File listings and help entries are clickable; completion suggestions fill the prompt.
+Double-click unused tab-strip space (or an empty pane) to create an untitled scratch file. The plus menu also offers New File and Open File. Pane actions appear while that pane or its menu has focus. Scratch files are editable plain text kept in memory; use Download to keep a copy before reloading or leaving.
 
-- Up / Down: command history, preserving an unfinished command.
-- Tab: complete a command, project ID, or theme ID. Repeated Tab can leave the field; Shift+Tab always moves backward.
-- Tab after `cat`, `ls`, `cd`, or `open`: complete paths relative to the current directory, including `../` and `~/`.
-- Ctrl+L: clear the terminal while preserving the current input. Ctrl+C cancels an unfinished command; Ctrl+U clears the input.
-- Cmd/Ctrl+P: open the file picker. Type to filter pages and projects; Up / Down and Enter select a result.
-- Escape: leave the terminal or close a picker/navigation drawer.
-- Theme name in the status bar or Change theme in the project tree: open the centered theme picker. Up / Down moves between themes; Enter applies one.
-- Explorer icon in the bottom left: toggle the project tree. On smaller screens it opens a keyboard-accessible drawer.
-- Folder chevrons: collapse or expand branches in the project tree.
-- Projects open in their own named tabs. The close button returns an active project tab to the project overview.
-- Terminal buttons: collapse or restore the terminal.
-- Terminal expand button: maximize or restore the dock. Opening a page or pressing Escape restores the editor.
-- Drag the terminal’s top edge to resize it. The resize handle also accepts Up / Down, Home, and End when focused; double-click resets its height.
-
-The music section is curated, not a live Spotify feed. The terminal handles only the listed commands against portfolio data. It cannot access the visitor’s filesystem or execute system commands. The site embeds no artwork, analytics, remote fonts, or media players.
-
-## GitHub Pages
-
-The workflow runs the unit tests and uploads **only `site/`**. Source documentation and tests stay outside the published artifact. Add this checkout to your GitHub repository, then choose **GitHub Actions** as the Pages source in repository settings. A push to `main` or a manual workflow run deploys it. All assets use relative paths, so it works at a repository subpath without configuration.
-
-No remote repository or deployment was created by this implementation. No GitHub profile README is included.
-
-## Palette credits
-
-[Gruvbox Material](https://github.com/sainnhe/gruvbox-material), [Gruvbox](https://github.com/morhetz/gruvbox), [Panda](https://github.com/tinkertrain/panda-syntax-vscode), [Dracula](https://draculatheme.com/contribute), [Monokai Pro](https://monokai.pro/), and [Catppuccin Frappé](https://github.com/catppuccin/palette).
+The terminal panel supports independent sessions, tabs, and nested horizontal/vertical splits matching Zed. Terminal tab-bar actions appear when the terminal has focus, commands wrap at the prompt, and clicking output returns focus to typing while preserving selection.

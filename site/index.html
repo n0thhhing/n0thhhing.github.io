@@ -21,35 +21,28 @@
       <div class="window-mark">
         <div class="window-controls" aria-hidden="true"><i></i><i></i><i></i></div>
         <span class="titlebar-project"><a class="workspace-name" href="#home">website</a></span>
+        <span class="titlebar-worktree" aria-label="Worktree main"><svg class="worktree-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M7.783 8 12.325 3.458M9.499 9.717l2.825 2.825M3.258 8h4.513m4.971-1.521V3.04H9.304m-.002 9.92h3.439V9.521"/></svg> main</span>
         <span class="titlebar-divider" aria-hidden="true">/</span>
-        <span class="titlebar-worktree">main</span>
-        <span class="titlebar-divider" aria-hidden="true">/</span>
-        <span class="titlebar-branch"><svg class="branch-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M11.75 2.5a2.25 2.25 0 1 0-3.5 1.86v2.39a3.75 3.75 0 0 0-1.5 3v1.89a2.25 2.25 0 1 0 1.5 0V9.75a2.25 2.25 0 0 1 2.25-2.25h1.25a2.25 2.25 0 1 0 0-4.5z"/></svg> main</span>
+        <span class="titlebar-branch" aria-label="Branch main"><svg class="branch-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="4.5" cy="11.5" r="1.5"/><circle cx="11.5" cy="4.5" r="1.5"/><path d="M4.5 10V3M10 4.44C8.54 4.44 7.14 5.03 6.11 6.07A5.5 5.5 0 0 0 4.5 10"/></svg> main</span>
       </div>
-      <button class="file-search" data-open-files aria-label="Go to file"><svg class="icon search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg><span>Go to file…</span><kbd data-file-shortcut>⌘ P</kbd></button>
-      <div class="titlebar-actions">
+      <button class="profile-button" popovertarget="social-menu" aria-label="Show social links"><img src="./assets/avatar.jpg" alt="" width="24" height="24"></button>
+      <div id="social-menu" class="social-menu" popover="auto" aria-label="Social links">
+        <span class="social-menu-name">levi.napz</span>
         <a href="https://github.com/n0thhhing" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
         <a href="https://instagram.com/levi.napz" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a>
-        <button class="titlebar-update-pill" data-open-palette aria-label="Theme palette"><span class="update-icon" aria-hidden="true">✓</span> <span id="titlebar-theme-label">Gruvbox</span></button>
       </div>
     </header>
     <div class="workbench">
       <aside class="explorer" id="explorer" aria-label="Project panel">
-        <div class="explorer-header">
-          <span class="explorer-header-title"><svg class="icon panel-icon" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="2" width="14" height="12" rx="2" fill="none" stroke="currentColor"/><line x1="5.5" y1="2" x2="5.5" y2="14" stroke="currentColor"/></svg> Project</span>
-          <div class="explorer-header-actions">
-            <button class="icon-button" data-open-files aria-label="Find a file"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg></button>
-          </div>
-        </div>
         <div class="project-tree-container" id="project-tree-container">
           <details class="folder root-folder" open>
-            <summary class="folder-root"><span class="chevron" aria-hidden="true">›</span><svg class="folder-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="#7daea3" d="M1.5 3A1.5 1.5 0 0 0 0 4.5v7A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H8L6.5 3.5A1.5 1.5 0 0 0 5.5 3h-4z"/></svg> <span class="folder-title">website</span></summary>
+            <summary class="folder-root"><svg class="folder-icon" viewBox="0 0 16 16" aria-hidden="true"><path class="folder-closed" d="M1.5 3A1.5 1.5 0 0 0 0 4.5v7A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H8L6.5 3.5A1.5 1.5 0 0 0 5.5 3h-4z"/><path class="folder-open" d="M1.5 3h4l2 2h6A1.5 1.5 0 0 1 15 6.5V7H4L1 13V4.5A1.5 1.5 0 0 1 1.5 3ZM4.7 8h10.5a.7.7 0 0 1 .65 1l-1.6 3.5a.9.9 0 0 1-.82.5H2.4Z"/></svg> <span class="folder-title">website</span></summary>
             <div class="tree-contents">
               <details class="folder subfolder">
-                <summary class="folder-header"><span class="chevron" aria-hidden="true">›</span><svg class="folder-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="#7daea3" d="M1.5 3A1.5 1.5 0 0 0 0 4.5v7A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H8L6.5 3.5A1.5 1.5 0 0 0 5.5 3h-4z"/></svg> .github</summary>
+                <summary class="folder-header"><svg class="folder-icon" viewBox="0 0 16 16" aria-hidden="true"><path class="folder-closed" d="M1.5 3A1.5 1.5 0 0 0 0 4.5v7A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H8L6.5 3.5A1.5 1.5 0 0 0 5.5 3h-4z"/><path class="folder-open" d="M1.5 3h4l2 2h6A1.5 1.5 0 0 1 15 6.5V7H4L1 13V4.5A1.5 1.5 0 0 1 1.5 3ZM4.7 8h10.5a.7.7 0 0 1 .65 1l-1.6 3.5a.9.9 0 0 1-.82.5H2.4Z"/></svg> .github</summary>
                 <div class="tree-contents">
                   <details class="folder subfolder">
-                    <summary class="folder-header"><span class="chevron" aria-hidden="true">›</span><svg class="folder-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="#7daea3" d="M1.5 3A1.5 1.5 0 0 0 0 4.5v7A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H8L6.5 3.5A1.5 1.5 0 0 0 5.5 3h-4z"/></svg> workflows</summary>
+                    <summary class="folder-header"><svg class="folder-icon" viewBox="0 0 16 16" aria-hidden="true"><path class="folder-closed" d="M1.5 3A1.5 1.5 0 0 0 0 4.5v7A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H8L6.5 3.5A1.5 1.5 0 0 0 5.5 3h-4z"/><path class="folder-open" d="M1.5 3h4l2 2h6A1.5 1.5 0 0 1 15 6.5V7H4L1 13V4.5A1.5 1.5 0 0 1 1.5 3ZM4.7 8h10.5a.7.7 0 0 1 .65 1l-1.6 3.5a.9.9 0 0 1-.82.5H2.4Z"/></svg> workflows</summary>
                     <div class="tree-contents">
                       <span class="file-link tree-leaf-static"><span class="file-icon icon-yml" aria-hidden="true">⚙</span>deploy.yml</span>
                     </div>
@@ -57,17 +50,16 @@
                 </div>
               </details>
               <details class="folder subfolder">
-                <summary class="folder-header"><span class="chevron" aria-hidden="true">›</span><svg class="folder-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="#7daea3" d="M1.5 3A1.5 1.5 0 0 0 0 4.5v7A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H8L6.5 3.5A1.5 1.5 0 0 0 5.5 3h-4z"/></svg> site</summary>
+                <summary class="folder-header"><svg class="folder-icon" viewBox="0 0 16 16" aria-hidden="true"><path class="folder-closed" d="M1.5 3A1.5 1.5 0 0 0 0 4.5v7A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H8L6.5 3.5A1.5 1.5 0 0 0 5.5 3h-4z"/><path class="folder-open" d="M1.5 3h4l2 2h6A1.5 1.5 0 0 1 15 6.5V7H4L1 13V4.5A1.5 1.5 0 0 1 1.5 3ZM4.7 8h10.5a.7.7 0 0 1 .65 1l-1.6 3.5a.9.9 0 0 1-.82.5H2.4Z"/></svg> site</summary>
                 <div class="tree-contents">
                   <details class="folder subfolder">
-                    <summary class="folder-header"><span class="chevron" aria-hidden="true">›</span><svg class="folder-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="#7daea3" d="M1.5 3A1.5 1.5 0 0 0 0 4.5v7A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H8L6.5 3.5A1.5 1.5 0 0 0 5.5 3h-4z"/></svg> assets</summary>
+                    <summary class="folder-header"><svg class="folder-icon" viewBox="0 0 16 16" aria-hidden="true"><path class="folder-closed" d="M1.5 3A1.5 1.5 0 0 0 0 4.5v7A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H8L6.5 3.5A1.5 1.5 0 0 0 5.5 3h-4z"/><path class="folder-open" d="M1.5 3h4l2 2h6A1.5 1.5 0 0 1 15 6.5V7H4L1 13V4.5A1.5 1.5 0 0 1 1.5 3ZM4.7 8h10.5a.7.7 0 0 1 .65 1l-1.6 3.5a.9.9 0 0 1-.82.5H2.4Z"/></svg> assets</summary>
                     <div class="tree-contents">
-                      <span class="file-link tree-leaf-static"><span class="file-icon icon-svg" aria-hidden="true">◈</span>avatar.svg</span>
                       <span class="file-link tree-leaf-static"><span class="file-icon icon-svg" aria-hidden="true">◈</span>favicon.svg</span>
                     </div>
                   </details>
                   <details class="folder subfolder">
-                    <summary class="folder-header"><span class="chevron" aria-hidden="true">›</span><svg class="folder-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="#7daea3" d="M1.5 3A1.5 1.5 0 0 0 0 4.5v7A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H8L6.5 3.5A1.5 1.5 0 0 0 5.5 3h-4z"/></svg> js</summary>
+                    <summary class="folder-header"><svg class="folder-icon" viewBox="0 0 16 16" aria-hidden="true"><path class="folder-closed" d="M1.5 3A1.5 1.5 0 0 0 0 4.5v7A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H8L6.5 3.5A1.5 1.5 0 0 0 5.5 3h-4z"/><path class="folder-open" d="M1.5 3h4l2 2h6A1.5 1.5 0 0 1 15 6.5V7H4L1 13V4.5A1.5 1.5 0 0 1 1.5 3ZM4.7 8h10.5a.7.7 0 0 1 .65 1l-1.6 3.5a.9.9 0 0 1-.82.5H2.4Z"/></svg> js</summary>
                     <div class="tree-contents">
                       <span class="file-link tree-leaf-static"><span class="file-icon icon-js" aria-hidden="true">JS</span>app.js</span>
                       <span class="file-link tree-leaf-static"><span class="file-icon icon-js" aria-hidden="true">JS</span>commands.js</span>
@@ -83,13 +75,13 @@
               </details>
               <nav id="file-nav" class="file-nav" aria-label="Pages"></nav>
               <details class="folder subfolder" id="project-tree" open>
-                <summary class="project-folder folder-header"><span class="chevron" aria-hidden="true">›</span><svg class="folder-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="#fabd2f" d="M1.5 3A1.5 1.5 0 0 0 0 4.5v7A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H8L6.5 3.5A1.5 1.5 0 0 0 5.5 3h-4z"/></svg> <span>projects</span><span id="project-count" class="folder-count">12</span></summary>
+                <summary class="project-folder folder-header"><svg class="folder-icon" viewBox="0 0 16 16" aria-hidden="true"><path class="folder-closed" d="M1.5 3A1.5 1.5 0 0 0 0 4.5v7A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H8L6.5 3.5A1.5 1.5 0 0 0 5.5 3h-4z"/><path class="folder-open" d="M1.5 3h4l2 2h6A1.5 1.5 0 0 1 15 6.5V7H4L1 13V4.5A1.5 1.5 0 0 1 1.5 3ZM4.7 8h10.5a.7.7 0 0 1 .65 1l-1.6 3.5a.9.9 0 0 1-.82.5H2.4Z"/></svg> <span>projects</span><span id="project-count" class="folder-count">12</span></summary>
                 <nav id="project-nav" class="project-nav" aria-label="Projects"></nav>
               </details>
               <details class="folder subfolder">
-                <summary class="folder-header"><span class="chevron" aria-hidden="true">›</span><svg class="folder-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="#7daea3" d="M1.5 3A1.5 1.5 0 0 0 0 4.5v7A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H8L6.5 3.5A1.5 1.5 0 0 0 5.5 3h-4z"/></svg> tests</summary>
+                <summary class="folder-header"><svg class="folder-icon" viewBox="0 0 16 16" aria-hidden="true"><path class="folder-closed" d="M1.5 3A1.5 1.5 0 0 0 0 4.5v7A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H8L6.5 3.5A1.5 1.5 0 0 0 5.5 3h-4z"/><path class="folder-open" d="M1.5 3h4l2 2h6A1.5 1.5 0 0 1 15 6.5V7H4L1 13V4.5A1.5 1.5 0 0 1 1.5 3ZM4.7 8h10.5a.7.7 0 0 1 .65 1l-1.6 3.5a.9.9 0 0 1-.82.5H2.4Z"/></svg> tests</summary>
                 <div class="tree-contents">
-                  <span class="file-link tree-leaf-static"><span class="file-icon icon-test" aria-hidden="true">⚗</span>portfolio.test.js</span>
+                  <span class="file-link tree-leaf-static"><span class="file-icon icon-test" aria-hidden="true">⚗</span>workspace.test.js</span>
                 </div>
               </details>
               <span class="file-link tree-leaf-static"><span class="file-icon icon-git" aria-hidden="true">⑂</span>.gitignore</span>
@@ -97,100 +89,188 @@
             </div>
           </details>
         </div>
-        <div class="explorer-note">
-          <div class="tiny-palette" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          <p>systems, sketches,<br>and getting the colors right.</p>
-          <button class="explorer-theme" data-open-palette>Change theme <span aria-hidden="true">↗</span></button>
-        </div>
       </aside>
-      <div id="explorer-resizer" class="explorer-resizer" role="separator" aria-label="Resize project panel" aria-orientation="vertical" tabindex="0"></div>
+      <div id="explorer-resizer" class="explorer-resizer" role="separator" aria-label="Resize project panel" aria-controls="explorer" aria-orientation="vertical" aria-valuemin="160" aria-valuemax="500" aria-valuenow="240" tabindex="0"></div>
       <div class="editor">
+        <label class="pane-switcher">Active pane <select id="pane-switcher" aria-label="Active pane"></select></label>
+        <div id="pane-layout" class="pane-layout" aria-label="Editor panes"></div>
+        <template id="pane-template"><section class="editor-pane" aria-label="Editor pane">
         <div class="tab-strip">
           <div class="tab-history-nav">
-            <button id="history-back" class="tab-history-btn" aria-label="Go back in history" title="Back (Alt+Left)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 3-5 5 5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-            <button id="history-forward" class="tab-history-btn" aria-label="Go forward in history" title="Forward (Alt+Right)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button data-role="history-back" class="tab-history-btn" aria-label="Go back in history" title="Back (Alt+Left)"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" aria-hidden="true"><path d="M11 8H5M8 5l-3 3 3 3" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button data-role="history-forward" class="tab-history-btn" aria-label="Go forward in history" title="Forward (Alt+Right)"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" aria-hidden="true"><path d="M5 8h6M8 5l3 3-3 3" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           </div>
-          <nav id="tabs" class="tabs" aria-label="Open files"></nav>
-          <button class="icon-button open-file-button" data-open-files aria-label="Open a file">+</button>
+          <nav data-role="tabs" class="tabs" aria-label="Open files"></nav>
+          <div class="tab-actions">
+            <button class="tab-action-btn" data-role="new-item-btn" aria-label="New item" title="New…" aria-haspopup="menu"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" aria-hidden="true"><path d="M3.33 8h9.34M8 3.33v9.34" stroke-width="1.2" stroke-linecap="round"/></svg></button>
+            <button class="tab-action-btn" data-role="editor-split-btn" aria-label="Split editor pane" title="Split pane" aria-haspopup="menu"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" aria-hidden="true"><path opacity="0.15" d="M14 2H8v12h6z" fill="currentColor"/><path d="M13.4 2H2.6C2.27 2 2 2.27 2 2.6v10.8c0 .33.27.6.6.6h10.8c.33 0 .6-.27.6-.6V2.6c0-.33-.27-.6-.6-.6Z" stroke-width="1.2"/><path d="M8 2v12" stroke-width="1.2"/></svg></button>
+            <button class="tab-action-btn" data-role="editor-maximize-btn" aria-label="Toggle maximized editor" title="Maximize pane"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" aria-hidden="true"><path d="M10 3h3v3M6 13H3v-3M13 3l-3.5 3.5M3 13l3.5-3.5" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
         </div>
-        <div class="editor-path"><span id="breadcrumb">website › site › README.md</span><span class="file-language"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v16H3zM3 9h18M9 9v11"/></svg> Markdown preview</span></div>
-        <main id="content" class="content" tabindex="-1"></main>
-        <section class="terminal" id="terminal" aria-labelledby="terminal-title">
-          <div id="terminal-resizer" class="terminal-resizer" role="separator" aria-label="Resize terminal" aria-orientation="horizontal" aria-controls="terminal" aria-valuemin="140" aria-valuemax="600" aria-valuenow="240" tabindex="0"></div>
-          <div class="terminal-toolbar">
-            <div class="terminal-tabs">
-              <div class="terminal-tab active"><svg class="icon term-icon" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="2" width="14" height="12" rx="2" fill="none" stroke="currentColor"/><path d="m4 6 2.5 2L4 10m4 0h4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> <span id="terminal-title">website — zsh</span><span id="terminal-tab-cwd" class="sr-only">~</span></div>
-            </div>
-            <div class="terminal-actions">
-              <button id="terminal-clear" class="icon-button" aria-label="Clear terminal" title="Clear terminal (Ctrl+L)">⌫</button>
-              <button id="terminal-maximize" class="icon-button" aria-label="Maximize terminal" title="Maximize terminal" aria-pressed="false"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m8 0h5v-5"/></svg></button>
-              <button class="icon-button" data-terminal-toggle aria-label="Collapse terminal" aria-controls="terminal" aria-expanded="true">×</button>
-            </div>
+        <div class="editor-path">
+          <div class="editor-path-left">
+            <span data-role="breadcrumb">README.md › # Levi (@n0thhhing) - Personal Portfolio & Systems Showcase</span>
           </div>
-          <div class="terminal-body" id="terminal-body">
+          <div class="editor-path-actions">
+            <button class="editor-path-btn" data-role="outline-btn" aria-label="Symbol outline" title="Outline / Symbols">
+              <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2"/></svg>
+            </button>
+            <button class="editor-path-btn" data-role="buffer-search-btn" aria-label="Find in page" title="Find in page (Cmd/Ctrl+F)">
+              <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4"/><path d="M10 10l3.5 3.5"/></svg>
+            </button>
+            <span class="file-language"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v16H3zM3 9h18M9 9v11"/></svg> <span data-role="editor-lang-badge">Markdown preview</span></span>
+          </div>
+        </div>
+        <div data-role="content" class="content" role="region" tabindex="-1"></div>
+        </section></template>
+        <section class="terminal" id="terminal" aria-label="Terminal panel">
+          <div id="terminal-resizer" class="terminal-resizer" role="separator" aria-label="Resize terminal" aria-orientation="horizontal" aria-controls="terminal" aria-valuemin="140" aria-valuemax="600" aria-valuenow="240" tabindex="0"></div>
+          <div class="terminal-layout" id="terminal-layout"></div>
+          <template id="terminal-pane-template"><section class="terminal-pane" aria-label="Terminal pane">
+            <div class="terminal-toolbar">
+              <nav class="terminal-tabs" aria-label="Terminal sessions"></nav>
+              <div class="terminal-actions">
+                <button class="tab-action-btn" data-term-action="terminal-new" aria-label="New terminal" title="New…" aria-haspopup="menu"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" aria-hidden="true"><path d="M3 8h10M8 3v10"/></svg></button>
+                <button class="tab-action-btn" data-term-action="terminal-split" aria-label="Split terminal pane" title="Split Pane" aria-haspopup="menu"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" aria-hidden="true"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M8 2v12"/></svg></button>
+                <button class="tab-action-btn" data-term-action="terminal-maximize" aria-label="Maximize terminal" title="Zoom In" aria-pressed="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" aria-hidden="true"><path d="M10 2h4v4M6 14H2v-4M14 2l-4 4M2 14l4-4"/></svg></button>
+                <button class="tab-action-btn" data-terminal-toggle aria-label="Collapse terminal" aria-controls="terminal" aria-expanded="true" title="Close panel"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+              </div>
+            </div>
+            <div class="terminal-session-host"></div>
+          </section></template>
+          <template id="terminal-session-template"><div class="terminal-body" data-term-role="terminal-body">
             <div class="terminal-intro">
               <div class="terminal-welcome"><span class="accent">Last login: Wed Oct 14 17:16:25 on ttys002</span></div>
-              <p>Type <button class="inline-command" data-command="help">help</button> to look around, <button class="inline-command" data-command="fetch">fetch</button> for specs, or <button class="inline-command" data-command="ls">ls</button> to explore.</p>
-              <span class="terminal-hint">↑↓ history · Tab complete · Ctrl+L clear · drag top edge to resize</span>
+              <p>Type <button class="inline-command" data-command="help">help</button> to explore this portfolio.</p>
             </div>
-            <div id="terminal-output" role="log" aria-label="Command output" aria-live="polite" aria-relevant="additions"></div>
-            <form id="terminal-form" autocomplete="off">
+            <div data-term-role="terminal-output" role="log" aria-label="Command output" aria-live="polite" aria-relevant="additions"></div>
+            <form data-term-role="terminal-form" class="terminal-form" autocomplete="off">
               <div class="terminal-prompt-box">
                 <div class="terminal-prompt-row1">
                   <span class="prompt-user">levi.napz</span>
                   <span class="prompt-arrow">-&gt;</span>
-                  <span class="prompt-path" id="terminal-prompt-path">.../website<span id="terminal-cwd" class="sr-only">~</span></span>
+                  <span class="prompt-path">website</span><span data-term-role="terminal-cwd" class="sr-only">~</span>
                   <span class="prompt-branch">main*!?</span>
-                  <span class="prompt-time" id="terminal-time">00:17</span>
+                  <span class="prompt-time" data-term-role="terminal-time">18:22</span>
                 </div>
                 <div class="terminal-prompt-row2">
-                  <label for="terminal-input" class="prompt-chevron">&gt;</label>
-                  <input id="terminal-input" aria-label="Terminal command" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="try ls or fetch" maxlength="500">
-                  <span class="terminal-cursor" aria-hidden="true">█</span>
-                  <button class="terminal-run" type="submit" aria-label="Run command">↵</button>
+                  <label class="terminal-chevron" for="terminal-input">&gt;</label>
+                  <textarea data-term-role="terminal-input" aria-label="Terminal command" rows="1" spellcheck="false" autocapitalize="off" autocorrect="off"></textarea>
                 </div>
               </div>
             </form>
-          </div>
+          </div></template>
         </section>
       </div>
+      <aside class="git-panel" id="git-panel" aria-label="Git panel" hidden>
+        <div class="git-panel-header">
+          <div class="git-tabs" role="tablist" aria-label="Git panel views">
+            <button class="git-tab active" id="git-tab-history" role="tab" aria-selected="true" data-git-tab="history">History</button>
+            <button class="git-tab" id="git-tab-changes" role="tab" aria-selected="false" data-git-tab="changes">Changes (0)</button>
+          </div>
+          <button class="icon-button git-panel-close" id="git-panel-close" aria-label="Close git panel">
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 4.5l7 7m0-7l-7 7"/></svg>
+          </button>
+        </div>
+        <div class="git-panel-body" id="git-panel-body">
+          <div id="git-history-view" class="git-view-pane">
+            <div class="git-overall-header">
+              <div class="git-profile-badge">
+                <img src="./assets/avatar.jpg" alt="" class="git-avatar-badge" width="22" height="22">
+                <div class="git-profile-text">
+                  <span class="git-profile-title">Overall Git Activity</span>
+                  <a href="https://github.com/n0thhhing" target="_blank" rel="noopener noreferrer" class="git-profile-sub">github.com/n0thhhing <span aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+              <div class="git-repo-filters" role="tablist" aria-label="Filter commits by repository">
+                <button class="git-filter-pill active" data-filter-repo="all" aria-pressed="true">Overall</button>
+                <button class="git-filter-pill" data-filter-repo="website" aria-pressed="false">website</button>
+                <button class="git-filter-pill" data-filter-repo="zeon" aria-pressed="false">zeon</button>
+                <button class="git-filter-pill" data-filter-repo="wallify" aria-pressed="false">wallify</button>
+                <button class="git-filter-pill" data-filter-repo="rarm64" aria-pressed="false">rarm64</button>
+                <button class="git-filter-pill" data-filter-repo="Discord-rich-presence" aria-pressed="false">Discord-rich-presence</button>
+                <button class="git-filter-pill" data-filter-repo="Offset-updater" aria-pressed="false">Offset-updater</button>
+                <button class="git-filter-pill" data-filter-repo="ts-capstone" aria-pressed="false">ts-capstone</button>
+                <button class="git-filter-pill" data-filter-repo="lwasm" aria-pressed="false">lwasm</button>
+                <button class="git-filter-pill" data-filter-repo="sse4-strstr-zig" aria-pressed="false">sse4-strstr-zig</button>
+                <button class="git-filter-pill" data-filter-repo="z-scanner" aria-pressed="false">z-scanner</button>
+              </div>
+            </div>
+            <div class="git-commit-list" id="git-commit-list" role="feed" aria-label="Commit history"></div>
+          </div>
+          <div id="git-changes-view" class="git-view-pane" hidden>
+            <div class="git-branch-banner">
+              <svg class="git-status-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="4.5" cy="11.5" r="1.5"/><circle cx="11.5" cy="4.5" r="1.5"/><path d="M4.5 10V3M10 4.44C8.54 4.44 7.14 5.03 6.11 6.07A5.5 5.5 0 0 0 4.5 10"/></svg>
+              <span>Branch: <strong>main</strong></span>
+            </div>
+            <p class="git-clean-note">No uncommitted changes. Working tree clean across all local and remote workspaces.</p>
+            <div class="git-section">
+              <div class="git-section-title"><span>Active Repository</span></div>
+              <a class="git-repo-link" href="https://github.com/n0thhhing/website" target="_blank" rel="noopener noreferrer">
+                <span class="git-repo-name">n0thhhing / website</span>
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+            <div class="git-section">
+              <div class="git-section-title"><span>Featured Repositories</span></div>
+              <ul class="git-repo-quicklist">
+                <li><a href="https://github.com/n0thhhing/zeon" target="_blank" rel="noopener noreferrer">n0thhhing / zeon <span aria-hidden="true">↗</span></a></li>
+                <li><a href="https://github.com/n0thhhing/wallify" target="_blank" rel="noopener noreferrer">n0thhhing / wallify <span aria-hidden="true">↗</span></a></li>
+                <li><a href="https://github.com/n0thhhing/Offset-updater" target="_blank" rel="noopener noreferrer">n0thhhing / Offset-updater <span aria-hidden="true">↗</span></a></li>
+                <li><a href="https://github.com/n0thhhing/Discord-rich-presence" target="_blank" rel="noopener noreferrer">n0thhhing / Discord-rich-presence <span aria-hidden="true">↗</span></a></li>
+                <li><a href="https://github.com/n0thhhing/lwasm" target="_blank" rel="noopener noreferrer">n0thhhing / lwasm <span aria-hidden="true">↗</span></a></li>
+                <li><a href="https://github.com/n0thhhing/ts-capstone" target="_blank" rel="noopener noreferrer">n0thhhing / ts-capstone <span aria-hidden="true">↗</span></a></li>
+                <li><a href="https://github.com/n0thhhing" target="_blank" rel="noopener noreferrer">All repositories on GitHub (@n0thhhing) <span aria-hidden="true">↗</span></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </aside>
     </div>
-    <footer class="statusbar">
+    <footer class="statusbar" role="toolbar" aria-label="Status bar">
       <div class="statusbar-left">
-        <button id="explorer-toggle" class="status-btn status-icon" aria-label="Toggle file explorer" aria-controls="explorer" aria-expanded="true"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="2" width="14" height="12" rx="2" fill="none" stroke="currentColor"/><line x1="5.5" y1="2" x2="5.5" y2="14" stroke="currentColor"/></svg></button>
-        <button data-terminal-toggle class="status-btn status-icon" aria-label="Toggle terminal" aria-controls="terminal" aria-expanded="true"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="2" width="14" height="12" rx="2" fill="none" stroke="currentColor"/><path d="m4 6 2 2-2 2m3 0h3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
+        <button id="explorer-toggle" class="status-btn status-icon selected" aria-label="Toggle file explorer" aria-controls="explorer" aria-expanded="true">
+          <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" aria-hidden="true">
+            <rect class="sidebar-fill" opacity="0.8" width="5" height="12" rx="1.5" transform="matrix(-1 0 0 1 7 2)" fill="currentColor"/>
+            <path d="M7 2V14" stroke="currentColor" stroke-width="1.2"/>
+            <rect x="2" y="2" width="12" height="12" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+        </button>
+        <span class="status-separator" aria-hidden="true">|</span>
+        <button class="status-btn status-icon" data-open-files aria-label="Go to file" title="Go to file (Cmd+P)">
+          <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" aria-hidden="true">
+            <path opacity="0.1" d="M3 7.31C3 4.93 4.93 3 7.31 3C9.69 3 11.62 4.93 11.62 7.31C11.62 9.69 9.69 11.62 7.31 11.62C4.93 11.62 3 9.69 3 7.31Z" fill="currentColor"/>
+            <path d="M13 13L10.41 10.41M3 7.31C3 4.93 4.93 3 7.31 3C9.69 3 11.62 4.93 11.62 7.31C11.62 9.69 9.69 11.62 7.31 11.62C4.93 11.62 3 9.69 3 7.31Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <span class="status-separator" aria-hidden="true">|</span>
+        <span class="status-item status-diagnostics" title="No problems found">
+          <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 4.5l-7 7L3 8"/></svg>
+        </span>
       </div>
       <div class="statusbar-right">
+        <span class="status-item status-cursor" id="status-cursor" title="Read-only portfolio page">Preview</span>
+        <span class="status-item status-lang" id="status-lang">Markdown</span>
+        <span class="status-separator" aria-hidden="true">|</span>
         <button id="status-theme" class="status-btn" aria-label="Open theme palette" aria-haspopup="dialog"><span class="palette-bullet" aria-hidden="true">●</span> <span id="status-theme-name">Gruvbox Material</span></button>
         <span class="status-separator" aria-hidden="true">|</span>
-        <span class="status-cursor">10:148</span>
-        <span class="status-encoding">UTF-8</span>
-        <span class="status-zed-badge">Z</span>
-        <button id="status-bell" class="status-btn status-bell" aria-label="Notifications" title="1 Notification" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 1.5a2.5 2.5 0 0 0-2.5 2.5v1.8a4 4 0 0 1-.8 2.4L3.5 10h9l-1.2-1.8a4 4 0 0 1-.8-2.4V4A2.5 2.5 0 0 0 8 1.5zm-1.5 11a1.5 1.5 0 0 0 3 0h-3z"/></svg><span class="bell-count">1</span></button>
+        <button data-terminal-toggle class="status-btn status-icon selected" aria-label="Toggle terminal" aria-controls="terminal" aria-expanded="true">
+          <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" aria-hidden="true">
+            <rect x="2.5" y="2.5" width="11" height="11" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M5 5.5L7.5 8L5 10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8.5 10.5H11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button id="git-toggle" class="status-btn status-icon" aria-label="Toggle git panel" aria-controls="git-panel" aria-expanded="false" title="Git (main)">
+          <svg class="git-status-icon" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" aria-hidden="true">
+            <circle cx="4.5" cy="11.5" r="1.5" stroke="currentColor" stroke-width="1.2"/>
+            <circle cx="11.5" cy="4.5" r="1.5" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M4.5 10V3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M10 4.44C8.54 4.44 7.14 5.03 6.11 6.07A5.5 5.5 0 0 0 4.5 10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
       </div>
     </footer>
-    <div id="notification-popover" class="notification-popover" hidden aria-label="Notifications" role="region">
-      <div class="notification-popover-header">
-        <span class="notification-popover-title"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M8 1.5a2.5 2.5 0 0 0-2.5 2.5v1.8a4 4 0 0 1-.8 2.4L3.5 10h9l-1.2-1.8a4 4 0 0 1-.8-2.4V4A2.5 2.5 0 0 0 8 1.5zm-1.5 11a1.5 1.5 0 0 0 3 0h-3z"/></svg> Notifications</span>
-        <div class="notification-popover-actions">
-          <button id="notification-clear" class="notification-clear-btn" aria-label="Clear all notifications">Clear all</button>
-          <button id="notification-close" class="icon-button notification-close-btn" aria-label="Close notification panel">×</button>
-        </div>
-      </div>
-      <div id="notification-list" class="notification-list">
-        <div class="notification-card unread" id="notif-welcome">
-          <div class="notification-card-dot" aria-hidden="true"></div>
-          <div class="notification-card-content">
-            <div class="notification-card-header">
-              <span class="notification-card-title">Welcome to Levi’s workspace</span>
-              <span class="notification-card-time">now</span>
-            </div>
-            <p class="notification-card-msg">Pixel-accurate Zed redesign is active with Gruvbox Material, interactive terminal shell, and project inspector.</p>
-          </div>
-          <button class="notification-card-dismiss" data-dismiss-id="notif-welcome" aria-label="Dismiss notification">×</button>
-        </div>
-      </div>
-    </div>
   </div>
   <dialog class="picker theme-picker" id="palette" aria-labelledby="palette-title">
     <div class="picker-heading"><h2 id="palette-title">Select a theme</h2><button class="icon-button" data-close-dialog aria-label="Close theme palette">×</button></div>
@@ -202,8 +282,13 @@
   <dialog class="picker" id="file-picker" aria-label="Go to file">
     <form method="dialog" class="file-picker-search"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg><input id="file-query" aria-label="Search files" placeholder="Search pages and projects…" autocomplete="off" spellcheck="false"><button class="icon-button" data-close-dialog aria-label="Close file picker" type="button">×</button></form>
     <div id="file-results" class="file-results" aria-label="Matching files"></div>
-    <div class="picker-footer"><span><kbd>↑</kbd> <kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> open <kbd>esc</kbd> close</span></div>
+    <div class="picker-footer"><span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span><button id="file-open-split" type="button" title="Open selected file in a split (Cmd/Ctrl+Enter)">Open in split</button><span><kbd>↵</kbd> open <kbd>esc</kbd> close</span></div>
     <div id="file-result-status" class="sr-only" role="status" aria-live="polite"></div>
+  </dialog>
+  <dialog class="picker" id="outline-picker" aria-label="Go to heading">
+    <div class="file-picker-search"><input id="outline-query" aria-label="Filter headings" placeholder="Go to heading…" autocomplete="off"><button class="icon-button" data-close-dialog aria-label="Close heading picker">×</button></div>
+    <div id="outline-results" class="file-results"></div>
+    <div class="picker-footer">↑ ↓ navigate · Enter jump · Esc close</div>
   </dialog>
   <div id="drawer-backdrop" class="drawer-backdrop" hidden></div>
   <div id="announcer" class="sr-only" role="status" aria-live="polite"></div>
