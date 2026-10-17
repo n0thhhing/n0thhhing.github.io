@@ -33,7 +33,11 @@ function applyTheme(value, notify = true) {
   document.querySelectorAll('[data-theme-id]').forEach(button => button.setAttribute('aria-pressed', button.dataset.themeId === id));
   $('#current-swatches').innerHTML = theme.colors.map((color, index) => `<span style="background:${color}" title="${theme.name} swatch ${index + 1}: ${color}" aria-label="${color}"></span>`).join('');
   $('#theme-note').textContent = theme.note;
-  $('#status-theme').textContent = theme.name;
+  const statusThemeName = $('#status-theme-name');
+  if (statusThemeName) statusThemeName.textContent = theme.name;
+  else $('#status-theme').textContent = theme.name;
+  const titlebarThemeLabel = $('#titlebar-theme-label');
+  if (titlebarThemeLabel) titlebarThemeLabel.textContent = theme.name;
   $('#theme-source').href = theme.source;
   document.querySelector('meta[name="theme-color"]').content = getComputedStyle(root).getPropertyValue('--bg').trim();
   if (notify) announce(`Theme changed to ${theme.name}`);
@@ -68,14 +72,17 @@ function renderRoute(focus = false) {
     link.classList.toggle('active', link.dataset.project === id);
     if (link.dataset.project === id) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
   });
-  const file = pages.find(entry => entry.id === page).file;
-  $('#breadcrumb').textContent = `levi  ›  ${project ? `projects  ›  ${project.name}` : file}`;
+  const file = pages.find(entry => entry.id === page)?.file ?? 'README.md';
+  $('#breadcrumb').textContent = `website  ›  site  ›  ${project ? `projects  ›  ${project.name}` : file}`;
   if (project) $('#project-tree').open = true;
   document.title = `${project?.name ?? (page === 'home' ? 'Levi’s workspace' : file)} · levi.napz`;
   if (focus) content.focus({ preventScroll: true });
 }
 window.addEventListener('hashchange', () => renderRoute(true));
 renderRoute();
+
+$('#history-back')?.addEventListener('click', () => window.history.back());
+$('#history-forward')?.addEventListener('click', () => window.history.forward());
 
 function syncControls() {
   const mobileExplorer = matchMedia('(max-width: 760px)').matches;

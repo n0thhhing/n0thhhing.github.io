@@ -49,10 +49,24 @@ export function initTerminal({ navigate, applyTheme }) {
     input.focus({ preventScroll: true });
   }
 
+  function getTimestamp() {
+    const now = new Date();
+    return `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  }
+
   function sync() {
     document.querySelectorAll('[data-terminal-toggle]').forEach(button => button.setAttribute('aria-expanded', !terminal.hidden));
-    document.querySelector('#terminal-cwd').textContent = cwd;
-    document.querySelector('#terminal-tab-cwd').textContent = cwd;
+    const termCwd = document.querySelector('#terminal-cwd');
+    if (termCwd) termCwd.textContent = cwd;
+    const tabCwd = document.querySelector('#terminal-tab-cwd');
+    if (tabCwd) tabCwd.textContent = cwd;
+    const promptPath = document.querySelector('#terminal-prompt-path');
+    if (promptPath) {
+      const displayPath = cwd === '~' ? '.../website' : `.../website/${cwd.replace(/^~\/?/, '')}`;
+      promptPath.innerHTML = `${displayPath}<span id="terminal-cwd" class="sr-only">${cwd}</span>`;
+    }
+    const timeEl = document.querySelector('#terminal-time');
+    if (timeEl) timeEl.textContent = getTimestamp();
   }
 
   function setMaximized(value) {
@@ -71,9 +85,14 @@ export function initTerminal({ navigate, applyTheme }) {
 
   function appendEntry(command, result) {
     const entry = element('div', 'terminal-entry');
-    const prompt = element('div', 'terminal-entry-command');
-    prompt.append(element('span', 'terminal-command-cwd', cwd), element('span', 'terminal-chevron', '❯'), element('span', 'terminal-typed', command));
-    entry.append(prompt);
+    const promptBox = element('div', 'terminal-entry-prompt');
+    const row1 = element('div', 'terminal-prompt-row1');
+    const displayPath = cwd === '~' ? '.../website' : `.../website/${cwd.replace(/^~\/?/, '')}`;
+    row1.innerHTML = `<span class="prompt-user">levi.napz</span> <span class="prompt-arrow">-&gt;</span> <span class="prompt-path">${displayPath}</span> <span class="prompt-branch">main*!?</span> <span class="prompt-time">${getTimestamp()}</span>`;
+    const row2 = element('div', 'terminal-entry-command');
+    row2.append(element('span', 'terminal-chevron', '>'), element('span', 'terminal-typed', command));
+    promptBox.append(row1, row2);
+    entry.append(promptBox);
     if (result.fetch) {
       const fetch = element('div', 'terminal-fetch');
       const art = element('pre', 'fetch-art', '██╗\n██║\n██║\n███████╗\n╚══════╝');
