@@ -70,31 +70,33 @@ I build software with hardware-level empathy and an artist's obsession with colo
 `,
 
   fetch: () => `
-<div class="terminal-fetch">
-  <pre class="fetch-ascii">   __        __   
+<div class="terminal-fetch" style="display:flex;align-items:flex-start;gap:1.75rem;margin:0.4rem 0;font-family:var(--font-mono);white-space:normal;">
+  <pre class="fetch-ascii" style="margin:0;color:var(--amber);font-family:inherit;font-size:0.85rem;line-height:1.25;font-weight:700;white-space:pre;user-select:none;">   __        __   
   /  \\      /  \\  
  / /\\ \\    / /\\ \\ 
 / /  \\ \\  / /  \\ \\
 \\ \\  / /  \\ \\  / /
  \\ \\/ /    \\ \\/ / 
   \\__/      \\__/  </pre>
-  <div class="fetch-info">
-    <div class="fetch-title"><span style="color:var(--title-highlight);font-weight:700;">levi</span>@<span style="color:var(--cyan);font-weight:700;">aarch64</span></div>
-    <div class="fetch-sep">-----------------------------</div>
-    <div><span class="fetch-label">OS:</span> Darwin / macOS (Apple Silicon ARM64e)</div>
-    <div><span class="fetch-label">Host:</span> MacBook Pro + Pixel &amp; Galaxy S22</div>
-    <div><span class="fetch-label">Testbeds:</span> aarch64 bare-metal (LADB / Shizuku)</div>
-    <div><span class="fetch-label">Toolchain:</span> Zig 0.16 (bleeding), Rust, Swift/Metal</div>
-    <div><span class="fetch-label">Editor:</span> Zed (GPU-accelerated) / Ghostty</div>
-    <div><span class="fetch-label">Theme:</span> Gruvbox Material <span style="color:var(--amber);font-weight:700;">[★ Daily Driver]</span></div>
-    <div><span class="fetch-label">Status:</span> <span style="color:var(--amber);font-weight:600;">:bowtie: procrastinating</span></div>
-    <div class="fetch-palette">
-      <span style="background:#ea6962"></span>
-      <span style="background:#e78a4e"></span>
-      <span style="background:#d8a657"></span>
-      <span style="background:#a9b665"></span>
-      <span style="background:#7daea3"></span>
-      <span style="background:#d3869b"></span>
+  <div class="fetch-info" style="display:flex;flex-direction:column;gap:0.25rem;font-size:0.825rem;line-height:1.45;">
+    <div class="fetch-title" style="font-size:0.9rem;margin-bottom:0.1rem;">
+      <span style="color:var(--title-highlight);font-weight:700;">levi</span>@<span style="color:var(--cyan);font-weight:700;">aarch64</span>
+    </div>
+    <div class="fetch-sep" style="color:var(--text-muted);margin-bottom:0.15rem;user-select:none;">-----------------------------</div>
+    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:78px;">OS:</span> Darwin / macOS (Apple Silicon ARM64e)</div>
+    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:78px;">Host:</span> MacBook Pro + Pixel &amp; Galaxy S22</div>
+    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:78px;">Testbeds:</span> aarch64 bare-metal (LADB / Shizuku)</div>
+    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:78px;">Toolchain:</span> Zig 0.16 (bleeding), Rust, Swift/Metal</div>
+    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:78px;">Editor:</span> Zed (GPU-accelerated) / Ghostty</div>
+    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:78px;">Theme:</span> Gruvbox Material <span style="color:var(--amber);font-weight:700;">[★ Daily Driver]</span></div>
+    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:78px;">Status:</span> <span style="color:var(--amber);font-weight:600;">:bowtie: procrastinating</span></div>
+    <div class="fetch-palette" style="display:flex;align-items:center;gap:6px;margin-top:0.4rem;">
+      <span style="display:inline-block;width:14px;height:14px;background:#ea6962;border-radius:2px;"></span>
+      <span style="display:inline-block;width:14px;height:14px;background:#e78a4e;border-radius:2px;"></span>
+      <span style="display:inline-block;width:14px;height:14px;background:#d8a657;border-radius:2px;"></span>
+      <span style="display:inline-block;width:14px;height:14px;background:#a9b665;border-radius:2px;"></span>
+      <span style="display:inline-block;width:14px;height:14px;background:#7daea3;border-radius:2px;"></span>
+      <span style="display:inline-block;width:14px;height:14px;background:#d3869b;border-radius:2px;"></span>
     </div>
   </div>
 </div>
