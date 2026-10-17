@@ -14,7 +14,7 @@ export const THEMES = [
   {
     id: "gruvbox-material",
     name: "Gruvbox Material",
-    swatchPrimary: "#ea6962",
+    swatchPrimary: "#e78a4e",
     swatchAccent: "#d8a657",
     swatchBg: "#282828"
   },

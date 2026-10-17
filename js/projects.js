@@ -107,14 +107,14 @@ export const PROJECTS_DATA = [
     category: "compilers",
     categoryLabel: "Compilers & Runtimes",
     stars: 1,
-    tagline: "WebAssembly 2.0 runtime, disassembler, validator, and WAT decompiler in Lua & C.",
+    tagline: "WebAssembly 2.0 runtime, disassembler, & WAT decompiler in Lua & C — originally built to embed into Game Guardian with shared memory to live-patch game memory.",
     repoUrl: "https://github.com/n0thhhing/lwasm",
-    tech: ["Lua", "C", "WebAssembly 2.0", "WAT", "Bytecode"],
+    tech: ["Lua", "C", "WebAssembly 2.0", "WAT", "Bytecode", "Memory Patching"],
     highlights: [
-      "Verified against 292 W3C WebAssembly Specification suites",
-      "Byte-for-byte instruction verification against reference SQLite3 WABT dumps",
-      "128-bit SIMD, threads, atomics, memory64, and typed references",
-      "Full interactive WAT decompiler and execution trace debugger"
+      "Originally architected to embed into Game Guardian with shared memory to write C/Wasm patches directly against live game memory (Pixel Gun 3D modding)",
+      "Pivoted into a full zero-dependency standalone WebAssembly 2.0 runtime & WAT decompiler",
+      "Verified against 292 W3C WebAssembly Specification test suites",
+      "Byte-for-byte instruction verification against reference SQLite3 WABT dumps (128-bit SIMD, threads, atomics, memory64)"
     ]
   },
   {
