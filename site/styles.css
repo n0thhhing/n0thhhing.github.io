@@ -137,7 +137,7 @@ svg { display: block; }
 .zed-icon-folder { width: 14px; height: 14px; flex-shrink: 0; }
 .workspace-name { font-weight: 600; color: var(--text); }
 .workspace-name:hover { color: var(--accent); }
-.titlebar-branch, .titlebar-branch-sub { color: var(--muted); display: flex; gap: 5px; align-items: center; font-size: 12px; }
+.titlebar-worktree, .titlebar-branch { color: var(--muted); display: flex; gap: 5px; align-items: center; font-size: 12px; }
 .branch-icon { width: 13px; height: 13px; flex-shrink: 0; }
 .titlebar-divider { color: var(--border); margin: 0 1px; }
 .file-search { display: flex; align-items: center; gap: 8px; width: min(320px, 32vw); height: 26px; padding: 0 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 12px; color: var(--muted); background: var(--surface); transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease; }
@@ -431,7 +431,7 @@ details[open] > summary > .chevron { transform: rotate(90deg); }
   .explorer-open .explorer { display: flex; }
   .explorer-open .drawer-backdrop:not([hidden]) { display: block; position: fixed; inset: 38px 0 26px 260px; background: #0005; z-index: 11; }
   .window-controls { gap: 6px; margin-right: 4px; }.window-controls i { width: 9px; height: 9px; }
-  .titlebar { padding: 0 10px; gap: 8px; }.titlebar-branch, .titlebar-branch-sub, .titlebar-divider { display: none; }
+  .titlebar { padding: 0 10px; gap: 8px; }.titlebar-worktree, .titlebar-branch, .titlebar-divider { display: none; }
   .file-search { width: auto; margin-left: auto; }.file-search kbd { display: none; }
   .titlebar-actions { gap: 10px; font-size: 11px; }
   .content { padding: 22px 24px 35px; }
