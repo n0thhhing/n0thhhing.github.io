@@ -35,7 +35,7 @@ I build software with hardware-level empathy and an artist's eye for color and c
 | **`il2cpp v29`** *(In Dev)* | — | `Zig` `Android ELF` `SQLite` | Unity IL2CPP v29 metadata & 64-bit Android ELF analyzer, stripped registration discovery, and SQLite call-graph exporter. |
 | [**`z-scanner`**](https://github.com/n0thhhing/z-scanner) | ★ 1 | `Zig` `AOB` `Memory Scan` | High-performance Array of Bytes (AOB) memory pattern scanner in Zig with wildcard masking (`?`, `??`). |
 | [**`lwasm`**](https://github.com/n0thhhing/lwasm) | ★ 1 | `Lua` `C` `WebAssembly 2.0` | WebAssembly 2.0 runtime, disassembler, & WAT decompiler. Conceived for Game Guardian with shared memory to patch live game memory with C (Pixel Gun 3D modding); evolved into 292-test W3C compliant engine. |
-| [**`wallify`**](https://github.com/n0thhhing/wallify) | — | `Zig` `Swift` `Metal` `ImGui` | Native macOS audio widget with live system audio waveform capture, ambient artwork glow, and Dear ImGui diagnostics. |
+| [**`wallify`**](https://github.com/n0thhhing/wallify) | — | `Zig` `Swift` `Metal` `ImGui` | Native macOS wallpaper and widget experience: layered Apple glass shaders (refraction, translucency), Spotify integration, and Ghostty-inspired ImGui inspector. |
 | **`hexer`** *(In Dev)* | — | `Rust` `Terminal` `Zero-Deps` | Terminal hex viewer with ANSI mouse reporting, wildcard byte searching (`4? ??`), and zero Cargo dependencies. |
 | [**`Discord-rich-presence`**](https://github.com/n0thhhing/Discord-rich-presence) | ★ 2 | `Node.js` `IPC Sockets` | Custom Unix domain socket IPC client for dynamic Discord rich presence status management. |
 
@@ -47,12 +47,13 @@ I build software with hardware-level empathy and an artist's eye for color and c
   ┌────────────────────────────────────────┬────────────────────────────────────────┐
   │  LOW-LEVEL & BARE METAL                │  HIGH-LEVEL & APPLICATION              │
   ├────────────────────────────────────────┼────────────────────────────────────────┤
-  │  • ARM64 / ARM64e / AArch64            │  • Swift & Metal GPU Shaders           │
-  │  • Zig 0.16 (comptime, memory models)  │  • Dear ImGui Real-Time Diagnostics    │
+  │  • ARM64 / ARM64e / AArch64            │  • Swift & Metal GPU Glass Shaders     │
+  │  • Zig 0.16 (bleeding-edge, comptime)  │  • Ghostty-Style ImGui Diagnostics HUD │
   │  • Rust (zero-dep stdlib, unsafe)      │  • TypeScript & Bun Ecosystem          │
   │  • Inline Assembly (NEON / A64)        │  • Discord IPC Protocol                │
   │  • Mach-O & Android ELF Parsing        │  • Capstone Engine 5.0 Bindings        │
-  │  • AOB Pattern Scanning (z-scanner)    │  • Termux & Android 17 Service Helpers │
+  │  • AOB Pattern Scanning (z-scanner)    │  • Termux, LADB & Shizuku Automation   │
+  │  • Hardware Testbeds (Pixel / S22)     │  • Clip Studio Paint (Art & Aesthetics)│
   │  • WebAssembly 2.0 (lwasm runtime)     │  • Automated Test Fixtures & Oracles   │
   └────────────────────────────────────────┴────────────────────────────────────────┘
 ```

@@ -123,14 +123,14 @@ export const PROJECTS_DATA = [
     category: "apps",
     categoryLabel: "macOS & Graphics",
     stars: null,
-    tagline: "Native macOS desktop audio & music widget in Zig, Swift, Metal, and Dear ImGui.",
+    tagline: "Native macOS wallpaper & widget experience with Apple glass shaders, media integration, and ImGui profiling in Zig.",
     repoUrl: "https://github.com/n0thhhing/wallify",
-    tech: ["Zig", "Swift", "Metal", "Dear ImGui", "macOS API"],
+    tech: ["Zig 0.16", "Native macOS APIs", "Metal Shaders", "Dear ImGui", "Spotify API"],
     highlights: [
-      "Real-time system audio waveform capture without saving audio streams",
-      "Metal-rendered ambient artwork glow and spring-physics animations",
-      "Adaptive frame scheduling: 20 FPS steady, 30 FPS transitions, 60 FPS motion",
-      "Live Dear ImGui diagnostics HUD for render profiling and layout inspection"
+      "Layered Apple glass aesthetic: genuine GPU refraction, translucency, inset borders, and focus physics (not just a naive blur)",
+      "Intentional Now Playing integration: Spotify metadata, album art, and playback controls without cramped layouts",
+      "Custom Dear ImGui inspector inspired by Ghostty's terminal inspector for live CPU/GPU profiling and debug controls",
+      "Lightweight and visualizer-free: purposeful separation of music metadata from audio visualizer overhead"
     ]
   },
   {

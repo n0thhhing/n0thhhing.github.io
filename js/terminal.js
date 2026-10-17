@@ -12,9 +12,13 @@ const TERMINAL_COMMANDS = {
   <span class="mono" style="color:var(--cyan)">about</span>      - Display background, focus, and engineering ethos
   <span class="mono" style="color:var(--cyan)">projects</span>   - List featured systems, compilers, & reverse engineering tools
   <span class="mono" style="color:var(--cyan)">skills</span>     - Show architecture, languages, & low-level proficiencies
+  <span class="mono" style="color:var(--cyan)">fetch</span>      - System architecture, testbeds, and toolchain info
+  <span class="mono" style="color:var(--cyan)">status</span>     - Show current state (:bowtie: procrastinating)
   <span class="mono" style="color:var(--cyan)">theme</span>      - Switch or list themes (usage: theme [gruvbox|panda|dracula|monokai|catppuccin])
   <span class="mono" style="color:var(--cyan)">disasm</span>     - Inspect ARM64 routine (usage: disasm [rarm64|zeon|il2cpp])
   <span class="mono" style="color:var(--cyan)">simd</span>       - Jump to NEON SIMD vector visualizer
+  <span class="mono" style="color:var(--cyan)">art</span>        - Digital illustration background & Clip Studio Paint works
+  <span class="mono" style="color:var(--cyan)">music</span>      - Late-night 24-bit audio & anime OST rotation
   <span class="mono" style="color:var(--cyan)">contact</span>    - Instagram art, GitHub, and email details
   <span class="mono" style="color:var(--cyan)">uname -a</span>   - Print system & architecture identity
   <span class="mono" style="color:var(--cyan)">clear</span>      - Clear terminal screen
@@ -29,7 +33,7 @@ I build software with hardware-level empathy and an artist's obsession with colo
 • Zero-dependency binary tools (Mach-O, ARM64, ELF, WebAssembly)
 • Pure Zig & Assembly SIMD vector intrinsics (2,800+ NEON implementations)
 • Reverse engineering runtimes (Unity IL2CPP metadata, SQLite call-graph mining)
-• High-level native user experiences (Swift/Metal desktop widgets, TypeScript)
+• High-level native user experiences (Apple glass shaders, Swift/Metal, ImGui diagnostics)
 `,
 
   projects: () => `
@@ -41,17 +45,61 @@ I build software with hardware-level empathy and an artist's obsession with colo
   • <span style="color:var(--pink);font-weight:700;">il2cpp</span>          Unity IL2CPP v29 & 64-bit Android ELF reverse engineering analyzer (Zig)
   • <span style="color:var(--yellow);font-weight:700;">z-scanner</span>       [★ 1]  High-performance AOB memory pattern scanner in Zig
   • <span style="color:var(--cyan);font-weight:700;">lwasm</span>           [★ 1]  WebAssembly 2.0 runtime & WAT decompiler in Lua/C (born as Game Guardian C memory-patcher for Pixel Gun 3D)
-  • <span style="color:var(--emerald);font-weight:700;">wallify</span>         Native macOS desktop audio widget in Zig, Swift & Metal (live waveform)
+  • <span style="color:var(--emerald);font-weight:700;">wallify</span>         Native macOS wallpaper & widget experience with Apple glass shaders & ImGui inspector (Zig)
   • <span style="color:var(--amber);font-weight:700;">hexer</span>           Zero-dependency terminal hex viewer in Rust with ANSI mouse reporting
   • <span style="color:var(--purple);font-weight:700;">Discord-RPC</span>     [★ 2]  Lightweight Node.js Discord Rich Presence socket client
 `,
 
   skills: () => `
-<span class="accent">Technical Proficiencies:</span>
-  • <b>Low-Level Systems:</b> ARM64/AArch64, ARM64e, Zig 0.16, Rust, Assembly, C/C++
+<span class="accent">Technical Proficiencies & Toolchain:</span>
+  • <b>Low-Level Systems:</b> ARM64/AArch64, ARM64e, Zig 0.16 (bleeding-edge), Rust, Assembly, C/C++
   • <b>Binary Analysis:</b> Mach-O (Fat/Thin), Android ELF, Unity IL2CPP, WebAssembly 2.0, Dyld chained fixups
+  • <b>Hardware Testbeds:</b> Apple Silicon M-series + Google Pixel / Galaxy S22 aarch64 bare-metal testbeds (LADB / Shizuku)
   • <b>SIMD & Vectorization:</b> ARM NEON, SSE4, AVX, SIMD algorithmic acceleration
   • <b>Native & UI Tools:</b> Swift, Metal, Dear ImGui, TypeScript, Node.js, Bun
+  • <b>Creative Tools:</b> Clip Studio Paint, Figma, Color Theory & Visual Ergonomics
+`,
+
+  status: () => `
+<span class="accent">GitHub Status:</span>
+  <span style="color:var(--amber);font-weight:700;">:bowtie: procrastinating</span>
+  <span style="color:var(--text-secondary);font-size:0.85rem;">
+  Backlog untouched, 20 browser tabs queued... followed by hyper-focusing until
+  3 AM on a single ARM64 Neon intrinsic or dyld fixup chain.
+  </span>
+`,
+
+  fetch: () => `
+<div class="mono" style="color:var(--cyan);line-height:1.3;margin:0.25rem 0;">
+<span style="color:var(--amber);font-weight:700;">   __        __   </span><span style="color:var(--title-highlight);font-weight:700;">levi</span>@<span style="color:var(--cyan);font-weight:700;">aarch64</span>
+<span style="color:var(--amber);font-weight:700;">  /  \\      /  \\  </span><span style="color:var(--text-muted);">-------------------------</span>
+<span style="color:var(--amber);font-weight:700;"> / /\\ \\    / /\\ \\ </span><span style="color:var(--text-muted);">OS:</span> Darwin / macOS (Apple Silicon ARM64e)
+<span style="color:var(--amber);font-weight:700;">/ /  \\ \\  / /  \\ \\</span><span style="color:var(--text-muted);">Testbeds:</span> Google Pixel + Galaxy S22 (aarch64 / LADB)
+<span style="color:var(--amber);font-weight:700;">\\ \\  / /  \\ \\  / /</span><span style="color:var(--text-muted);">Toolchain:</span> Zig 0.16 (bleeding), Rust, Swift/Metal
+<span style="color:var(--amber);font-weight:700;"> \\ \\/ /    \\ \\/ / </span><span style="color:var(--text-muted);">Editor:</span> Zed (GPU) / Ghostty / Fleet
+<span style="color:var(--amber);font-weight:700;">  \\__/      \\__/  </span><span style="color:var(--text-muted);">Theme:</span> Gruvbox Material [★ Daily Driver]
+                  <span style="color:var(--text-muted);">Status:</span> <span style="color:var(--amber);font-weight:600;">:bowtie: procrastinating</span>
+
+  <span style="display:inline-block;width:14px;height:14px;background:#ea6962;border-radius:2px;margin-right:4px;"></span><span style="display:inline-block;width:14px;height:14px;background:#e78a4e;border-radius:2px;margin-right:4px;"></span><span style="display:inline-block;width:14px;height:14px;background:#d8a657;border-radius:2px;margin-right:4px;"></span><span style="display:inline-block;width:14px;height:14px;background:#a9b665;border-radius:2px;margin-right:4px;"></span><span style="display:inline-block;width:14px;height:14px;background:#7daea3;border-radius:2px;margin-right:4px;"></span><span style="display:inline-block;width:14px;height:14px;background:#d3869b;border-radius:2px;"></span>
+</div>
+`,
+
+  neofetch: () => TERMINAL_COMMANDS.fetch(),
+  fastfetch: () => TERMINAL_COMMANDS.fetch(),
+
+  music: () => `
+<span class="accent">Late-Night Coding & Sketching Rotation:</span>
+  • <span style="color:var(--pink);font-weight:600;">"Fukashigi no Carte"</span> (Rascal Does Not Dream ED — constant repeat)
+  • <span style="color:var(--cyan);font-weight:600;">Roshidere / Alya</span> OST & character singles
+  • <span style="color:var(--emerald);font-weight:600;">Anime OSTs:</span> Attack on Titan, One Piece, Dragon Ball
+  • <span style="color:var(--text-muted);font-size:0.8rem;">Playback: 24-bit lossless audio</span>
+`,
+
+  art: () => `
+<span class="accent">Visual Art & Character Illustrations:</span>
+  • Tools: Clip Studio Paint, Figma, Canva
+  • Focus: Character sketches, visual aesthetics, color theory
+  • Instagram: <a href="https://instagram.com/levi.napz" target="_blank" rel="noopener noreferrer" style="color:var(--amber);font-weight:700;">instagram.com/levi.napz</a> (@levi.napz)
 `,
 
   contact: () => `
