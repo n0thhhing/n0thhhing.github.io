@@ -320,6 +320,44 @@ a:hover {
   margin-top: 0.5rem;
 }
 
+.hero-stats-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  background: rgba(10, 15, 25, 0.65);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 1.25rem;
+  margin-top: 0.5rem;
+  width: fit-content;
+  backdrop-filter: blur(8px);
+}
+
+.hero-stat-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+}
+
+.hero-stat-val {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--cyan);
+}
+
+.hero-stat-lbl {
+  font-size: 0.775rem;
+  color: var(--text-muted);
+}
+
+.hero-stat-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border-subtle);
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -886,6 +924,20 @@ a:hover {
   background: rgba(255, 255, 255, 0.05);
   color: var(--text-muted);
   border: 1px solid var(--border-subtle);
+}
+
+.project-stars-badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #ffc83b;
+  background: rgba(255, 200, 59, 0.1);
+  border: 1px solid rgba(255, 200, 59, 0.25);
+  padding: 0.2rem 0.45rem;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 600;
 }
 
 .project-github-link {

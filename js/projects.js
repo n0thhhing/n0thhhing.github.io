@@ -1,36 +1,55 @@
 /**
  * Projects Data & Filter Management Module
+ * Sourced directly from Levi's GitHub (@n0thhhing) and local core systems
  */
 
 export const PROJECTS_DATA = [
-  {
-    id: "rarm64",
-    name: "rarm64",
-    category: "lowlevel",
-    categoryLabel: "Low-Level & Disassembly",
-    tagline: "Zero-dependency Mach-O ARM64/ARM64e disassembler with Arm 2026-09 specification parity.",
-    repoUrl: "https://github.com/n0thhhing/rarm64",
-    tech: ["Rust", "ARM64 / ARM64e", "Mach-O", "Dyld Fixups", "Demangler"],
-    highlights: [
-      "Zero external crate dependencies ([dependencies] is empty)",
-      "4,429 encodings partitioned into 16 dispatch buckets for O(1) matching",
-      "Pure-Rust demangler for Swift 5+, Rust legacy, and Rust v0 symbols",
-      "Parses dyld chained fixups (0x80000034) & LC_FUNCTION_STARTS"
-    ]
-  },
   {
     id: "zeon",
     name: "zeon",
     category: "simd",
     categoryLabel: "SIMD & Vectorization",
+    stars: 16,
     tagline: "ARM / ARM64 NEON intrinsics implemented in pure Zig and inline assembly.",
     repoUrl: "https://github.com/n0thhhing/zeon",
     tech: ["Zig 0.16", "ARM / ARM64", "NEON SIMD", "Inline Assembly"],
     highlights: [
-      "2,800+ NEON intrinsics with over 2,815+ unit tests passing",
+      "Top-starred repository with 2,800+ NEON intrinsics and 2,815+ unit tests",
       "Cross-platform execution across host, arm-linux, and aarch64_be",
       "Vectorized real-world algorithms: Mandelbrot, wave equations, matrix ops",
-      "Zero overhead pure Zig fallbacks matching assembly speeds"
+      "Zero-overhead pure Zig fallbacks matching assembly speeds"
+    ]
+  },
+  {
+    id: "ts-capstone",
+    name: "ts-capstone",
+    category: "reversing",
+    categoryLabel: "Reverse Engineering",
+    stars: 6,
+    tagline: "Full-featured Capstone 5.0 disassembler bindings for TypeScript & Bun via Emscripten.",
+    repoUrl: "https://github.com/n0thhhing/ts-capstone",
+    tech: ["TypeScript", "Capstone 5.0", "Emscripten", "Bun", "ARM64 / x86"],
+    highlights: [
+      "High-performance Capstone 5.0 C engine compiled to WebAssembly/JS",
+      "Full CS_OPT_DETAIL support: register read/write inspection, operand indexing",
+      "Multi-architecture support: ARM, ARM64, x86, MIPS, PowerPC",
+      "Instruction formatting with byte streams, ASCII representation, and memory cleanup"
+    ]
+  },
+  {
+    id: "rarm64",
+    name: "rarm64",
+    category: "lowlevel",
+    categoryLabel: "Low-Level & Disassembly",
+    stars: null,
+    tagline: "Zero-dependency Mach-O ARM64/ARM64e disassembler with Arm 2026-09 specification parity.",
+    repoUrl: "https://github.com/n0thhhing/rarm64",
+    tech: ["Rust", "ARM64 / ARM64e", "Mach-O", "Dyld Fixups", "Demangler"],
+    highlights: [
+      "Zero external crate dependencies ([dependencies] in Cargo.toml is empty)",
+      "4,429 encodings partitioned into 16 dispatch buckets for O(1) matching",
+      "Pure-Rust demangler for Swift 5+, Rust legacy, and Rust v0 symbols",
+      "Parses dyld chained fixups (0x80000034), LC_FUNCTION_STARTS & stubs"
     ]
   },
   {
@@ -38,6 +57,7 @@ export const PROJECTS_DATA = [
     name: "il2cpp v29 analyzer",
     category: "reversing",
     categoryLabel: "Reverse Engineering",
+    stars: null,
     tagline: "Unity IL2CPP metadata v29 & 64-bit ARM64 Android ELF disassembler and exporter.",
     repoUrl: "https://github.com/n0thhhing/il2cpp",
     tech: ["Zig 0.16", "Android ELF", "SQLite", "Unity Internals", "C#"],
@@ -49,10 +69,42 @@ export const PROJECTS_DATA = [
     ]
   },
   {
+    id: "offset-updater",
+    name: "Offset-updater",
+    category: "reversing",
+    categoryLabel: "Reverse Engineering",
+    stars: 2,
+    tagline: "AArch64 IL2CPP offset updater with disassembler-guided wildcard signatures & NEON engine.",
+    repoUrl: "https://github.com/n0thhhing/Offset-updater",
+    tech: ["TypeScript", "C++", "Capstone", "ARM NEON", "Bun"],
+    highlights: [
+      "Dynamic signature growth from 48 bytes with automatic ambiguity resolution",
+      "Native C++ ARM NEON SIMD pattern scanning engine",
+      "Auto-anchors generic 1-liners via .rodata pointer arrays",
+      "Validates trampolines, detours, and branch targets across game updates"
+    ]
+  },
+  {
+    id: "z-scanner",
+    name: "z-scanner",
+    category: "lowlevel",
+    categoryLabel: "Low-Level & Memory",
+    stars: 1,
+    tagline: "High-performance Array of Bytes (AOB) memory pattern scanner implemented in Zig.",
+    repoUrl: "https://github.com/n0thhhing/z-scanner",
+    tech: ["Zig", "AOB Scanner", "Memory Analysis", "Pattern Matching"],
+    highlights: [
+      "Fast byte-sequence searching with wildcard and masked byte support ('?', '??')",
+      "Zero-allocation pattern compilation and streaming buffer scanning",
+      "Engineered for game reverse engineering and signature verification"
+    ]
+  },
+  {
     id: "lwasm",
     name: "lwasm",
     category: "compilers",
     categoryLabel: "Compilers & Runtimes",
+    stars: 1,
     tagline: "WebAssembly 2.0 runtime, disassembler, validator, and WAT decompiler in Lua & C.",
     repoUrl: "https://github.com/n0thhhing/lwasm",
     tech: ["Lua", "C", "WebAssembly 2.0", "WAT", "Bytecode"],
@@ -68,6 +120,7 @@ export const PROJECTS_DATA = [
     name: "wallify",
     category: "apps",
     categoryLabel: "macOS & Graphics",
+    stars: null,
     tagline: "Native macOS desktop audio & music widget in Zig, Swift, Metal, and Dear ImGui.",
     repoUrl: "https://github.com/n0thhhing/wallify",
     tech: ["Zig", "Swift", "Metal", "Dear ImGui", "macOS API"],
@@ -83,6 +136,7 @@ export const PROJECTS_DATA = [
     name: "hexer",
     category: "lowlevel",
     categoryLabel: "Terminal & Systems",
+    stars: null,
     tagline: "Read-only terminal hex viewer in Rust with ANSI mouse reporting and wildcard search.",
     repoUrl: "https://github.com/n0thhhing/hexer",
     tech: ["Rust", "Terminal UI", "ANSI Codes", "Zero-Deps"],
@@ -94,25 +148,11 @@ export const PROJECTS_DATA = [
     ]
   },
   {
-    id: "offset-updater",
-    name: "Offset-updater",
-    category: "reversing",
-    categoryLabel: "Reverse Engineering",
-    tagline: "AArch64 IL2CPP offset updater with disassembler-guided wildcard signatures & NEON engine.",
-    repoUrl: "https://github.com/n0thhhing/Offset-updater",
-    tech: ["TypeScript", "C++", "Capstone", "ARM NEON", "Bun"],
-    highlights: [
-      "Dynamic signature growth from 48 bytes with automatic ambiguity resolution",
-      "Native C++ ARM NEON SIMD pattern scanning engine",
-      "Auto-anchors generic 1-liners via .rodata pointer arrays",
-      "Validates trampolines, detours, and branch targets across game updates"
-    ]
-  },
-  {
     id: "discord-rpc",
     name: "Discord-rich-presence",
     category: "apps",
     categoryLabel: "Apps & Tools",
+    stars: 2,
     tagline: "Lightweight Node.js custom Discord Rich Presence client and IPC bridge.",
     repoUrl: "https://github.com/n0thhhing/Discord-rich-presence",
     tech: ["Node.js", "JavaScript", "IPC Sockets", "Discord RPC"],
@@ -120,6 +160,20 @@ export const PROJECTS_DATA = [
       "Fast Unix domain socket IPC connection directly to local Discord client",
       "Dynamic presence cycling, asset keys, and party state controls",
       "Zero heavy framework overhead, clean event loop"
+    ]
+  },
+  {
+    id: "sse4-strstr",
+    name: "sse4-strstr-zig",
+    category: "simd",
+    categoryLabel: "SIMD & Hardware",
+    stars: null,
+    tagline: "Accelerated substring search using x86 SSE4.2 explicit-length string instructions in Zig.",
+    repoUrl: "https://github.com/n0thhhing/sse4-strstr-zig",
+    tech: ["Zig", "x86_64", "SSE4.2", "PCMPESTRI"],
+    highlights: [
+      "Vectorized substring scanning via hardware PCMPESTRI instructions",
+      "Zero-overhead SIMD string matching compared against libc strstr"
     ]
   }
 ];
@@ -144,11 +198,22 @@ export function initProjectsGrid() {
     filtered.forEach(p => {
       const card = document.createElement("div");
       card.className = "project-card";
+      
+      const starsBadge = p.stars ? `
+        <span class="project-stars-badge mono" title="${p.stars} stars on GitHub">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          <span>${p.stars}</span>
+        </span>
+      ` : "";
+
       card.innerHTML = `
         <div class="project-card-header">
           <div>
             <div class="project-meta-top">
               <span class="project-badge-tag mono">${p.categoryLabel}</span>
+              ${starsBadge}
             </div>
             <h3 class="project-name mono" style="margin-top:0.4rem;">${p.name}</h3>
           </div>

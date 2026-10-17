@@ -30,14 +30,17 @@ I build software with hardware-level empathy:
 `,
 
   projects: () => `
-<span class="accent">Core Repositories:</span>
-  • <span style="color:var(--cyan)">rarm64</span>        Zero-dependency Mach-O ARM64/ARM64e disassembler in Rust (Arm 2026-09 spec)
-  • <span style="color:var(--emerald)">zeon</span>         2,800+ ARM/ARM64 NEON intrinsics in pure Zig & inline assembly
-  • <span style="color:var(--purple)">il2cpp</span>       Unity IL2CPP v29 & 64-bit Android ELF reverse engineering analyzer (Zig)
-  • <span style="color:var(--amber)">lwasm</span>        WebAssembly 2.0 runtime, disassembler, & WAT decompiler in Lua/C
-  • <span style="color:var(--pink)">wallify</span>      Native macOS music widget in Zig & Swift/Metal with live waveform capture
-  • <span style="color:var(--yellow)">hexer</span>        Zero-dependency terminal hex viewer in Rust with ANSI mouse reporting
-  • <span style="color:var(--cyan)">Offset-updater</span> AArch64 IL2CPP offset updater with NEON SIMD scanning engine
+<span class="accent">Featured Repositories (@n0thhhing):</span>
+  • <span style="color:var(--emerald);font-weight:700;">zeon</span>            [★ 16] ARM/ARM64 NEON intrinsics in pure Zig & inline assembly
+  • <span style="color:var(--cyan);font-weight:700;">ts-capstone</span>     [★ 6]  Full Capstone 5.0 disassembler bindings for TypeScript & Bun
+  • <span style="color:var(--purple);font-weight:700;">Offset-updater</span>  [★ 2]  AArch64 IL2CPP offset updater with NEON SIMD scanning engine
+  • <span style="color:var(--amber);font-weight:700;">rarm64</span>          Zero-dependency Mach-O ARM64/ARM64e disassembler in Rust (Arm 2026-09)
+  • <span style="color:var(--pink);font-weight:700;">il2cpp</span>          Unity IL2CPP v29 & 64-bit Android ELF reverse engineering analyzer (Zig)
+  • <span style="color:var(--yellow);font-weight:700;">z-scanner</span>       [★ 1]  High-performance AOB memory pattern scanner in Zig
+  • <span style="color:var(--cyan);font-weight:700;">lwasm</span>           [★ 1]  WebAssembly 2.0 runtime, disassembler, & WAT decompiler in Lua/C
+  • <span style="color:var(--emerald);font-weight:700;">wallify</span>         Native macOS desktop audio widget in Zig, Swift & Metal (live waveform)
+  • <span style="color:var(--amber);font-weight:700;">hexer</span>           Zero-dependency terminal hex viewer in Rust with ANSI mouse reporting
+  • <span style="color:var(--purple);font-weight:700;">Discord-RPC</span>     [★ 2]  Lightweight Node.js Discord Rich Presence socket client
 `,
 
   skills: () => `
