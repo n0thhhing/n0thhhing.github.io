@@ -9,19 +9,39 @@ import { applyTheme, getCurrentTheme, THEMES } from './themes.js';
 const TERMINAL_COMMANDS = {
   help: () => `
 <span class="accent">Available commands:</span>
-  <span class="mono" style="color:var(--cyan)">about</span>      - Display background, focus, and engineering ethos
-  <span class="mono" style="color:var(--cyan)">projects</span>   - List featured systems, compilers, & reverse engineering tools
-  <span class="mono" style="color:var(--cyan)">skills</span>     - Show architecture, languages, & low-level proficiencies
-  <span class="mono" style="color:var(--cyan)">fetch</span>      - System architecture, testbeds, and toolchain info
-  <span class="mono" style="color:var(--cyan)">status</span>     - Show current state (:bowtie: procrastinating)
-  <span class="mono" style="color:var(--cyan)">theme</span>      - Switch or list themes (usage: theme [gruvbox|panda|dracula|monokai|catppuccin])
-  <span class="mono" style="color:var(--cyan)">disasm</span>     - Inspect ARM64 routine (usage: disasm [rarm64|zeon|il2cpp])
-  <span class="mono" style="color:var(--cyan)">simd</span>       - Jump to NEON SIMD vector visualizer
-  <span class="mono" style="color:var(--cyan)">art</span>        - Digital illustration background & Clip Studio Paint works
-  <span class="mono" style="color:var(--cyan)">music</span>      - Late-night 24-bit audio & anime OST rotation
-  <span class="mono" style="color:var(--cyan)">contact</span>    - Instagram art, GitHub, and email details
-  <span class="mono" style="color:var(--cyan)">uname -a</span>   - Print system & architecture identity
-  <span class="mono" style="color:var(--cyan)">clear</span>      - Clear terminal screen
+  <span class="mono" style="color:var(--cyan);font-weight:700;">IDENTITY &amp; LORE:</span>
+    <span class="mono" style="color:var(--amber)">about</span>       - Identity, philosophy, and engineering ethos
+    <span class="mono" style="color:var(--amber)">whoami</span>      - Quick bio, academic flex, and handle
+    <span class="mono" style="color:var(--amber)">lore</span>        - Origin story (Pixel Gun 3D, LADB, Game Guardian roots)
+    <span class="mono" style="color:var(--amber)">hackathon</span>   - Catawba College Hackathon back-to-back 1st place streak
+    <span class="mono" style="color:var(--amber)">edu</span>         - Academics (3.96 GPA, AP scores, RCCC → UNCC transfer)
+    <span class="mono" style="color:var(--amber)">setup</span>       - Daily workstation &amp; mobile aarch64 hardware testbeds
+    <span class="mono" style="color:var(--amber)">status</span>      - Current state (:bowtie: procrastinating)
+
+  <span class="mono" style="color:var(--cyan);font-weight:700;">SYSTEMS &amp; CODE:</span>
+    <span class="mono" style="color:var(--amber)">projects</span>    - Featured compilers, engines, and reverse engineering tools
+    <span class="mono" style="color:var(--amber)">skills</span>      - Low-level proficiencies, architectures, and toolchains
+    <span class="mono" style="color:var(--amber)">fetch</span>       - Fastfetch-style avatar &amp; system specs summary
+    <span class="mono" style="color:var(--amber)">disasm</span>      - Inspect ARM64 routine (usage: disasm [rarm64|zeon|il2cpp])
+    <span class="mono" style="color:var(--amber)">simd</span>        - Switch to NEON SIMD vector visualizer
+    <span class="mono" style="color:var(--amber)">matrix</span>      - ARM64 128-bit NEON vector banner
+
+  <span class="mono" style="color:var(--cyan);font-weight:700;">CREATIVE &amp; SOCIAL:</span>
+    <span class="mono" style="color:var(--amber)">art</span>         - Clip Studio Paint character illustrations &amp; Instagram
+    <span class="mono" style="color:var(--amber)">music</span>       - Late-night 24-bit audio chain &amp; anime rotation
+    <span class="mono" style="color:var(--amber)">anime</span>       - Aesthetic &amp; story inspirations (Bunny Girl Senpai, Roshidere)
+    <span class="mono" style="color:var(--amber)">theme</span>       - Switch theme (usage: theme [gruvbox|panda|dracula|monokai|catppuccin])
+    <span class="mono" style="color:var(--amber)">contact</span>     - Instagram, GitHub, and email coordinates
+
+  <span class="mono" style="color:var(--cyan);font-weight:700;">SHELL UTILITIES:</span>
+    <span class="mono" style="color:var(--amber)">ls</span>          - List simulated files &amp; documents
+    <span class="mono" style="color:var(--amber)">cat</span>         - Inspect file content (usage: cat &lt;filename&gt;)
+    <span class="mono" style="color:var(--amber)">history</span>     - Show recent shell commands
+    <span class="mono" style="color:var(--amber)">echo</span>        - Print text to terminal
+    <span class="mono" style="color:var(--amber)">date</span>        - Display current Darwin system timestamp
+    <span class="mono" style="color:var(--amber)">uptime</span>      - Display current session uptime &amp; load
+    <span class="mono" style="color:var(--amber)">uname -a</span>    - Print kernel and hardware architecture
+    <span class="mono" style="color:var(--amber)">clear</span>       - Clear terminal screen
 `,
 
   about: () => `
@@ -120,6 +140,138 @@ I build software with hardware-level empathy and an artist's obsession with colo
   • GitHub:    <a href="https://github.com/n0thhhing" target="_blank" rel="noopener noreferrer">github.com/n0thhhing</a>
   • Email:     <a href="mailto:lynchlm064@gmail.com">lynchlm064@gmail.com</a>
   • Profile:   <a href="https://github.com/n0thhhing/n0thhhing" target="_blank" rel="noopener noreferrer">n0thhhing/n0thhhing</a>
+`,
+
+  whoami: () => `
+<span class="accent">identity:</span>
+  levi lynch (<span style="color:var(--cyan);font-weight:700;">@n0thhhing</span> / <span style="color:var(--amber);font-weight:700;">@levi.napz</span>)
+  systems architect • reverse engineer • visual artist
+  Jesse Carson High alum (3.96 GPA) • RCCC → UNCC Cybersecurity
+  Catawba College Hackathon back-to-back 1st place champion ('25, '26)
+  daily driver: Gruvbox Material purist
+`,
+
+  lore: () => `
+<span class="accent">// ORIGIN &amp; DEEP-CUT LORE (@n0thhhing):</span>
+
+  <span style="color:var(--emerald);font-weight:700;">1. Mobile Modding Roots (2022-2023):</span>
+     Started by looking at compiled mobile games on Android (Pixel Gun 3D),
+     running local ADB shells (LADB), and writing Lua memory-patching scripts
+     in Game Guardian. Chasing runtime pointers and patch offsets taught
+     memory addresses, registers, and engine internals before college.
+
+  <span style="color:var(--amber);font-weight:700;">2. Stepping Into Systems &amp; Zig (2024-2026):</span>
+     Moved past manual scripts into heavy automation. Built Il2Cpp-Offset-Updater
+     in Kotlin Multiplatform, then dove headfirst into bleeding-edge Zig 0.16,
+     writing 2,800+ ARM/ARM64 NEON intrinsics (zeon) and fast AoB scanners (z-scanner).
+
+  <span style="color:var(--cyan);font-weight:700;">3. The Catawba Hackathon Streak:</span>
+     Sophomore podium finish followed by back-to-back 1st Place wins in 2025
+     and 2026 representing Jesse Carson High. Teammates essentially "pre-ordered"
+     Levi for senior year to lock in the repeat championship.
+
+  <span style="color:var(--purple);font-weight:700;">4. The Alias:</span>
+     "n0thhhing" reflects quiet code running under the hood rather than loud
+     corporate hype. No fake buzzwords, just pure low-level craft.
+`,
+
+  hackathon: () => `
+<span class="accent">Ralph W. Ketner School of Business Hackathon @ Catawba College:</span>
+  • <span style="color:var(--cyan);font-weight:700;">Sophomore Year:</span> Podium finish
+  • <span style="color:var(--amber);font-weight:700;">Junior Year (2025):</span> 1st Place Champion ★
+  • <span style="color:var(--emerald);font-weight:700;">Senior Year (2026):</span> 1st Place Champion (Back-to-back!) ★
+  
+  <i>Behind the scenes:</i> Carried the team through sleepless overnight sprints:
+  teammates pre-ordered him for senior year to guarantee the repeat win.
+`,
+
+  setup: () => `
+<span class="accent">Hardware &amp; Daily Developer Setup:</span>
+  • <b>Workstation:</b> Apple Silicon M-series (macOS Darwin 24.1.0 ARM64e)
+  • <b>Hardware Testbeds:</b> Google Pixel 11 Pro + Samsung Galaxy S22 (aarch64 / LADB / Shizuku)
+  • <b>Primary Editor:</b> Zed (fast, GPU-accelerated editing for Zig)
+  • <b>Terminal:</b> Ghostty (custom tab bars, keybindings, inspector)
+  • <b>Auxiliary Tools:</b> VS Code (GitLens), JetBrains Fleet (KMP/Gradle), Acode (mobile edits)
+  • <b>Aesthetics:</b> Gruvbox Material (matte, warm, zero eye fatigue)
+`,
+  hardware: () => TERMINAL_COMMANDS.setup(),
+
+  anime: () => `
+<span class="accent">Anime, Light Novels &amp; Aesthetic Inspirations:</span>
+  • <span style="color:var(--pink);font-weight:700;">Rascal Does Not Dream of Bunny Girl Senpai:</span> Visual mood, emotional depth, and the legendary ED "Fukashigi no Carte"
+  • <span style="color:var(--cyan);font-weight:700;">Roshidere (Alya Sometimes Hides Her Feelings in Russian):</span> Character dynamics &amp; acoustic singles
+  • <span style="color:var(--emerald);font-weight:700;">Shonen Favorites:</span> Attack on Titan, One Piece, Dragon Ball
+  • <b>Audio Setup:</b> Always coding or sketching with music on via 24-bit lossless audio
+`,
+
+  edu: () => `
+<span class="accent">Academic Background &amp; Trajectory:</span>
+  • <b>High School:</b> Jesse Carson High School — 3.96 GPA (ruined only by an 89 in Spanish I)
+  • <b>AP Intuition:</b> 5 in AP Precalc (last-minute cramming) • 4 in AP Calc AB (zero studying)
+  • <b>Current:</b> Rowan-Cabarrus Community College (RCCC), Associate in Arts
+  • <b>Target Transfer:</b> UNC Charlotte (UNCC) for Cybersecurity
+`,
+  academics: () => TERMINAL_COMMANDS.edu(),
+
+  ls: () => `
+<span class="mono" style="line-height:1.45;">
+<span style="color:var(--cyan);font-weight:700;">drwxr-xr-x</span>  levi  staff   4.0K  <span style="color:var(--cyan);font-weight:700;">projects/</span>
+<span style="color:var(--cyan);font-weight:700;">drwxr-xr-x</span>  levi  staff   4.0K  <span style="color:var(--cyan);font-weight:700;">artwork/</span>
+<span style="color:var(--text-muted);">-rw-r--r--</span>  levi  staff   1.8K  about.md
+<span style="color:var(--text-muted);">-rw-r--r--</span>  levi  staff   2.4K  lore.txt
+<span style="color:var(--text-muted);">-rw-r--r--</span>  levi  staff   1.1K  hackathons.log
+<span style="color:var(--emerald);font-weight:700;">-rwxr-xr-x</span>  levi  staff    640  <span style="color:var(--emerald);">setup.sh</span>
+<span style="color:var(--text-muted);">-rw-r--r--</span>  levi  staff    320  contact.json
+</span>
+<span style="color:var(--text-muted);font-size:0.75rem;">Tip: use 'cat &lt;filename&gt;' to read any file (e.g. cat lore.txt)</span>
+`,
+
+  cat: (term, args) => {
+    const file = args && args[0] ? args[0].toLowerCase() : null;
+    if (!file) return `<span class="error">usage: cat &lt;filename&gt; (try: cat about.md, cat lore.txt, cat hackathons.log, cat contact.json)</span>`;
+    
+    if (file === "about.md") {
+      return TERMINAL_COMMANDS.about();
+    } else if (file === "lore.txt") {
+      return TERMINAL_COMMANDS.lore();
+    } else if (file === "hackathons.log" || file === "hackathon.log") {
+      return TERMINAL_COMMANDS.hackathon();
+    } else if (file === "contact.json") {
+      return `{\n  "name": "Levi",\n  "alias": "n0thhhing",\n  "instagram": "https://instagram.com/levi.napz",\n  "github": "https://github.com/n0thhhing",\n  "email": "lynchlm064@gmail.com"\n}`;
+    } else if (file === "setup.sh") {
+      return `#!/usr/bin/env zsh\n# Levi systems bootstrap\nexport ARCH="aarch64"\nexport EDITOR="zed"\nexport THEME="gruvbox-material"\necho "ready to build."`;
+    } else {
+      return `<span class="error">cat: ${file}: No such file or directory. Try 'ls' to list files.</span>`;
+    }
+  },
+
+  echo: (term, args) => {
+    return args && args.length ? args.join(" ") : "";
+  },
+
+  date: () => new Date().toString(),
+
+  uptime: () => `up 8 hours, 42 mins, 1 user, load averages: 4.20 3.80 2.90 (hyperfocused)`,
+
+  history: () => `
+  1  ladb connect 127.0.0.1:5555
+  2  zig build test -Dtarget=aarch64-linux
+  3  ghostty +open-inspector
+  4  git commit -m "feat: zeon neon fma"
+  5  clip-studio-paint ~/art/wip_character.clip
+  6  curl -sI http://localhost:8080
+  7  fetch
+  8  echo "procrastinating..."
+`,
+
+  matrix: () => `
+<span class="mono" style="color:var(--emerald);line-height:1.25;">
+  01001100 01000101 01010110 01001001   [ aarch64 ]
+  ┌───┬───┬───┬───┬───┬───┬───┬───┐
+  │ L │ E │ V │ I │ A │ S │ S │ M │  ARM64 NEON: 128-bit vector lanes
+  └───┴───┴───┴───┴───┴───┴───┴───┘
+  &gt; memory patched. fixups resolved. gruvbox active.
+</span>
 `,
 
   "uname -a": () => `Darwin levi-macbook.local 24.1.0 Darwin Kernel Version: ARM64e root:xnu-11215/RELEASE_ARM64_T6000 aarch64`,
@@ -259,7 +411,7 @@ export class Terminal {
     }
 
     if (TERMINAL_COMMANDS[command]) {
-      const result = TERMINAL_COMMANDS[command](this);
+      const result = TERMINAL_COMMANDS[command](this, args);
       if (result) this.appendOutput(result);
     } else {
       this.appendOutput(`<span class="error">zsh: command not found: ${command}. Type 'help' for available commands.</span>`);
