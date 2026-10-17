@@ -6,6 +6,7 @@
 *Bare-metal ARM64/ARM64e instruction decoding, 2,800+ NEON SIMD intrinsics in pure Zig/assembly, binary analysis, WebAssembly runtimes, and an artist's devotion to color theory & ergonomics (proud Gruvbox Material purist).*
 
 [![Portfolio Website](https://img.shields.io/badge/Live_Portfolio-n0thhhing.github.io%2Fwebsite-e78a4e?style=for-the-badge&logo=safari&logoColor=black)](https://n0thhhing.github.io/website)
+[![Instagram](https://img.shields.io/badge/Art_Instagram-@levi.napz-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/levi.napz)
 [![GitHub](https://img.shields.io/badge/GitHub-@n0thhhing-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/n0thhhing)
 [![Email](https://img.shields.io/badge/Contact-lynchlm064@gmail.com-d8a657?style=for-the-badge&logo=gmail&logoColor=black)](mailto:lynchlm064@gmail.com)
 
@@ -16,7 +17,7 @@
 ### `// ABOUT ME`
 
 I build software with hardware-level empathy and an artist's eye for color and craft:
-- **Visual Artist & Color Theory**: As an artist, colors aren't decoration—they are cognitive architecture. I theme almost all my developer environments in **Gruvbox Material** for warm, matte contrast and zero visual fatigue.
+- **Visual Artist & Color Theory**: As an artist, colors aren't decoration—they are cognitive architecture. I share my art on Instagram [**@levi.napz**](https://instagram.com/levi.napz), and theme almost all my developer environments in **Gruvbox Material** for warm, matte contrast and zero visual fatigue.
 - **Zero-Dependency Philosophy**: Hand-written demanglers, custom parsers, and zero runtime crates/dependencies for audit-proof speed and determinism.
 - **Hardware-Aware Design**: Instruction-level optimization, 128-bit vectorization across NEON lanes, and cache-conscious memory layouts.
 - **Specification Parity**: Full compliance with official standards (Arm 2026-09 MRS, W3C WebAssembly 2.0, Unity metadata v29).

@@ -540,7 +540,8 @@ a:hover {
   background: var(--cyan-dim);
 }
 
-.nav-github-btn {
+.nav-github-btn,
+.nav-social-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -559,6 +560,13 @@ a:hover {
   border-color: var(--border-cyan);
   color: var(--cyan);
   box-shadow: var(--shadow-cyan);
+}
+
+.nav-social-btn:hover {
+  background: rgba(231, 138, 78, 0.15);
+  border-color: var(--border-amber);
+  color: var(--amber);
+  box-shadow: 0 4px 14px rgba(231, 138, 78, 0.25);
 }
 
 .nav-right-actions {

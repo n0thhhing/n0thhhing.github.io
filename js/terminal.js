@@ -15,7 +15,7 @@ const TERMINAL_COMMANDS = {
   <span class="mono" style="color:var(--cyan)">theme</span>      - Switch or list themes (usage: theme [gruvbox|panda|dracula|monokai|catppuccin])
   <span class="mono" style="color:var(--cyan)">disasm</span>     - Inspect ARM64 routine (usage: disasm [rarm64|zeon|il2cpp])
   <span class="mono" style="color:var(--cyan)">simd</span>       - Jump to NEON SIMD vector visualizer
-  <span class="mono" style="color:var(--cyan)">contact</span>    - GitHub, email, and Discord details
+  <span class="mono" style="color:var(--cyan)">contact</span>    - Instagram art, GitHub, and email details
   <span class="mono" style="color:var(--cyan)">uname -a</span>   - Print system & architecture identity
   <span class="mono" style="color:var(--cyan)">clear</span>      - Clear terminal screen
 `,
@@ -56,9 +56,10 @@ I build software with hardware-level empathy and an artist's obsession with colo
 
   contact: () => `
 <span class="accent">Reach Out:</span>
-  • GitHub:  <a href="https://github.com/n0thhhing" target="_blank" rel="noopener noreferrer">github.com/n0thhhing</a>
-  • Email:   <a href="mailto:lynchlm064@gmail.com">lynchlm064@gmail.com</a>
-  • Profile: <a href="https://github.com/n0thhhing/n0thhhing" target="_blank" rel="noopener noreferrer">n0thhhing/n0thhhing</a>
+  • Instagram: <a href="https://instagram.com/levi.napz" target="_blank" rel="noopener noreferrer" style="color:var(--amber);">instagram.com/levi.napz</a> (@levi.napz — Art & Visual Works)
+  • GitHub:    <a href="https://github.com/n0thhhing" target="_blank" rel="noopener noreferrer">github.com/n0thhhing</a>
+  • Email:     <a href="mailto:lynchlm064@gmail.com">lynchlm064@gmail.com</a>
+  • Profile:   <a href="https://github.com/n0thhhing/n0thhhing" target="_blank" rel="noopener noreferrer">n0thhhing/n0thhhing</a>
 `,
 
   "uname -a": () => `Darwin levi-macbook.local 24.1.0 Darwin Kernel Version: ARM64e root:xnu-11215/RELEASE_ARM64_T6000 aarch64`,
