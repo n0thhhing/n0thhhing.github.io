@@ -366,6 +366,22 @@
   --scanline-opacity: 0.2;
 }
 
+/* ==========================================================================
+   SMOOTH THEME TRANSITION ENGINE
+   ========================================================================== */
+
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 0.45s cubic-bezier(0.4, 0, 0.2, 1) !important,
+              color 0.45s cubic-bezier(0.4, 0, 0.2, 1) !important,
+              border-color 0.45s cubic-bezier(0.4, 0, 0.2, 1) !important,
+              box-shadow 0.45s cubic-bezier(0.4, 0, 0.2, 1) !important,
+              fill 0.45s cubic-bezier(0.4, 0, 0.2, 1) !important,
+              stroke 0.45s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
 /* Base Reset & Background */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -389,6 +405,8 @@ body {
   position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Background Grid & Atmosphere */
@@ -579,18 +597,36 @@ a:hover {
   position: absolute;
   top: calc(100% + 0.5rem);
   right: 0;
-  width: 220px;
+  width: 250px;
   background: var(--bg-surface);
   border: 1px solid var(--border-medium);
   border-radius: var(--radius-md);
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7);
-  padding: 0.45rem;
+  padding: 0.5rem;
   display: none;
   flex-direction: column;
   gap: 0.25rem;
   z-index: 100;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+}
+
+.theme-dropdown-header {
+  padding: 0.25rem 0.65rem 0.4rem;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 0.25rem;
+}
+
+.theme-favorite-pill {
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  background: rgba(231, 138, 78, 0.15);
+  color: var(--amber);
+  border: 1px solid var(--border-amber);
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .theme-dropdown-menu.open {

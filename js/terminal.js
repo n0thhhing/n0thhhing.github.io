@@ -22,9 +22,10 @@ const TERMINAL_COMMANDS = {
 
   about: () => `
 <span class="accent">Levi (@n0thhhing)</span>
-Systems Architect & Reverse Engineer.
+Systems Architect, Reverse Engineer, & Visual Artist.
 
-I build software with hardware-level empathy:
+I build software with hardware-level empathy and an artist's obsession with color & craft:
+• Visual artist: Deep background in color theory & visual ergonomics (Gruvbox Material purist)
 • Zero-dependency binary tools (Mach-O, ARM64, ELF, WebAssembly)
 • Pure Zig & Assembly SIMD vector intrinsics (2,800+ NEON implementations)
 • Reverse engineering runtimes (Unity IL2CPP metadata, SQLite call-graph mining)
@@ -169,9 +170,12 @@ export class Terminal {
         const current = getCurrentTheme();
         const listHtml = THEMES.map(t => {
           const isCur = t.id === current;
-          return `  • <span style="color:${isCur ? 'var(--cyan)' : 'var(--text-secondary)'};font-weight:${isCur ? '700' : '400'}">${t.id}</span> ${isCur ? ' <span style="color:var(--emerald)">(active)</span>' : ''} — ${t.name}`;
+          const isFav = t.id === "gruvbox-material";
+          const favBadge = isFav ? ` <span style="color:var(--amber);font-weight:700;">[★ Daily Driver]</span>` : '';
+          const activeBadge = isCur ? ` <span style="color:var(--emerald);font-weight:700;">(active)</span>` : '';
+          return `  • <span style="color:${isCur ? 'var(--title-highlight)' : 'var(--text-secondary)'};font-weight:${isCur ? '700' : '400'}">${t.id}</span>${activeBadge}${favBadge} — ${t.name}`;
         }).join("<br>");
-        this.appendOutput(`<span class="accent">Available Themes:</span><br>${listHtml}<br><span style="color:var(--text-muted);font-size:0.775rem;">Usage: theme [name] (e.g. theme gruvbox-material, theme panda)</span>`);
+        this.appendOutput(`<span class="accent">Artist-Curated Themes (Smooth 450ms Cross-Fade):</span><br>${listHtml}<br><span style="color:var(--text-muted);font-size:0.775rem;">Usage: theme &lt;name&gt; (e.g. theme gruvbox-material, theme panda)</span>`);
         return;
       }
 
@@ -179,7 +183,7 @@ export class Terminal {
       const match = THEMES.find(t => t.id.includes(target) || t.name.toLowerCase().includes(target));
       if (match) {
         applyTheme(match.id, true);
-        this.appendOutput(`<span class="accent">Theme switched to: <b>${match.name}</b> (${match.id})</span>`);
+        this.appendOutput(`<span class="accent">Theme smoothly cross-faded to: <b>${match.name}</b> (${match.id})</span>`);
       } else {
         this.appendOutput(`<span class="error">Unknown theme '${args[0]}'. Type 'theme' to see available themes.</span>`);
       }

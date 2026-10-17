@@ -105,7 +105,14 @@ export function initThemes() {
 
 export function applyTheme(themeId, save = true) {
   const theme = THEMES.find(t => t.id === themeId) || THEMES[0];
+  
+  // Trigger smooth cross-fade transition
+  document.documentElement.classList.add("theme-transitioning");
   document.documentElement.setAttribute("data-theme", theme.id);
+
+  setTimeout(() => {
+    document.documentElement.classList.remove("theme-transitioning");
+  }, 450);
 
   if (save) {
     localStorage.setItem(STORAGE_KEY, theme.id);

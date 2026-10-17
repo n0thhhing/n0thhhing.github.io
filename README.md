@@ -4,8 +4,7 @@ Zero-dependency personal portfolio website and low-level systems showcase for **
 
 ## Features
 
-- **Zero External Dependencies**: Pure modern HTML5, CSS3, and vanilla ES6 modules. No npm, no node_modules, no webpack/vite bundle step needed.
-- **Cyber-Glass Aesthetics**: Dark void palette, neon cyan & electric emerald accents, CRT scanlines, memory address gutters, and glassmorphism.
+- **Artist-Curated Theme Engine**: 7 hand-tuned palettes featuring Levi's daily driver **Gruvbox Material** (Default), classic **Gruvbox**, **Panda**, **Dracula**, **Monokai Pro**, **Catppuccin Frappé**, and **Void Cyber** with smooth 450ms cross-fade transitions. Zero eye fatigue, warm matte contrast.
 - **Interactive Low-Level Sandbox**:
   - **Live ARM64 Disassembler & Hex Inspector**: Real disassembly from `rarm64`, `zeon`, and `il2cpp` with interactive opcode breakdown and register inspectors.
   - **Terminal CLI**: Interactive command prompt supporting `help`, `about`, `projects`, `skills`, `disasm`, `simd`, and `clear`.

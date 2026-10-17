@@ -51,9 +51,15 @@
             <span id="theme-label">Gruvbox Material</span>
           </button>
           <div id="theme-dropdown" class="theme-dropdown-menu">
+            <div class="theme-dropdown-header">
+              <span class="mono" style="font-size:0.675rem;color:var(--text-muted);letter-spacing:0.06em;font-weight:700;">// ARTIST-CURATED PALETTES</span>
+            </div>
             <button class="theme-option-btn active" data-theme="gruvbox-material">
               <span class="theme-swatch" style="background:#e78a4e;box-shadow:0 0 0 2px #d8a657"></span>
-              <span>Gruvbox Material</span>
+              <span style="display:flex;align-items:center;justify-content:space-between;width:100%;">
+                <span>Gruvbox Material</span>
+                <span class="theme-favorite-pill">★ Daily Driver</span>
+              </span>
             </button>
             <button class="theme-option-btn" data-theme="gruvbox">
               <span class="theme-swatch" style="background:#fb4934;box-shadow:0 0 0 2px #fabd2f"></span>
@@ -98,7 +104,7 @@
       <div class="hero-content">
         <div class="hero-status-pill">
           <span class="brand-status-dot"></span>
-          <span>Decoding ARM64 Mach-O &amp; Vectorizing SIMD Intrinsics</span>
+          <span>Artist-Driven Systems Architecture &amp; Low-Level Precision</span>
         </div>
 
         <h1 class="hero-title">
@@ -107,15 +113,17 @@
         </h1>
 
         <p class="hero-subtitle">
-          I’m <b>Levi</b> (<b>@n0thhhing</b>). I build software from instruction-level primitives up:
+          I’m <b>Levi</b> (<b>@n0thhhing</b>). Systems architect, reverse engineer, and visual artist.
+          I engineer software with hardware-level empathy and an artist’s obsession with color, ergonomics, and craft:
           zero-dependency Mach-O disassemblers, 2,800+ NEON SIMD intrinsics in pure Zig/assembly,
-          Unity IL2CPP reverse-engineering engines, WebAssembly runtimes, and native macOS desktop tools.
+          Unity IL2CPP decompilers, and meticulously themed developer environments (proud <b>Gruvbox Material</b> purist).
         </p>
 
         <div class="hero-tags">
+          <span class="tag-badge accent-amber">Gruvbox Material Purist</span>
           <span class="tag-badge accent-cyan">ARM64 / ARM64e</span>
           <span class="tag-badge accent-emerald">Zig 0.16</span>
-          <span class="tag-badge accent-amber">Rust</span>
+          <span class="tag-badge">Rust</span>
           <span class="tag-badge">WebAssembly 2.0</span>
           <span class="tag-badge">NEON SIMD</span>
           <span class="tag-badge">Mach-O &amp; Android ELF</span>
@@ -509,6 +517,14 @@
           <h3 class="philosophy-heading">Deterministic Verification</h3>
           <p class="philosophy-body">
             Tools must be mathematically and specificationally sound. <code>rarm64</code> matches Arm's official 2026-09 MRS data; <code>lwasm</code> passes 292 W3C WebAssembly suites; <code>zeon</code> maintains 2,815+ unit tests across multiple cross-compilation targets.
+          </p>
+        </div>
+
+        <div class="philosophy-card">
+          <div class="philosophy-number">04 // THE ARTIST'S PALETTE</div>
+          <h3 class="philosophy-heading">Color Theory &amp; Ergonomics</h3>
+          <p class="philosophy-body">
+            As an artist, colors aren't decoration—they are cognitive architecture. Every interface, terminal, and disassembler I build is engineered with deliberate visual hierarchy, matte contrast, and zero eye fatigue. I theme virtually all my dev environments with Gruvbox Material because thoughtful color theory makes deep technical work a joy.
           </p>
         </div>
       </div>
