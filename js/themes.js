@@ -75,18 +75,26 @@ export function initThemes() {
 
   if (themeBtn && dropdown) {
     themeBtn.addEventListener("click", (e) => {
+      e.preventDefault();
       e.stopPropagation();
       dropdown.classList.toggle("open");
     });
 
     document.addEventListener("click", (e) => {
-      if (!dropdown.contains(e.target) && e.target !== themeBtn) {
+      if (!dropdown.contains(e.target) && !themeBtn.contains(e.target)) {
+        dropdown.classList.remove("open");
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && dropdown.classList.contains("open")) {
         dropdown.classList.remove("open");
       }
     });
 
     document.querySelectorAll(".theme-option-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
         const themeId = btn.dataset.theme;
         applyTheme(themeId, true);
         dropdown.classList.remove("open");

@@ -8,7 +8,7 @@ import { initSimdVisualizer } from './simd.js';
 import { initProjectsGrid } from './projects.js';
 import { initThemes } from './themes.js';
 
-document.addEventListener("DOMContentLoaded", () => {
+function bootstrap() {
   // Initialize Themes (Defaults to Gruvbox Material)
   initThemes();
 
@@ -34,7 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Smooth scroll links
   setupSmoothScroll();
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", bootstrap);
+} else {
+  bootstrap();
+}
 
 function setupSandboxTabs() {
   const tabButtons = document.querySelectorAll(".sandbox-tab-btn");

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="gruvbox-material">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -271,7 +271,7 @@
               <div id="simd-op-desc" style="font-size:0.8rem;color:var(--text-muted);margin-top:0.25rem;">4-lane parallel 32-bit integer addition in 1 clock cycle</div>
             </div>
             <div class="simd-controls">
-              <select id="simd-op-select" class="simd-btn mono" style="background:#0a0f18;">
+              <select id="simd-op-select" class="simd-btn mono">
                 <option value="vaddq_s32">vaddq_s32 (Vector Add)</option>
                 <option value="vmulq_s32">vmulq_s32 (Vector Multiply)</option>
                 <option value="vmaxq_s32">vmaxq_s32 (Vector Max)</option>
@@ -290,8 +290,8 @@
             <!-- Lane 0 -->
             <div class="simd-lane" id="simd-lane-0">
               <div class="lane-label">Lane 0 (31:0)</div>
-              <div class="lane-register">v0[0]: <span id="lane-0-val-a" class="mono" style="color:#fff;">12</span></div>
-              <div class="lane-register">v1[0]: <span id="lane-0-val-b" class="mono" style="color:#fff;">8</span></div>
+              <div class="lane-register">v0[0]: <span id="lane-0-val-a" class="mono" style="color:var(--text-main);">12</span></div>
+              <div class="lane-register">v1[0]: <span id="lane-0-val-b" class="mono" style="color:var(--text-main);">8</span></div>
               <div style="font-size:0.7rem;color:var(--text-muted);margin:0.25rem 0;">⬇ Vector ALU ⬇</div>
               <div class="lane-value mono" id="lane-0-val-out">—</div>
             </div>
@@ -299,8 +299,8 @@
             <!-- Lane 1 -->
             <div class="simd-lane" id="simd-lane-1">
               <div class="lane-label">Lane 1 (63:32)</div>
-              <div class="lane-register">v0[1]: <span id="lane-1-val-a" class="mono" style="color:#fff;">45</span></div>
-              <div class="lane-register">v1[1]: <span id="lane-1-val-b" class="mono" style="color:#fff;">55</span></div>
+              <div class="lane-register">v0[1]: <span id="lane-1-val-a" class="mono" style="color:var(--text-main);">45</span></div>
+              <div class="lane-register">v1[1]: <span id="lane-1-val-b" class="mono" style="color:var(--text-main);">55</span></div>
               <div style="font-size:0.7rem;color:var(--text-muted);margin:0.25rem 0;">⬇ Vector ALU ⬇</div>
               <div class="lane-value mono" id="lane-1-val-out">—</div>
             </div>
@@ -308,8 +308,8 @@
             <!-- Lane 2 -->
             <div class="simd-lane" id="simd-lane-2">
               <div class="lane-label">Lane 2 (95:64)</div>
-              <div class="lane-register">v0[2]: <span id="lane-2-val-a" class="mono" style="color:#fff;">89</span></div>
-              <div class="lane-register">v1[2]: <span id="lane-2-val-b" class="mono" style="color:#fff;">11</span></div>
+              <div class="lane-register">v0[2]: <span id="lane-2-val-a" class="mono" style="color:var(--text-main);">89</span></div>
+              <div class="lane-register">v1[2]: <span id="lane-2-val-b" class="mono" style="color:var(--text-main);">11</span></div>
               <div style="font-size:0.7rem;color:var(--text-muted);margin:0.25rem 0;">⬇ Vector ALU ⬇</div>
               <div class="lane-value mono" id="lane-2-val-out">—</div>
             </div>
@@ -317,8 +317,8 @@
             <!-- Lane 3 -->
             <div class="simd-lane" id="simd-lane-3">
               <div class="lane-label">Lane 3 (127:96)</div>
-              <div class="lane-register">v0[3]: <span id="lane-3-val-a" class="mono" style="color:#fff;">134</span></div>
-              <div class="lane-register">v1[3]: <span id="lane-3-val-b" class="mono" style="color:#fff;">66</span></div>
+              <div class="lane-register">v0[3]: <span id="lane-3-val-a" class="mono" style="color:var(--text-main);">134</span></div>
+              <div class="lane-register">v1[3]: <span id="lane-3-val-b" class="mono" style="color:var(--text-main);">66</span></div>
               <div style="font-size:0.7rem;color:var(--text-muted);margin:0.25rem 0;">⬇ Vector ALU ⬇</div>
               <div class="lane-value mono" id="lane-3-val-out">—</div>
             </div>
