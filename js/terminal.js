@@ -28,7 +28,7 @@ const TERMINAL_COMMANDS = {
 
   <span class="mono" style="color:var(--cyan);font-weight:700;">CREATIVE &amp; SOCIAL:</span>
     <span class="mono" style="color:var(--amber)">art</span>         - Clip Studio Paint character illustrations &amp; Instagram
-    <span class="mono" style="color:var(--amber)">music</span>       - Late-night 24-bit audio chain &amp; anime rotation
+    <span class="mono" style="color:var(--amber)">music</span>       - Heavy rotation (redize, NEET, spawncamped, lantern)
     <span class="mono" style="color:var(--amber)">anime</span>       - Aesthetic &amp; story inspirations (Bunny Girl Senpai, Roshidere)
     <span class="mono" style="color:var(--amber)">theme</span>       - Switch theme (usage: theme [gruvbox|panda|dracula|monokai|catppuccin])
     <span class="mono" style="color:var(--amber)">contact</span>     - Instagram, GitHub, and email coordinates
@@ -120,11 +120,14 @@ I build software with hardware-level empathy and an artist's obsession with colo
   fastfetch: () => TERMINAL_COMMANDS.fetch(),
 
   music: () => `
-<span class="accent">Late-Night Coding & Sketching Rotation:</span>
-  • <span style="color:var(--pink);font-weight:600;">"Fukashigi no Carte"</span> (Rascal Does Not Dream ED — constant repeat)
-  • <span style="color:var(--cyan);font-weight:600;">Roshidere / Alya</span> OST & character singles
-  • <span style="color:var(--emerald);font-weight:600;">Anime OSTs:</span> Attack on Titan, One Piece, Dragon Ball
-  • <span style="color:var(--text-muted);font-size:0.8rem;">Playback: 24-bit lossless audio</span>
+<span class="accent">Current Heavy Rotation (Spotify / Desktop):</span>
+  • <span style="color:var(--amber);font-weight:700;">redize</span> — "stood up on halloween", "idk what s wrong with me", "hey i love you"
+  • <span style="color:var(--emerald);font-weight:700;">NEET</span> — "Clozapine", "Vampire", "Too Neurotic", "I Don't Like This"
+  • <span style="color:var(--cyan);font-weight:700;">spawncamped</span> — "sweet talk", "left behind", "staywithme", "paranoid"
+  • <span style="color:var(--pink);font-weight:700;">overtonight</span> &amp; <span style="color:var(--purple);font-weight:700;">lantern</span> — "now you're gone"
+  • <span style="color:var(--yellow);font-weight:700;">wifiskeleton</span> — "2008", "Everyday's the same joke"
+  • <span style="color:var(--text-secondary);">penguinband, Crustsox, pooterdabooter, 14 days after february</span>
+  • <span style="color:var(--text-muted);font-size:0.8rem;">Playback telemetry wired via Wallify spotifast daemon</span>
 `,
 
   art: () => `
@@ -198,10 +201,9 @@ I build software with hardware-level empathy and an artist's obsession with colo
 
   anime: () => `
 <span class="accent">Anime, Light Novels &amp; Aesthetic Inspirations:</span>
-  • <span style="color:var(--pink);font-weight:700;">Rascal Does Not Dream of Bunny Girl Senpai:</span> Visual mood, emotional depth, and the legendary ED "Fukashigi no Carte"
-  • <span style="color:var(--cyan);font-weight:700;">Roshidere (Alya Sometimes Hides Her Feelings in Russian):</span> Character dynamics &amp; acoustic singles
+  • <span style="color:var(--pink);font-weight:700;">Rascal Does Not Dream of Bunny Girl Senpai:</span> Visual mood, atmosphere, and character writing
+  • <span style="color:var(--cyan);font-weight:700;">Roshidere (Alya Sometimes Hides Her Feelings in Russian):</span> Character design &amp; illustration aesthetics
   • <span style="color:var(--emerald);font-weight:700;">Shonen Favorites:</span> Attack on Titan, One Piece, Dragon Ball
-  • <b>Audio Setup:</b> Always coding or sketching with music on via 24-bit lossless audio
 `,
 
   edu: () => `
