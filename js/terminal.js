@@ -70,27 +70,27 @@ I build software with hardware-level empathy and an artist's obsession with colo
 `,
 
   fetch: () => `
-<div class="terminal-fetch" style="display:flex;align-items:flex-start;gap:1.5rem;margin:0.4rem 0;font-family:var(--font-mono);white-space:normal;">
-  <img src="assets/avatar.png" alt="levi@aarch64" class="fetch-image" style="width:136px;height:136px;border-radius:8px;object-fit:cover;border:1.5px solid var(--border-amber);box-shadow:0 4px 16px rgba(0,0,0,0.4);flex-shrink:0;display:block;">
-  <div class="fetch-info" style="display:flex;flex-direction:column;gap:0.25rem;font-size:0.825rem;line-height:1.45;">
-    <div class="fetch-title" style="font-size:0.9rem;margin-bottom:0.1rem;">
+<div class="terminal-fetch" style="display:flex;align-items:flex-start;gap:1.85rem;margin:0.5rem 0;font-family:var(--font-mono);white-space:normal;">
+  <img src="assets/avatar.png" alt="levi@aarch64" class="fetch-image" style="width:190px;height:190px;border-radius:10px;object-fit:cover;border:1.5px solid var(--border-amber);box-shadow:0 6px 20px rgba(0,0,0,0.45);flex-shrink:0;display:block;">
+  <div class="fetch-info" style="display:flex;flex-direction:column;gap:0.3rem;font-size:0.875rem;line-height:1.48;">
+    <div class="fetch-title" style="font-size:0.95rem;margin-bottom:0.1rem;">
       <span style="color:var(--title-highlight);font-weight:700;">levi</span>@<span style="color:var(--cyan);font-weight:700;">aarch64</span>
     </div>
-    <div class="fetch-sep" style="color:var(--text-muted);margin-bottom:0.15rem;user-select:none;">-----------------------------</div>
-    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:78px;">OS:</span> Darwin / macOS (Apple Silicon ARM64e)</div>
-    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:78px;">Host:</span> MacBook Pro + Pixel &amp; Galaxy S22</div>
-    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:78px;">Testbeds:</span> aarch64 bare-metal (LADB / Shizuku)</div>
-    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:78px;">Toolchain:</span> Zig 0.16 (bleeding), Rust, Swift/Metal</div>
-    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:78px;">Editor:</span> Zed (GPU-accelerated) / Ghostty</div>
-    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:78px;">Theme:</span> Gruvbox Material <span style="color:var(--amber);font-weight:700;">[★ Daily Driver]</span></div>
-    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:78px;">Status:</span> <span style="color:var(--amber);font-weight:600;">:bowtie: procrastinating</span></div>
-    <div class="fetch-palette" style="display:flex;align-items:center;gap:6px;margin-top:0.4rem;">
-      <span style="display:inline-block;width:14px;height:14px;background:#ea6962;border-radius:2px;"></span>
-      <span style="display:inline-block;width:14px;height:14px;background:#e78a4e;border-radius:2px;"></span>
-      <span style="display:inline-block;width:14px;height:14px;background:#d8a657;border-radius:2px;"></span>
-      <span style="display:inline-block;width:14px;height:14px;background:#a9b665;border-radius:2px;"></span>
-      <span style="display:inline-block;width:14px;height:14px;background:#7daea3;border-radius:2px;"></span>
-      <span style="display:inline-block;width:14px;height:14px;background:#d3869b;border-radius:2px;"></span>
+    <div class="fetch-sep" style="color:var(--text-muted);margin-bottom:0.15rem;user-select:none;">--------------</div>
+    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:82px;">OS:</span> Darwin / macOS (Apple Silicon ARM64e)</div>
+    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:82px;">Host:</span> MacBook Pro + Pixel &amp; Galaxy S22</div>
+    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:82px;">Testbeds:</span> aarch64 bare-metal (LADB / Shizuku)</div>
+    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:82px;">Toolchain:</span> Zig 0.16 (bleeding), Rust, Swift/Metal</div>
+    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:82px;">Editor:</span> Zed (GPU-accelerated) / Ghostty</div>
+    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:82px;">Theme:</span> Gruvbox Material <span style="color:var(--amber);font-weight:700;">[★ Daily Driver]</span></div>
+    <div><span class="fetch-label" style="color:var(--text-muted);font-weight:600;display:inline-block;min-width:82px;">Status:</span> <span style="color:var(--amber);font-weight:600;">:bowtie: procrastinating</span></div>
+    <div class="fetch-palette" style="display:flex;align-items:center;gap:7px;margin-top:0.45rem;">
+      <span style="display:inline-block;width:18px;height:18px;background:#ea6962;border-radius:3px;"></span>
+      <span style="display:inline-block;width:18px;height:18px;background:#e78a4e;border-radius:3px;"></span>
+      <span style="display:inline-block;width:18px;height:18px;background:#d8a657;border-radius:3px;"></span>
+      <span style="display:inline-block;width:18px;height:18px;background:#a9b665;border-radius:3px;"></span>
+      <span style="display:inline-block;width:18px;height:18px;background:#7daea3;border-radius:3px;"></span>
+      <span style="display:inline-block;width:18px;height:18px;background:#d3869b;border-radius:3px;"></span>
     </div>
   </div>
 </div>

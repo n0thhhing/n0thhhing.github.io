@@ -1124,19 +1124,19 @@ a:hover {
 .terminal-fetch {
   display: flex;
   align-items: flex-start;
-  gap: 1.5rem;
-  margin: 0.35rem 0;
+  gap: 1.85rem;
+  margin: 0.5rem 0;
   font-family: var(--font-mono);
   white-space: normal;
 }
 
 .fetch-image {
-  width: 136px;
-  height: 136px;
-  border-radius: 8px;
+  width: 190px;
+  height: 190px;
+  border-radius: 10px;
   object-fit: cover;
   border: 1.5px solid var(--border-amber);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
   flex-shrink: 0;
 }
 
@@ -1154,13 +1154,13 @@ a:hover {
 .fetch-info {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  font-size: 0.825rem;
-  line-height: 1.45;
+  gap: 0.3rem;
+  font-size: 0.875rem;
+  line-height: 1.48;
 }
 
 .fetch-title {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .fetch-sep {
@@ -1173,21 +1173,21 @@ a:hover {
   color: var(--text-muted);
   font-weight: 600;
   display: inline-block;
-  min-width: 78px;
+  min-width: 82px;
 }
 
 .fetch-palette {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 0.4rem;
+  gap: 7px;
+  margin-top: 0.45rem;
 }
 
 .fetch-palette span {
   display: inline-block;
-  width: 14px;
-  height: 14px;
-  border-radius: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
 }
 
 .terminal-input-row {
