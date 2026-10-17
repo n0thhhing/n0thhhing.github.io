@@ -6,8 +6,12 @@ import { initDisassembler } from './disassembler.js';
 import { Terminal } from './terminal.js';
 import { initSimdVisualizer } from './simd.js';
 import { initProjectsGrid } from './projects.js';
+import { initThemes } from './themes.js';
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Initialize Themes (Defaults to Gruvbox Material)
+  initThemes();
+
   // Initialize Disassembler (Default Tab)
   initDisassembler();
 

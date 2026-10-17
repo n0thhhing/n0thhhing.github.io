@@ -1,6 +1,6 @@
 /**
  * Projects Data & Filter Management Module
- * Sourced directly from Levi's GitHub (@n0thhhing) and local core systems
+ * Sourced from Levi's GitHub (@n0thhhing) and local core systems
  */
 
 export const PROJECTS_DATA = [
@@ -43,7 +43,8 @@ export const PROJECTS_DATA = [
     categoryLabel: "Low-Level & Disassembly",
     stars: null,
     tagline: "Zero-dependency Mach-O ARM64/ARM64e disassembler with Arm 2026-09 specification parity.",
-    repoUrl: "https://github.com/n0thhhing/rarm64",
+    repoUrl: null, // Set to GitHub URL when published
+    statusLabel: "Local / In Dev",
     tech: ["Rust", "ARM64 / ARM64e", "Mach-O", "Dyld Fixups", "Demangler"],
     highlights: [
       "Zero external crate dependencies ([dependencies] in Cargo.toml is empty)",
@@ -59,7 +60,8 @@ export const PROJECTS_DATA = [
     categoryLabel: "Reverse Engineering",
     stars: null,
     tagline: "Unity IL2CPP metadata v29 & 64-bit ARM64 Android ELF disassembler and exporter.",
-    repoUrl: "https://github.com/n0thhhing/il2cpp",
+    repoUrl: null, // Set to GitHub URL when published
+    statusLabel: "Local / In Dev",
     tech: ["Zig 0.16", "Android ELF", "SQLite", "Unity Internals", "C#"],
     highlights: [
       "Discovers stripped registration structures and resolves native addresses",
@@ -138,7 +140,8 @@ export const PROJECTS_DATA = [
     categoryLabel: "Terminal & Systems",
     stars: null,
     tagline: "Read-only terminal hex viewer in Rust with ANSI mouse reporting and wildcard search.",
-    repoUrl: "https://github.com/n0thhhing/hexer",
+    repoUrl: null, // Set to GitHub URL when published
+    statusLabel: "Local / In Dev",
     tech: ["Rust", "Terminal UI", "ANSI Codes", "Zero-Deps"],
     highlights: [
       "Zero Cargo dependencies; relies strictly on standard library & stty",
@@ -208,6 +211,23 @@ export function initProjectsGrid() {
         </span>
       ` : "";
 
+      // Right action: GitHub link IF repoUrl exists, otherwise a sleek "Local / In Dev" badge
+      const actionHtml = p.repoUrl ? `
+        <a href="${p.repoUrl}" target="_blank" rel="noopener noreferrer" class="project-github-link" title="View Source on GitHub">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+          </svg>
+        </a>
+      ` : `
+        <span class="project-local-badge mono" title="Private codebase / local project — not yet on GitHub">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span>${p.statusLabel || "Local / In Dev"}</span>
+        </span>
+      `;
+
       card.innerHTML = `
         <div class="project-card-header">
           <div>
@@ -217,11 +237,7 @@ export function initProjectsGrid() {
             </div>
             <h3 class="project-name mono" style="margin-top:0.4rem;">${p.name}</h3>
           </div>
-          <a href="${p.repoUrl}" target="_blank" rel="noopener noreferrer" class="project-github-link" title="View Source on GitHub">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-            </svg>
-          </a>
+          ${actionHtml}
         </div>
 
         <p class="project-tagline">${p.tagline}</p>

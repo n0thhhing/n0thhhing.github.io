@@ -4,6 +4,7 @@
  */
 
 import { selectRoutine } from './disassembler.js';
+import { applyTheme, getCurrentTheme, THEMES } from './themes.js';
 
 const TERMINAL_COMMANDS = {
   help: () => `
@@ -11,6 +12,7 @@ const TERMINAL_COMMANDS = {
   <span class="mono" style="color:var(--cyan)">about</span>      - Display background, focus, and engineering ethos
   <span class="mono" style="color:var(--cyan)">projects</span>   - List featured systems, compilers, & reverse engineering tools
   <span class="mono" style="color:var(--cyan)">skills</span>     - Show architecture, languages, & low-level proficiencies
+  <span class="mono" style="color:var(--cyan)">theme</span>      - Switch or list themes (usage: theme [gruvbox|panda|dracula|monokai|catppuccin])
   <span class="mono" style="color:var(--cyan)">disasm</span>     - Inspect ARM64 routine (usage: disasm [rarm64|zeon|il2cpp])
   <span class="mono" style="color:var(--cyan)">simd</span>       - Jump to NEON SIMD vector visualizer
   <span class="mono" style="color:var(--cyan)">contact</span>    - GitHub, email, and Discord details
@@ -157,6 +159,29 @@ export class Terminal {
       } else {
         selectRoutine("rarm64_demangle");
         this.appendOutput(`<span class="accent">Switched disassembler to 'rarm64 :: _swift_demangle_entry'</span>`);
+      }
+      return;
+    }
+
+    if (command === "theme") {
+      const target = args[0] ? args[0].toLowerCase() : null;
+      if (!target || target === "list") {
+        const current = getCurrentTheme();
+        const listHtml = THEMES.map(t => {
+          const isCur = t.id === current;
+          return `  • <span style="color:${isCur ? 'var(--cyan)' : 'var(--text-secondary)'};font-weight:${isCur ? '700' : '400'}">${t.id}</span> ${isCur ? ' <span style="color:var(--emerald)">(active)</span>' : ''} — ${t.name}`;
+        }).join("<br>");
+        this.appendOutput(`<span class="accent">Available Themes:</span><br>${listHtml}<br><span style="color:var(--text-muted);font-size:0.775rem;">Usage: theme [name] (e.g. theme gruvbox-material, theme panda)</span>`);
+        return;
+      }
+
+      // Fuzzy match target theme
+      const match = THEMES.find(t => t.id.includes(target) || t.name.toLowerCase().includes(target));
+      if (match) {
+        applyTheme(match.id, true);
+        this.appendOutput(`<span class="accent">Theme switched to: <b>${match.name}</b> (${match.id})</span>`);
+      } else {
+        this.appendOutput(`<span class="error">Unknown theme '${args[0]}'. Type 'theme' to see available themes.</span>`);
       }
       return;
     }

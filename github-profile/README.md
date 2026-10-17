@@ -29,12 +29,12 @@ I build software with hardware-level empathy:
 | [**`zeon`**](https://github.com/n0thhhing/zeon) | ★ 16 | `Zig` `ARM64` `NEON` `ASM` | 2,800+ ARM/ARM64 NEON intrinsics in pure Zig & inline assembly with 2,815+ passing unit tests. |
 | [**`ts-capstone`**](https://github.com/n0thhhing/ts-capstone) | ★ 6 | `TypeScript` `Capstone 5.0` `Wasm` | Full-featured Capstone 5.0 bindings for TypeScript & Bun via Emscripten with detailed instruction inspection. |
 | [**`Offset-updater`**](https://github.com/n0thhhing/Offset-updater) | ★ 2 | `TypeScript` `C++` `ARM NEON` | AArch64 IL2CPP offset updater with Capstone wildcard signatures and native NEON scanning engine. |
-| [**`rarm64`**](https://github.com/n0thhhing/rarm64) | — | `Rust` `ARM64` `Mach-O` | Zero-dependency Mach-O ARM64/ARM64e disassembler matching Arm 2026-09 spec with pure-Rust demangler (Swift 5+ & Rust v0). |
-| [**`il2cpp`**](https://github.com/n0thhhing/il2cpp) | — | `Zig` `Android ELF` `SQLite` | Unity IL2CPP v29 metadata & 64-bit Android ELF analyzer, stripped registration discovery, and SQLite call-graph exporter. |
+| **`rarm64`** *(In Dev)* | — | `Rust` `ARM64` `Mach-O` | Zero-dependency Mach-O ARM64/ARM64e disassembler matching Arm 2026-09 spec with pure-Rust demangler (Swift 5+ & Rust v0). |
+| **`il2cpp v29`** *(In Dev)* | — | `Zig` `Android ELF` `SQLite` | Unity IL2CPP v29 metadata & 64-bit Android ELF analyzer, stripped registration discovery, and SQLite call-graph exporter. |
 | [**`z-scanner`**](https://github.com/n0thhhing/z-scanner) | ★ 1 | `Zig` `AOB` `Memory Scan` | High-performance Array of Bytes (AOB) memory pattern scanner in Zig with wildcard masking (`?`, `??`). |
 | [**`lwasm`**](https://github.com/n0thhhing/lwasm) | ★ 1 | `Lua` `C` `WebAssembly 2.0` | WebAssembly 2.0 runtime, disassembler, and WAT decompiler passing 292 W3C specification suites. |
 | [**`wallify`**](https://github.com/n0thhhing/wallify) | — | `Zig` `Swift` `Metal` `ImGui` | Native macOS audio widget with live system audio waveform capture, ambient artwork glow, and Dear ImGui diagnostics. |
-| [**`hexer`**](https://github.com/n0thhhing/hexer) | — | `Rust` `Terminal` `Zero-Deps` | Terminal hex viewer with ANSI mouse reporting, wildcard byte searching (`4? ??`), and zero Cargo dependencies. |
+| **`hexer`** *(In Dev)* | — | `Rust` `Terminal` `Zero-Deps` | Terminal hex viewer with ANSI mouse reporting, wildcard byte searching (`4? ??`), and zero Cargo dependencies. |
 | [**`Discord-rich-presence`**](https://github.com/n0thhhing/Discord-rich-presence) | ★ 2 | `Node.js` `IPC Sockets` | Custom Unix domain socket IPC client for dynamic Discord rich presence status management. |
 
 ---

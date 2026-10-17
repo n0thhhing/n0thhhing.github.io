@@ -40,12 +40,55 @@
         </ul>
       </nav>
 
-      <a href="https://github.com/n0thhhing" target="_blank" rel="noopener noreferrer" class="nav-github-btn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-        </svg>
-        <span>@n0thhhing</span>
-      </a>
+      <div class="nav-right-actions">
+        <!-- Theme Picker Dropdown -->
+        <div class="theme-picker-wrapper">
+          <button id="theme-btn" class="theme-select-btn" aria-label="Select Theme">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M12 3a9 9 0 0 0 0 18v-18z"></path>
+            </svg>
+            <span id="theme-label">Gruvbox Material</span>
+          </button>
+          <div id="theme-dropdown" class="theme-dropdown-menu">
+            <button class="theme-option-btn active" data-theme="gruvbox-material">
+              <span class="theme-swatch" style="background:#ea6962;box-shadow:0 0 0 2px #d8a657"></span>
+              <span>Gruvbox Material</span>
+            </button>
+            <button class="theme-option-btn" data-theme="gruvbox">
+              <span class="theme-swatch" style="background:#fb4934;box-shadow:0 0 0 2px #fabd2f"></span>
+              <span>Gruvbox</span>
+            </button>
+            <button class="theme-option-btn" data-theme="panda">
+              <span class="theme-swatch" style="background:#ff75b5;box-shadow:0 0 0 2px #19f9d8"></span>
+              <span>Panda</span>
+            </button>
+            <button class="theme-option-btn" data-theme="dracula">
+              <span class="theme-swatch" style="background:#bd93f9;box-shadow:0 0 0 2px #50fa7b"></span>
+              <span>Dracula</span>
+            </button>
+            <button class="theme-option-btn" data-theme="monokai-pro">
+              <span class="theme-swatch" style="background:#ffd866;box-shadow:0 0 0 2px #a9dc76"></span>
+              <span>Monokai Pro</span>
+            </button>
+            <button class="theme-option-btn" data-theme="catppuccin-frappe">
+              <span class="theme-swatch" style="background:#ca9ee6;box-shadow:0 0 0 2px #81c8be"></span>
+              <span>Catppuccin Frappé</span>
+            </button>
+            <button class="theme-option-btn" data-theme="void-cyber">
+              <span class="theme-swatch" style="background:#00f5ff;box-shadow:0 0 0 2px #00ff9d"></span>
+              <span>Void Cyber</span>
+            </button>
+          </div>
+        </div>
+
+        <a href="https://github.com/n0thhhing" target="_blank" rel="noopener noreferrer" class="nav-github-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+          </svg>
+          <span>@n0thhhing</span>
+        </a>
+      </div>
     </div>
   </header>
 
