@@ -1130,6 +1130,16 @@ a:hover {
   white-space: normal;
 }
 
+.fetch-image {
+  width: 136px;
+  height: 136px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1.5px solid var(--border-amber);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+}
+
 .fetch-ascii {
   margin: 0;
   color: var(--amber);

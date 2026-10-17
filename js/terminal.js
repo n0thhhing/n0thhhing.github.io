@@ -70,14 +70,8 @@ I build software with hardware-level empathy and an artist's obsession with colo
 `,
 
   fetch: () => `
-<div class="terminal-fetch" style="display:flex;align-items:flex-start;gap:1.75rem;margin:0.4rem 0;font-family:var(--font-mono);white-space:normal;">
-  <pre class="fetch-ascii" style="margin:0;color:var(--amber);font-family:inherit;font-size:0.85rem;line-height:1.25;font-weight:700;white-space:pre;user-select:none;">   __        __   
-  /  \\      /  \\  
- / /\\ \\    / /\\ \\ 
-/ /  \\ \\  / /  \\ \\
-\\ \\  / /  \\ \\  / /
- \\ \\/ /    \\ \\/ / 
-  \\__/      \\__/  </pre>
+<div class="terminal-fetch" style="display:flex;align-items:flex-start;gap:1.5rem;margin:0.4rem 0;font-family:var(--font-mono);white-space:normal;">
+  <img src="assets/avatar.png" alt="levi@aarch64" class="fetch-image" style="width:136px;height:136px;border-radius:8px;object-fit:cover;border:1.5px solid var(--border-amber);box-shadow:0 4px 16px rgba(0,0,0,0.4);flex-shrink:0;display:block;">
   <div class="fetch-info" style="display:flex;flex-direction:column;gap:0.25rem;font-size:0.825rem;line-height:1.45;">
     <div class="fetch-title" style="font-size:0.9rem;margin-bottom:0.1rem;">
       <span style="color:var(--title-highlight);font-weight:700;">levi</span>@<span style="color:var(--cyan);font-weight:700;">aarch64</span>
