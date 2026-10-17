@@ -102,6 +102,7 @@
           <button class="explorer-theme" data-open-palette>Change theme <span aria-hidden="true">↗</span></button>
         </div>
       </aside>
+      <div id="explorer-resizer" class="explorer-resizer" role="separator" aria-label="Resize project panel" aria-orientation="vertical" tabindex="0"></div>
       <div class="editor">
         <div class="tab-strip">
           <div class="tab-history-nav">
@@ -168,9 +169,31 @@
         <span class="status-cursor">10:148</span>
         <span class="status-encoding">UTF-8</span>
         <span class="status-zed-badge">Z</span>
-        <button class="status-btn status-bell" aria-label="Notifications" title="1 Notification"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 1.5a2.5 2.5 0 0 0-2.5 2.5v1.8a4 4 0 0 1-.8 2.4L3.5 10h9l-1.2-1.8a4 4 0 0 1-.8-2.4V4A2.5 2.5 0 0 0 8 1.5zm-1.5 11a1.5 1.5 0 0 0 3 0h-3z"/></svg><span class="bell-count">1</span></button>
+        <button id="status-bell" class="status-btn status-bell" aria-label="Notifications" title="1 Notification" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 1.5a2.5 2.5 0 0 0-2.5 2.5v1.8a4 4 0 0 1-.8 2.4L3.5 10h9l-1.2-1.8a4 4 0 0 1-.8-2.4V4A2.5 2.5 0 0 0 8 1.5zm-1.5 11a1.5 1.5 0 0 0 3 0h-3z"/></svg><span class="bell-count">1</span></button>
       </div>
     </footer>
+    <div id="notification-popover" class="notification-popover" hidden aria-label="Notifications" role="region">
+      <div class="notification-popover-header">
+        <span class="notification-popover-title"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M8 1.5a2.5 2.5 0 0 0-2.5 2.5v1.8a4 4 0 0 1-.8 2.4L3.5 10h9l-1.2-1.8a4 4 0 0 1-.8-2.4V4A2.5 2.5 0 0 0 8 1.5zm-1.5 11a1.5 1.5 0 0 0 3 0h-3z"/></svg> Notifications</span>
+        <div class="notification-popover-actions">
+          <button id="notification-clear" class="notification-clear-btn" aria-label="Clear all notifications">Clear all</button>
+          <button id="notification-close" class="icon-button notification-close-btn" aria-label="Close notification panel">×</button>
+        </div>
+      </div>
+      <div id="notification-list" class="notification-list">
+        <div class="notification-card unread" id="notif-welcome">
+          <div class="notification-card-dot" aria-hidden="true"></div>
+          <div class="notification-card-content">
+            <div class="notification-card-header">
+              <span class="notification-card-title">Welcome to Levi’s workspace</span>
+              <span class="notification-card-time">now</span>
+            </div>
+            <p class="notification-card-msg">Pixel-accurate Zed redesign is active with Gruvbox Material, interactive terminal shell, and project inspector.</p>
+          </div>
+          <button class="notification-card-dismiss" data-dismiss-id="notif-welcome" aria-label="Dismiss notification">×</button>
+        </div>
+      </div>
+    </div>
   </div>
   <dialog class="picker theme-picker" id="palette" aria-labelledby="palette-title">
     <div class="picker-heading"><h2 id="palette-title">Select a theme</h2><button class="icon-button" data-close-dialog aria-label="Close theme palette">×</button></div>

@@ -185,9 +185,149 @@ initTerminal({
   applyTheme,
 });
 
+// Explorer sidebar resizer (drag without visual highlight, only cursor change)
+function initExplorerResizer() {
+  const resizer = $('#explorer-resizer');
+  if (!resizer) return;
+  let drag = null;
+  resizer.addEventListener('pointerdown', event => {
+    if (event.button !== 0) return;
+    drag = { startX: event.clientX, initialWidth: $('#explorer').getBoundingClientRect().width };
+    resizer.setPointerCapture(event.pointerId);
+    document.body.classList.add('explorer-resizing');
+    event.preventDefault();
+  });
+  resizer.addEventListener('pointermove', event => {
+    if (!drag) return;
+    const newWidth = Math.max(160, Math.min(500, Math.round(drag.initialWidth + (event.clientX - drag.startX))));
+    document.documentElement.style.setProperty('--explorer-width', `${newWidth}px`);
+    resizer.setAttribute('aria-valuenow', newWidth);
+  });
+  const endDrag = () => {
+    if (drag) {
+      drag = null;
+      document.body.classList.remove('explorer-resizing');
+      try { storage?.setItem('levi-explorer-width', getComputedStyle(document.documentElement).getPropertyValue('--explorer-width')); } catch {}
+    }
+  };
+  resizer.addEventListener('pointerup', endDrag);
+  resizer.addEventListener('pointercancel', endDrag);
+  resizer.addEventListener('dblclick', () => {
+    document.documentElement.style.setProperty('--explorer-width', '240px');
+    try { storage?.removeItem('levi-explorer-width'); } catch {}
+  });
+  try {
+    const saved = storage?.getItem('levi-explorer-width');
+    if (saved) document.documentElement.style.setProperty('--explorer-width', saved.trim());
+  } catch {}
+}
+initExplorerResizer();
+
+// Movable / draggable windows (Theme Picker, File Picker, Notifications)
+function makeDraggable(dialog, handle) {
+  if (!dialog || !handle) return;
+  let drag = null;
+  handle.addEventListener('pointerdown', event => {
+    if (event.button !== 0 || event.target.closest('button, input, a')) return;
+    const rect = dialog.getBoundingClientRect();
+    drag = {
+      startX: event.clientX,
+      startY: event.clientY,
+      initialLeft: rect.left,
+      initialTop: rect.top,
+      width: rect.width,
+      height: rect.height,
+    };
+    handle.setPointerCapture(event.pointerId);
+    document.body.classList.add('dialog-dragging');
+    event.preventDefault();
+  });
+  handle.addEventListener('pointermove', event => {
+    if (!drag) return;
+    const dx = event.clientX - drag.startX;
+    const dy = event.clientY - drag.startY;
+    const maxLeft = window.innerWidth - drag.width - 10;
+    const maxTop = window.innerHeight - drag.height - 10;
+    const newLeft = Math.max(10, Math.min(maxLeft, drag.initialLeft + dx));
+    const newTop = Math.max(10, Math.min(maxTop, drag.initialTop + dy));
+    dialog.style.position = 'fixed';
+    dialog.style.left = `${newLeft}px`;
+    dialog.style.top = `${newTop}px`;
+    dialog.style.margin = '0';
+  });
+  const endDrag = () => {
+    drag = null;
+    document.body.classList.remove('dialog-dragging');
+  };
+  handle.addEventListener('pointerup', endDrag);
+  handle.addEventListener('pointercancel', endDrag);
+}
+
+makeDraggable($('#palette'), $('#palette .picker-heading'));
+makeDraggable($('#file-picker'), $('#file-picker .file-picker-search'));
+makeDraggable($('#notification-popover'), $('#notification-popover .notification-popover-header'));
+
+// Notifications panel
+const notifPopover = $('#notification-popover');
+const bellBtn = $('#status-bell');
+const bellCount = $('.bell-count');
+
+function toggleNotifications() {
+  if (!notifPopover) return;
+  const isHidden = notifPopover.hidden;
+  notifPopover.hidden = !isHidden;
+  bellBtn?.setAttribute('aria-expanded', isHidden);
+}
+
+function closeNotifications() {
+  if (!notifPopover || notifPopover.hidden) return;
+  notifPopover.hidden = true;
+  bellBtn?.setAttribute('aria-expanded', 'false');
+}
+
+function updateNotificationBadge() {
+  const remaining = $('#notification-list')?.querySelectorAll('.notification-card').length ?? 0;
+  if (remaining === 0) {
+    if (bellCount) bellCount.style.display = 'none';
+    bellBtn?.setAttribute('title', '0 Notifications');
+    bellBtn?.setAttribute('aria-label', 'Notifications (0)');
+    const list = $('#notification-list');
+    if (list) list.innerHTML = '<div class="notification-empty">No notifications</div>';
+  } else {
+    if (bellCount) {
+      bellCount.style.display = 'grid';
+      bellCount.textContent = String(remaining);
+    }
+    bellBtn?.setAttribute('title', `${remaining} Notification${remaining > 1 ? 's' : ''}`);
+    bellBtn?.setAttribute('aria-label', `Notifications (${remaining})`);
+  }
+}
+
 document.addEventListener('click', event => {
   const target = event.target.closest('button, a');
+  if (notifPopover && !notifPopover.hidden && !notifPopover.contains(event.target) && !event.target.closest('#status-bell, .status-bell')) {
+    closeNotifications();
+  }
   if (!target) return;
+  if (target.matches('#status-bell, .status-bell, .status-bell *')) {
+    toggleNotifications();
+    return;
+  }
+  if (target.matches('#notification-close, .notification-close-btn')) {
+    closeNotifications();
+    return;
+  }
+  if (target.matches('#notification-clear, .notification-clear-btn')) {
+    const list = $('#notification-list');
+    if (list) list.innerHTML = '';
+    updateNotificationBadge();
+    return;
+  }
+  if (target.matches('[data-dismiss-id]')) {
+    $(`#${target.dataset.dismissId}`)?.remove();
+    updateNotificationBadge();
+    return;
+  }
   if (target.matches('[data-theme-id]')) applyTheme(target.dataset.themeId);
   if (target.matches('[data-filter]')) {
     category = target.dataset.filter;
@@ -216,6 +356,9 @@ document.addEventListener('click', event => {
 });
 $('#drawer-backdrop').addEventListener('click', () => closeDrawer());
 document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') {
+    closeNotifications();
+  }
   if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'p' && !event.shiftKey && !event.altKey) {
     event.preventDefault();
     if (!document.querySelector('dialog[open]')) openPicker('file-picker', document.activeElement);
