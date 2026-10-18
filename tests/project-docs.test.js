@@ -18,7 +18,7 @@ test('Proplam-menu documents the historical Herx/JUDSN work', () => {
   const project = projects.find(item => item.id === 'proplam-menu');
   assert.ok(project);
   assert.equal(project.repoUrl, 'https://github.com/n0thhhing/Proplam-menu');
-  assert.match(projectDeepDives['proplam-menu'].summary, /Herx\/JUDSN-era/);
+  assert.match(projectDeepDives['proplam-menu'].summary, /Herx\/JUDSN era/);
 });
 test('Discord Rich Presence describes the Gateway WebSocket', () => {
   const project = projects.find(item => item.id === 'discord-rich-presence');
