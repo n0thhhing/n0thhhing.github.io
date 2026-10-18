@@ -1,5 +1,6 @@
 import { projects, profile, music, anime, repositoryLink, projectStatus, hackathons, ossContributions } from './content.js';
 import { projectPage } from './project-page.js';
+export { projectPage };
 
 export const escapeHTML = value => String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
 const e = escapeHTML;
