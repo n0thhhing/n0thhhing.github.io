@@ -642,7 +642,7 @@ function updateExecutionFlow(root) {
   root.dataset.flowStep = String(step);
   const currentId = path[step];
   const selectedId = root.dataset.flowSelected || currentId;
-  const scenarioButton = root.querySelector('[data-flow-scenario].is-selected');
+  const scenarioButton = [...root.querySelectorAll('[data-flow-scenario]')].find(button => button.dataset.flowScenario === root.dataset.flowActiveScenario);
   const totalProgress = path.length > 1 ? Math.round(step / (path.length - 1) * 100) : 100;
 
   root.querySelectorAll('[data-flow-scenario]').forEach(button => {
@@ -678,8 +678,8 @@ function updateExecutionFlow(root) {
   const selectedNode = nodeButtons.find(button => button.dataset.flowNode === selectedId) ||
     nodeButtons.find(button => button.dataset.flowNode === currentId);
   if (selectedNode) {
-    const selectedOnPath = path.includes(selectedNode.dataset.flowNode);
-    const selectedStep = path.indexOf(selectedNode.dataset.flowNode);
+    const selectedOnPath = selectedNode.dataset.flowNode === currentId || path.includes(selectedNode.dataset.flowNode);
+    const selectedStep = selectedNode.dataset.flowNode === currentId ? step : path.indexOf(selectedNode.dataset.flowNode);
     const kicker = root.querySelector('[data-flow-inspector-kicker]');
     if (kicker) {
       kicker.textContent = selectedOnPath
