@@ -1066,3 +1066,6 @@ details[open] > summary > .folder-icon > .folder-open { display: block; }
 /* Keep the document's navigation affordances close while reading long notes. */
 .project-document .project-reading-tools{position:sticky;top:0;z-index:4;background:var(--panel);border-bottom:1px solid var(--border)}
 @media(max-width:760px){.project-document .project-reading-tools{top:0}}
+
+.project-document .project-doc-section,.project-document .project-doc-overview{scroll-margin-top:60px}
+@media(max-width:760px){.project-document .project-doc-section,.project-document .project-doc-overview{scroll-margin-top:88px}}
