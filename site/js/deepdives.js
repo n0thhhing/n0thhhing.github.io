@@ -484,20 +484,24 @@ export const projectDeepDives = {
     ]
   },
   "shizukuboothelper": {
-    "summary": "An Android experiment exploring automated Shizuku startup on a non-root device under wireless-debugging and background-execution constraints.",
-    "problem": "Starting Shizuku depends on ADB authorization, changing wireless-debugging ports, network state, and Android's background-service rules.",
+    "summary": "A Shizuku-startup experiment that began on a non-rooted phone and relied on VPhoneGaGa as a virtualized Android workaround before investigating a repeatable ADB/Termux bootstrap path.",
+    "problem": "The starting phone was not rooted, so there was no root shell to rely on for starting Shizuku. VPhoneGaGa provided a virtualized environment to experiment with, but virtualization adds another boundary: its networking, permissions, and process behavior are not automatically the same as on the physical phone. The remaining path depends on Android's own wireless-debugging state, ADB authorization, changing endpoints, and background-execution rules.",
     "workflow": [
       {
-        "title": "Detect debugging state",
-        "detail": "The prototype looks for a discoverable ADB endpoint instead of assuming the port persists after reboot."
+        "title": "Start without root",
+        "detail": "The initial constraint was a non-rooted phone. The workflow could not assume direct root access to launch the daemon or change protected system state."
       },
       {
-        "title": "Try a local connection",
-        "detail": "A shell helper explores mDNS-discovered ADB services and loopback before invoking the Shizuku startup script."
+        "title": "Use VPhoneGaGa as a workaround",
+        "detail": "VPhoneGaGa supplied a virtualized Android environment for early experimentation. Results in that environment still need to be distinguished from behavior on the physical phone."
       },
       {
-        "title": "Record the failures",
-        "detail": "The investigation documents Wi-Fi state, wireless-debugging availability, pairing, and privilege boundaries."
+        "title": "Discover the current ADB endpoint",
+        "detail": "The Termux-side investigation checks the available wireless-debugging service rather than hard-coding a port that can change after reboot or settings changes."
+      },
+      {
+        "title": "Attempt only the authorized startup path",
+        "detail": "When the endpoint and existing authorization are available, the helper can attempt the Shizuku startup script. Missing Wi-Fi, permissions, or background execution conditions should produce a blocked result, not a claimed success."
       }
     ],
     "validation": [
@@ -511,11 +515,11 @@ export const projectDeepDives = {
       }
     ],
     "limits": [
-      "Does not bypass Android's authorization model or promise startup in every network state.",
-      "Wireless debugging has been unavailable in some tested states without active Wi-Fi.",
-      "Android version and OEM background restrictions can change behavior."
+      "VPhoneGaGa is a virtualized workaround, not proof that the exact same flow works on every physical handset.",
+      "Does not bypass Android's authorization model or promise startup in every network state; wireless-debugging availability can depend on Wi-Fi and current settings.",
+      "Android version, OEM background restrictions, and virtualized networking can change behavior."
     ],
-    "next": "Keep limitations with the prototype, make failure states visible, and avoid promising unattended startup until reboot/network tests are repeatable.",
+    "next": "Keep the physical-phone and VPhoneGaGa environments distinct in the notes, show a clear result when ADB discovery or authorization fails, and do not promise unattended startup until reboot/network tests are repeatable.",
     "refs": []
   },
   "proplam-menu": {
