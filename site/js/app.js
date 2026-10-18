@@ -643,6 +643,9 @@ function updateExecutionFlow(root) {
   const currentId = path[step];
   const selectedId = root.dataset.flowSelected || currentId;
   const scenarioButton = [...root.querySelectorAll('[data-flow-scenario]')].find(button => button.dataset.flowScenario === root.dataset.flowActiveScenario);
+  const graphViewport = root.querySelector('.execution-flow-graph-scroll');
+  const panHint = root.querySelector('.execution-flow-pan-hint');
+  if (graphViewport && panHint) panHint.hidden = graphViewport.scrollWidth <= graphViewport.clientWidth + 12;
   const totalProgress = path.length > 1 ? Math.round(step / (path.length - 1) * 100) : 100;
 
   root.querySelectorAll('[data-flow-scenario]').forEach(button => {
@@ -838,4 +841,5 @@ const executionFlowObserver = new MutationObserver(records => {
   if (addedFlow) requestAnimationFrame(refreshExecutionFlows);
 });
 executionFlowObserver.observe(document.body, { childList: true, subtree: true });
+window.addEventListener('resize', refreshExecutionFlows);
 requestAnimationFrame(refreshExecutionFlows);
