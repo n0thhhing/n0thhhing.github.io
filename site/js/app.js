@@ -758,6 +758,7 @@ document.addEventListener('click', event => {
     root.dataset.flowStep = '0';
     root.dataset.flowSelected = (target.dataset.flowSteps || '').split('>').filter(Boolean)[0] || '';
     updateExecutionFlow(root);
+    keepExecutionFlowNodeVisible(root, root.dataset.flowSelected);
     const announcer = document.querySelector('#announcer');
     if (announcer) announcer.textContent = 'Execution path selected: ' + target.textContent.trim();
     return;
