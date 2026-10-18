@@ -1,6 +1,7 @@
 
 import { projects, repositoryLink, projectStatus } from './content.js';
 import { projectDeepDives } from './deepdives.js';
+import { renderExecutionFlow } from './execution-flow.js';
 const e = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inline = value => e(value).replace(/`([^`]+)`/g,'<code>$1</code>');
 const idFor = (project,key) => `doc-${project.id}-${key}`;
@@ -10,7 +11,7 @@ function cards(items,kind=''){return `<div class="project-doc-cards ${kind}">${i
 export function projectPage(project){
  const doc=projectDeepDives[project.id]??{summary:project.description,problem:'',workflow:[],validation:[],limits:[],next:'',refs:[]};
  const repo=repositoryLink(project), index=projects.findIndex(p=>p.id===project.id), previous=projects[(index-1+projects.length)%projects.length], next=projects[(index+1)%projects.length];
- const toc=[{key:'overview',label:'Overview'},...(project.specs?.length?[{key:'specs',label:'At a glance'}]:[]),...(doc.problem?[{key:'problem',label:'Problem & context'}]:[]),...(doc.workflow?.length?[{key:'workflow',label:'How it works'}]:[]),...(project.architectureFlow?[{key:'architecture',label:'Architecture'}]:[]),...(project.subsystems?.length?[{key:'subsystems',label:'Subsystems'}]:[]),...(project.details?.length?[{key:'decisions',label:'Implementation notes'}]:[]),...(project.deepDive?[{key:'mechanics',label:'Core mechanics'}]:[]),...(doc.validation?.length?[{key:'validation',label:'Validation'}]:[]),...(doc.limits?.length?[{key:'limits',label:'Limits & trade-offs'}]:[]),...(doc.next?[{key:'next',label:'Open questions'}]:[]),...(project.snippet?[{key:'code',label:'Code sample'}]:[]),...(repo||doc.refs?.length?[{key:'refs',label:'References'}]:[])];
+ const toc=[{key:'overview',label:'Overview'},...(project.specs?.length?[{key:'specs',label:'At a glance'}]:[]),...(doc.problem?[{key:'problem',label:'Problem & context'}]:[]),...(doc.workflow?.length?[{key:'workflow',label:'How it works'}]:[]),...((project.architectureFlow || projectDeepDives[project.id]?.workflow?.length)?[{key:'architecture',label:'Execution flow'}]:[]),...(project.subsystems?.length?[{key:'subsystems',label:'Subsystems'}]:[]),...(project.details?.length?[{key:'decisions',label:'Implementation notes'}]:[]),...(project.deepDive?[{key:'mechanics',label:'Core mechanics'}]:[]),...(doc.validation?.length?[{key:'validation',label:'Validation'}]:[]),...(doc.limits?.length?[{key:'limits',label:'Limits & trade-offs'}]:[]),...(doc.next?[{key:'next',label:'Open questions'}]:[]),...(project.snippet?[{key:'code',label:'Code sample'}]:[]),...(repo||doc.refs?.length?[{key:'refs',label:'References'}]:[])];
  const metadata=[['kind',project.category],['status',projectStatus(project)],['stack',(project.tech??[]).slice(0,3).join(' · ')||'Not specified'],['source',repo?'Public repository':'Local / in development']].map(([k,v])=>`<div class="doc-frontmatter-row"><span>${e(k)}</span><strong>${e(v)}</strong></div>`).join('');
  const tech=(project.tech??[]).map(t=>`<span class="tech-tag">${e(t)}</span>`).join('');
  return `<article class="page prose project-document">
@@ -22,7 +23,7 @@ export function projectPage(project){
  ${project.specs?.length?section(project,'specs','At a glance',`<div class="spec-metrics">${project.specs.map(x=>`<span class="spec-metric">${e(x)}</span>`).join('')}</div>`):''}
  ${doc.problem?section(project,'problem','Problem & context',`<p>${inline(doc.problem)}</p>`):''}
  ${doc.workflow?.length?section(project,'workflow','How it works',cards(doc.workflow,'project-doc-steps')):''}
- ${project.architectureFlow?section(project,'architecture','Architecture & execution flow',`<pre class="arch-diagram"><code>${e(project.architectureFlow)}</code></pre>`):''}
+ ${project.architectureFlow || projectDeepDives[project.id]?.workflow?.length?section(project,'architecture','Interactive execution flow',renderExecutionFlow(project.id,project.architectureFlow)):''}
  ${project.subsystems?.length?section(project,'subsystems','Subsystems & responsibilities',`<div class="subsystem-grid">${project.subsystems.map(s=>`<article class="subsystem-card"><h3>${e(s.name)}</h3><p>${inline(s.description)}</p></article>`).join('')}</div>`):''}
  ${project.details?.length?section(project,'decisions','Implementation notes',`<ul class="detail-list">${project.details.map(x=>`<li>${inline(x)}</li>`).join('')}</ul>`):''}
  ${project.deepDive?section(project,'mechanics','Core mechanics',`<div class="project-deep-dive">${project.deepDive}</div>`):''}
