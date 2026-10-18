@@ -631,9 +631,9 @@ pub fn sse42_strstr(haystack: []const u8, needle: []const u8) ?usize {
   },
   {
     id: 'shizukuboothelper', name: 'ShizukuBootHelper', category: 'Apps',
-    description: 'An experimental Android helper for Shizuku startup.',
-    tech: ['Java', 'Android 17', 'Termux', 'Wireless ADB'], status: 'Experimental', repoUrl: null,
-    specs: ['Android 17 (Pixel 11 Pro)', 'Wireless ADB Loopback (127.0.0.1)', 'Termux Automation Scripting', 'SELinux Boundary Analysis', 'Rootless Privileged Execution'],
+    description: 'An experimental Shizuku-startup investigation that began on a non-rooted phone and relied on VPhoneGaGa as a virtualized workaround.',
+    tech: ['Java', 'Android', 'VPhoneGaGa', 'Termux', 'Wireless ADB'], status: 'Experimental', repoUrl: null,
+    specs: ['Started on a non-rooted phone', 'VPhoneGaGa virtualized workaround', 'Termux automation + Wireless ADB', 'Dynamic ADB endpoint discovery', 'SELinux / privilege-boundary investigation'],
     architectureFlow: `[Device Boot / Network Event] ──► [Termux Automation Trigger]
                                              │
                                              ▼
@@ -652,14 +652,14 @@ pub fn sse42_strstr(haystack: []const u8, needle: []const u8) ?usize {
       { name: 'scripts/helper.sh', description: 'Shell script testing wireless ADB daemon availability on localhost, resolving dynamic mDNS pairing ports.' },
       { name: 'docs/limits.md', description: 'Technical investigation documenting Android 17 SELinux restrictions, ADB wireless loopback constraints, and background service execution limits.' },
     ],
-    deepDive: `<p>On modern Android (Android 17), Shizuku provides rootless access to system APIs via the <code>shell</code> UID (2000). However, starting the service requires wireless ADB debugging, which resets its port upon reboot and requires an active Wi-Fi connection.</p><p>This project investigated native helper routines and Termux automation scripts to detect local network states, discover ADB ports via mDNS services, and automate daemon startup without manual developer settings intervention.</p>`,
+    deepDive: `<p>This started on a non-rooted Android phone, so I could not assume a root shell was available to bootstrap Shizuku. I ended up relying on VPhoneGaGa as a virtualized Android workaround while investigating the startup path. That was a practical way to experiment, but a virtualized environment is not identical to the physical device and can add its own process, networking, and permission boundaries.</p><p>From there, I explored Termux automation and wireless ADB discovery rather than hard-coding a port that may change after reboot. The helper checks whether the required debugging endpoint is available, attempts the already-authorized connection, and invokes the Shizuku startup script only when that path is usable. It does not remove Android's authorization requirements or magically add root access.</p>`,
     details: [
-      'Explores a native helper and Termux script for starting Shizuku on Android 17 without root.',
-      'Investigates platform limits: wireless ADB loopback requires an active Wi-Fi connection and cannot pair over mobile hotspot.',
-      'An experiment documenting real-world Android SELinux permissions, ADB daemon pairing, and process boundaries.',
+      'Started from a non-rooted phone, then relied on VPhoneGaGa as a virtualized Android environment during early experimentation.',
+      'Explores a Termux helper path for discovering wireless-ADB endpoints instead of assuming the port stays constant after reboot.',
+      'Documents Wi-Fi, ADB authorization, SELinux, and virtualized-versus-physical-device boundaries; it does not bypass them.',
     ],
     snippet: `#!/data/data/com.termux/files/usr/bin/bash
-# Query mDNS for wireless ADB pairing port on Android 17
+# Experimental: discover the currently available wireless-ADB endpoint
 PORT=$(adb mdns services | grep _adb-tls-connect | awk -F':' '{print $2}')
 if [ -n "$PORT" ]; then
     adb connect 127.0.0.1:$PORT
