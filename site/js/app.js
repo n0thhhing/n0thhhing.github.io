@@ -452,6 +452,37 @@ $('.statusbar').addEventListener('keydown', event => {
 });
 
 
+// Small document actions keep project write-ups useful as both editor previews and standalone case studies.
+document.addEventListener('click', async event => {
+  const button = event.target instanceof Element ? event.target.closest('[data-doc-reading-width], [data-doc-copy-link], [data-doc-print]') : null;
+  if (!button) return;
+  const article = button.closest('.project-document');
+  if (!article) return;
+  if (button.hasAttribute('data-doc-reading-width')) {
+    const enabled = article.classList.toggle('reading-focus');
+    button.setAttribute('aria-pressed', String(enabled));
+    button.textContent = enabled ? 'Exit focus' : 'Focus reading';
+    const announcer = document.querySelector('#announcer');
+    if (announcer) announcer.textContent = enabled ? 'Focused reading width enabled' : 'Focused reading width disabled';
+  } else if (button.hasAttribute('data-doc-copy-link')) {
+    const url = new URL(window.location.href);
+    url.hash = `projects/${article.querySelector('.project-doc-overview')?.id?.replace('doc-', '').replace(/-overview$/, '') || ''}`;
+    try {
+      await navigator.clipboard.writeText(url.href);
+      button.textContent = 'Copied!';
+      const announcer = document.querySelector('#announcer');
+      if (announcer) announcer.textContent = 'Project link copied';
+      window.setTimeout(() => { if (button.isConnected) button.textContent = 'Copy link'; }, 1400);
+    } catch {
+      button.textContent = 'Select URL above';
+      const announcer = document.querySelector('#announcer');
+      if (announcer) announcer.textContent = 'Clipboard unavailable. Copy the project URL from the address bar.';
+    }
+  } else if (button.hasAttribute('data-doc-print')) {
+    window.print();
+  }
+});
+
 // Outline navigation stays within the active Zed-style project document.
 document.addEventListener('click', event => {
   const trigger = event.target instanceof Element ? event.target.closest('[data-document-target]') : null;
