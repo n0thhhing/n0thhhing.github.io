@@ -1157,3 +1157,8 @@ details[open] > summary > .folder-icon > .folder-open { display: block; }
   .execution-edge.is-current-edge path{animation:none;stroke-dasharray:none}
 }
 @media print{.execution-stepper,.execution-scenarios{display:none!important}.execution-flow-graph-scroll{overflow:visible}.execution-flow-graph{min-width:0!important}}
+
+
+/* Let the graph use the available case-study width before requiring horizontal panning. */
+.project-document .project-doc-grid{grid-template-columns:minmax(0,1fr) minmax(155px,185px);gap:clamp(22px,3vw,38px)}
+@media(max-width:760px){.project-document .project-doc-grid{grid-template-columns:minmax(0,1fr)}}
