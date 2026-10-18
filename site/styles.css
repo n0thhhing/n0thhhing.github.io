@@ -1162,3 +1162,84 @@ details[open] > summary > .folder-icon > .folder-open { display: block; }
 /* Let the graph use the available case-study width before requiring horizontal panning. */
 .project-document .project-doc-grid{grid-template-columns:minmax(0,1fr) minmax(155px,185px);gap:clamp(22px,3vw,38px)}
 @media(max-width:760px){.project-document .project-doc-grid{grid-template-columns:minmax(0,1fr)}}
+
+
+/* Final layout polish: reading tools are a contained document control bar, not sticky floating chrome. */
+.project-document .project-reading-tools{
+  position:relative!important;top:auto!important;z-index:auto!important;
+  display:grid;grid-template-columns:minmax(0,1fr);gap:0;
+  min-height:0;margin:0 0 22px;padding:0;
+  overflow:hidden;border:1px solid var(--border);border-radius:5px;
+  background:var(--panel);color:var(--muted);font:11px/1.4 var(--mono);
+}
+.project-document .reading-toolbar-context{
+  display:grid;grid-template-columns:auto auto minmax(0,1fr) auto minmax(90px,170px);
+  align-items:center;gap:9px;min-width:0;padding:10px 12px;
+}
+.project-document .reading-tools-label{
+  flex:initial;margin:0;color:var(--accent);font:9px/1.4 var(--mono);
+  letter-spacing:.12em;white-space:nowrap;
+}
+.project-document .reading-context-separator{color:var(--border);font:11px var(--mono)}
+.project-document .reading-section-label{min-width:0;max-width:none;font:11px/1.4 var(--sans)}
+.project-document .reading-progress-percent{font:10px/1.4 var(--mono);white-space:nowrap}
+.project-document .reading-progress-track{
+  position:relative;left:auto;right:auto;bottom:auto;display:block;
+  width:100%;height:3px;min-width:0;border-radius:4px;overflow:hidden;
+  background:color-mix(in srgb,var(--border) 85%,transparent);
+}
+.project-document .reading-progress-track>span{height:100%;border-radius:4px}
+.project-document .reading-toolbar-actions{
+  display:flex;align-items:center;flex-wrap:wrap;gap:6px;
+  min-width:0;padding:8px 12px;border-top:1px solid var(--border);
+  background:color-mix(in srgb,var(--surface) 36%,transparent);
+}
+.project-document .reading-toolbar-actions button{
+  min-width:0;padding:6px 9px;border:1px solid var(--border);border-radius:4px;
+  background:var(--panel);color:var(--text);font:11px/1.25 var(--sans);
+  white-space:nowrap;cursor:pointer;
+}
+.project-document .reading-toolbar-actions button:hover,
+.project-document .reading-toolbar-actions button:focus-visible{
+  border-color:var(--accent);outline:none;
+}
+.project-document .reading-toolbar-actions button[aria-pressed=true]{
+  border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--panel));
+}
+.project-document .reading-toolbar-actions button:disabled{opacity:.38;cursor:default}
+
+/* Preserve each diagram's design-space size; the viewport scrolls rather than squeezing its nodes. */
+.execution-flow-graph-scroll{max-width:100%;overflow:auto;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.execution-flow-graph{position:relative;min-width:0;container-type:inline-size}
+.flow-node{min-width:0;min-height:0;padding:7px 9px;gap:3px;line-height:1.15;overflow:hidden;overflow-wrap:anywhere}
+.flow-node-kind{display:block;flex:0 0 auto;max-width:100%;font-size:10px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.flow-node strong{
+  display:-webkit-box;flex:0 1 auto;min-width:0;max-width:100%;
+  font:600 12px/1.2 var(--sans);overflow-wrap:anywhere;
+  -webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;
+}
+.flow-node-inspect{display:block;flex:0 0 auto;max-width:100%;margin-top:auto;font:9px/1.1 var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.flow-node-environment{border-left:3px solid var(--blue)}
+.flow-node-security{border-left:3px solid var(--warm)}
+.execution-flow-header{flex-wrap:wrap;align-items:flex-start}
+.execution-flow-heading{flex:1 1 360px;min-width:0}
+.execution-flow-key{flex:0 1 330px;min-width:0;justify-content:flex-start;padding-top:7px}
+.execution-flow-graph-scroll:focus-visible{outline:1px solid var(--accent);outline-offset:-2px}
+.execution-flow-graph-scroll::-webkit-scrollbar{height:8px}
+.execution-flow-graph-scroll::-webkit-scrollbar-thumb{background:var(--border);border:2px solid var(--panel);border-radius:6px}
+.execution-flow-graph-scroll::-webkit-scrollbar-track{background:transparent}
+@media(max-width:760px){
+  .project-document .reading-toolbar-context{grid-template-columns:auto auto minmax(0,1fr) auto;gap:7px;padding:9px 10px}
+  .project-document .reading-progress-track{grid-column:1/-1;height:3px;margin-top:2px}
+  .project-document .reading-toolbar-actions{gap:5px;padding:8px 9px}
+  .project-document .reading-toolbar-actions button{flex:1 1 calc(50% - 5px);white-space:normal;text-align:center}
+  .execution-flow-header{gap:12px}
+  .execution-flow-key{flex:1 1 100%;gap:7px 11px}
+}
+@media(max-width:430px){.project-document .reading-toolbar-actions button{flex:1 1 100%}}
+@media(prefers-reduced-motion:reduce){.project-document .reading-progress-track>span{transition:none}}
+@media print{
+  .project-document .project-reading-tools{display:none!important}
+  .execution-flow-graph{min-width:0!important;width:100%!important}
+  .flow-node{overflow:hidden}
+}
