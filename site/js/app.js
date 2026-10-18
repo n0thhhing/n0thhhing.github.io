@@ -460,6 +460,7 @@ document.addEventListener('click', async event => {
   if (!article) return;
   if (button.hasAttribute('data-doc-reading-width')) {
     const enabled = article.classList.toggle('reading-focus');
+    updateProjectReader(article.closest('.content'));
     button.setAttribute('aria-pressed', String(enabled));
     button.textContent = enabled ? 'Exit focus' : 'Focus reading';
     const announcer = document.querySelector('#announcer');
