@@ -1162,49 +1162,96 @@ details[open] > summary > .folder-icon > .folder-open { display: block; }
 @media(max-width:760px){.project-document .project-doc-grid{grid-template-columns:minmax(0,1fr)}}
 
 
-/* Final layout polish: reading tools are a contained document control bar, not sticky floating chrome. */
-.project-document .project-reading-tools{
-  position:relative!important;top:auto!important;z-index:auto!important;
-  display:grid;grid-template-columns:minmax(0,1fr);gap:0;
-  min-height:0;margin:0 0 22px;padding:0;
-  overflow:hidden;border:1px solid var(--border);border-radius:5px;
-  background:var(--panel);color:var(--muted);font:11px/1.4 var(--mono);
+/* Integrate reading status and document actions into the existing breadcrumb bar. */
+.project-document .project-doc-filebar{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(150px,1fr) minmax(220px,.9fr) auto;
+  align-items:center;
+  gap:10px 18px;
+  min-height:31px;
+  margin:-2px 0 24px;
+  padding:0 0 10px;
+  border-bottom:1px solid var(--border);
+  color:var(--muted);
+  font:11px/1.4 var(--mono);
 }
+.project-document .project-doc-filepath{min-width:0}
+.project-document .project-doc-mode{justify-self:end}
 .project-document .reading-toolbar-context{
-  display:grid;grid-template-columns:auto auto minmax(0,1fr) auto minmax(90px,170px);
-  align-items:center;gap:9px;min-width:0;padding:10px 12px;
+  display:grid;
+  grid-template-columns:auto auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:7px;
+  min-width:0;
+  padding:0;
 }
 .project-document .reading-tools-label{
-  flex:initial;margin:0;color:var(--accent);font:9px/1.4 var(--mono);
-  letter-spacing:.12em;white-space:nowrap;
+  display:inline-flex;
+  position:static;
+  align-items:center;
+  justify-self:start;
+  min-height:18px;
+  margin:0;
+  padding:2px 5px;
+  border:1px solid var(--border);
+  border-radius:3px;
+  background:var(--surface);
+  color:var(--accent);
+  font:9px/1.2 var(--mono);
+  letter-spacing:.1em;
+  white-space:nowrap;
 }
 .project-document .reading-context-separator{color:var(--border);font:11px var(--mono)}
-.project-document .reading-section-label{min-width:0;max-width:none;font:11px/1.4 var(--sans)}
-.project-document .reading-progress-percent{font:10px/1.4 var(--mono);white-space:nowrap}
-.project-document .reading-progress-track{
-  position:relative;left:auto;right:auto;bottom:auto;display:block;
-  width:100%;height:3px;min-width:0;border-radius:4px;overflow:hidden;
-  background:color-mix(in srgb,var(--border) 85%,transparent);
+.project-document .reading-section-label{
+  min-width:0;max-width:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  color:var(--text);font:11px/1.4 var(--sans);
 }
-.project-document .reading-progress-track>span{height:100%;border-radius:4px}
+.project-document .reading-progress-percent{color:var(--muted);font:10px/1.4 var(--mono);white-space:nowrap}
+.project-document .reading-progress-track{
+  position:relative;grid-column:1/-1;left:auto;right:auto;bottom:auto;
+  display:block;width:100%;height:2px;min-width:0;margin-top:1px;
+  overflow:hidden;border-radius:4px;background:color-mix(in srgb,var(--border) 85%,transparent);
+}
+.project-document .reading-progress-track>span{display:block;height:100%;border-radius:4px}
 .project-document .reading-toolbar-actions{
+  grid-column:1/-1;
   display:flex;align-items:center;flex-wrap:wrap;gap:6px;
-  min-width:0;padding:8px 12px;border-top:1px solid var(--border);
-  background:color-mix(in srgb,var(--surface) 36%,transparent);
+  min-width:0;padding:8px 0 0;border-top:1px solid var(--border);
 }
 .project-document .reading-toolbar-actions button{
-  min-width:0;padding:6px 9px;border:1px solid var(--border);border-radius:4px;
+  min-width:0;padding:5px 9px;border:1px solid var(--border);border-radius:4px;
   background:var(--panel);color:var(--text);font:11px/1.25 var(--sans);
   white-space:nowrap;cursor:pointer;
 }
 .project-document .reading-toolbar-actions button:hover,
-.project-document .reading-toolbar-actions button:focus-visible{
-  border-color:var(--accent);outline:none;
-}
+.project-document .reading-toolbar-actions button:focus-visible{border-color:var(--accent);outline:none}
 .project-document .reading-toolbar-actions button[aria-pressed=true]{
   border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--panel));
 }
 .project-document .reading-toolbar-actions button:disabled{opacity:.38;cursor:default}
+@media(max-width:760px){
+  .project-document .project-doc-filebar{
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:10px 12px;align-items:center;
+  }
+  .project-document .project-doc-filepath{grid-column:1;grid-row:1}
+  .project-document .project-doc-mode{grid-column:2;grid-row:1;font-size:10px}
+  .project-document .reading-toolbar-context{grid-column:1/-1;grid-row:2;gap:7px}
+  .project-document .reading-toolbar-actions{grid-row:3;gap:5px;padding-top:8px}
+  .project-document .reading-toolbar-actions button{flex:1 1 calc(50% - 5px);white-space:normal;text-align:center}
+}
+@media(max-width:430px){
+  .project-document .project-doc-filebar{gap:9px 10px}
+  .project-document .project-doc-mode{font-size:9px}
+  .project-document .reading-toolbar-actions button{flex:1 1 calc(50% - 5px)}
+}
+@media(prefers-reduced-motion:reduce){.project-document .reading-progress-track>span{transition:none}}
+@media print{
+  .project-document .project-doc-filebar{display:none!important}
+  .execution-flow-graph{min-width:0!important;width:100%!important}
+  .flow-node{overflow:hidden}
+}
 
 /* Preserve each diagram's design-space size; the viewport scrolls rather than squeezing its nodes. */
 .execution-flow-graph-scroll{max-width:100%;overflow:auto;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
@@ -1250,36 +1297,3 @@ details[open] > summary > .folder-icon > .folder-open { display: block; }
   letter-spacing:.035em;
 }
 .execution-flow-pan-hint[hidden]{display:none!important}
-
-
-/* Keep the READING marker visually attached to the toolbar, not floating above its content. */
-.project-document .reading-tools-label{
-  display:inline-flex!important;
-  position:static!important;
-  align-self:center;
-  justify-self:start;
-  align-items:center;
-  min-height:20px;
-  padding:3px 6px!important;
-  margin:0!important;
-  border:1px solid var(--border);
-  border-radius:3px;
-  background:var(--surface);
-  color:var(--accent);
-  font:9px/1.2 var(--mono);
-  letter-spacing:.1em;
-  white-space:nowrap;
-}
-/* The entire toolbar follows the document scroll; its label stays inside the same solid bar. */
-.project-document .project-reading-tools{
-  position:sticky!important;
-  top:0!important;
-  z-index:20!important;
-  transform:none!important;
-  box-shadow:none!important;
-}
-.project-document .reading-toolbar-context,
-.project-document .reading-toolbar-actions{
-  position:relative!important;
-  transform:none!important;
-}
