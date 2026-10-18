@@ -1,0 +1,36 @@
+
+import { projects, repositoryLink, projectStatus } from './content.js';
+import { projectDeepDives } from './deepdives.js';
+const e = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const inline = value => e(value).replace(/`([^`]+)`/g,'<code>$1</code>');
+const idFor = (project,key) => `doc-${project.id}-${key}`;
+function link(project,key,label,index){const id=idFor(project,key);return `<a class="project-outline-link" href="#projects/${e(project.id)}" data-document-target="${id}" data-document-label="${e(label)}"><span>${String(index+1).padStart(2,'0')}</span><span>${e(label)}</span></a>`;}
+function section(project,key,title,body){const id=idFor(project,key);return `<section class="project-doc-section" id="${id}" data-doc-section="${id}" aria-labelledby="${id}-heading"><h2 id="${id}-heading">${title}</h2>${body}</section>`;}
+function cards(items,kind=''){return `<div class="project-doc-cards ${kind}">${items.map((item,i)=>`<article class="project-doc-card"><span class="project-doc-card-index">${String(i+1).padStart(2,'0')}</span><div><h3>${e(item.title??item.label)}</h3><p>${inline(item.detail)}</p></div></article>`).join('')}</div>`;}
+export function projectPage(project){
+ const doc=projectDeepDives[project.id]??{summary:project.description,problem:'',workflow:[],validation:[],limits:[],next:'',refs:[]};
+ const repo=repositoryLink(project), index=projects.findIndex(p=>p.id===project.id), next=projects[(index+1)%projects.length];
+ const toc=[{key:'overview',label:'Overview'},...(project.specs?.length?[{key:'specs',label:'At a glance'}]:[]),...(doc.problem?[{key:'problem',label:'Problem & context'}]:[]),...(doc.workflow?.length?[{key:'workflow',label:'How it works'}]:[]),...(project.architectureFlow?[{key:'architecture',label:'Architecture'}]:[]),...(project.subsystems?.length?[{key:'subsystems',label:'Subsystems'}]:[]),...(project.details?.length?[{key:'decisions',label:'Implementation notes'}]:[]),...(project.deepDive?[{key:'mechanics',label:'Core mechanics'}]:[]),...(doc.validation?.length?[{key:'validation',label:'Validation'}]:[]),...(doc.limits?.length?[{key:'limits',label:'Limits & trade-offs'}]:[]),...(doc.next?[{key:'next',label:'Open questions'}]:[]),...(project.snippet?[{key:'code',label:'Code sample'}]:[]),...(repo||doc.refs?.length?[{key:'refs',label:'References'}]:[])];
+ const metadata=[['kind',project.category],['status',projectStatus(project)],['stack',(project.tech??[]).slice(0,3).join(' · ')||'Not specified'],['source',repo?'Public repository':'Local / in development']].map(([k,v])=>`<div class="doc-frontmatter-row"><span>${e(k)}</span><strong>${e(v)}</strong></div>`).join('');
+ const tech=(project.tech??[]).map(t=>`<span class="tech-tag">${e(t)}</span>`).join('');
+ return `<article class="page prose project-document">
+ <div class="project-doc-filebar"><div class="project-doc-filepath"><span class="file-icon" aria-hidden="true">M↓</span><span>projects</span><span class="doc-path-separator">/</span><strong>${e(project.id)}.md</strong></div><span class="project-doc-mode"><i class="doc-mode-dot"></i> rendered preview</span></div>
+ <div class="project-doc-grid"><main class="project-doc-main">
+ <div class="doc-frontmatter" aria-label="Project metadata">${metadata}</div>
+ <header class="project-doc-overview" id="${idFor(project,'overview')}" data-doc-section="${idFor(project,'overview')}"><div class="page-eyebrow eyebrow">${e(project.category.toUpperCase())}<span class="doc-breadcrumb-divider">/</span> PROJECT NOTES</div><h1 class="page-heading" id="${idFor(project,'overview')}-heading">${e(project.name)}</h1><p class="page-lead">${e(project.description)}</p><p class="project-doc-summary">${inline(doc.summary||project.description)}</p><div class="tech-tags">${tech}</div><div class="project-doc-actions">${repo?`<a class="project-doc-source" href="${e(repo)}" target="_blank" rel="noopener noreferrer">Open source repository <span aria-hidden="true">↗</span></a>`:'<span class="project-doc-local">Local / in development · no public repository linked</span>'}<span class="project-doc-status">${e(projectStatus(project))}</span></div></header>
+ ${project.specs?.length?section(project,'specs','At a glance',`<div class="spec-metrics">${project.specs.map(x=>`<span class="spec-metric">${e(x)}</span>`).join('')}</div>`):''}
+ ${doc.problem?section(project,'problem','Problem & context',`<p>${inline(doc.problem)}</p>`):''}
+ ${doc.workflow?.length?section(project,'workflow','How it works',cards(doc.workflow,'project-doc-steps')):''}
+ ${project.architectureFlow?section(project,'architecture','Architecture & execution flow',`<pre class="arch-diagram"><code>${e(project.architectureFlow)}</code></pre>`):''}
+ ${project.subsystems?.length?section(project,'subsystems','Subsystems & responsibilities',`<div class="subsystem-grid">${project.subsystems.map(s=>`<article class="subsystem-card"><h3>${e(s.name)}</h3><p>${inline(s.description)}</p></article>`).join('')}</div>`):''}
+ ${project.details?.length?section(project,'decisions','Implementation notes',`<ul class="detail-list">${project.details.map(x=>`<li>${inline(x)}</li>`).join('')}</ul>`):''}
+ ${project.deepDive?section(project,'mechanics','Core mechanics',`<div class="project-deep-dive">${project.deepDive}</div>`):''}
+ ${doc.validation?.length?section(project,'validation','Validation & evidence',cards(doc.validation,'project-doc-validation')):''}
+ ${doc.limits?.length?section(project,'limits','Limits, trade-offs & what this does not claim',`<ul class="project-boundary-list">${doc.limits.map(x=>`<li>${inline(x)}</li>`).join('')}</ul>`):''}
+ ${doc.next?section(project,'next','Open questions / next work',`<p>${inline(doc.next)}</p>`):''}
+ ${project.snippet?section(project,'code','Code sample',`<div class="project-code-heading"><span>example source</span><span>read-only</span></div><pre class="code-block"><code>${e(project.snippet)}</code></pre>`):''}
+ ${repo||doc.refs?.length?section(project,'refs','References & source material',`<ul class="project-reference-list">${repo?`<li><a href="${e(repo)}" target="_blank" rel="noopener noreferrer">${e(project.name)} source repository <span aria-hidden="true">↗</span></a></li>`:''}${(doc.refs??[]).map(r=>`<li><a href="${e(r.url)}" target="_blank" rel="noopener noreferrer">${e(r.label)} <span aria-hidden="true">↗</span></a></li>`).join('')}</ul><p class="project-reference-note">Counts and status are snapshots of linked source or current development notes, not permanent guarantees.</p>`):''}
+ <footer class="project-doc-footer"><a class="primary-link" href="#projects">← All projects</a><a class="project-next-link" href="#projects/${e(next.id)}">Next: ${e(next.name)} <span aria-hidden="true">→</span></a></footer>
+ </main><aside class="project-outline" aria-label="Project document outline"><div class="project-outline-title"><span>OUTLINE</span><span>${String(toc.length).padStart(2,'0')}</span></div><nav>${toc.map((t,i)=>link(project,t.key,t.label,i)).join('')}</nav><div class="project-outline-foot"><i class="outline-dot"></i> local document view</div></aside></div>
+ </article>`;
+}

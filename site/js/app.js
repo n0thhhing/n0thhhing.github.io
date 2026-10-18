@@ -450,3 +450,20 @@ $('.statusbar').addEventListener('keydown', event => {
   event.preventDefault();
   buttons[(index + (event.key === 'ArrowRight' ? 1 : -1) + buttons.length) % buttons.length].focus();
 });
+
+
+// Outline navigation stays within the active Zed-style project document.
+document.addEventListener('click', event => {
+  const trigger = event.target instanceof Element ? event.target.closest('[data-document-target]') : null;
+  if (!trigger) return;
+  event.preventDefault(); event.stopPropagation();
+  const pane = trigger.closest('.editor-pane') ?? document;
+  const key = trigger.getAttribute('data-document-target');
+  const target = [...pane.querySelectorAll('[data-doc-section]')].find(node => node.getAttribute('data-doc-section') === key);
+  if (!target) return;
+  pane.querySelectorAll('.project-outline-link').forEach(link => link.removeAttribute('aria-current'));
+  trigger.setAttribute('aria-current','location');
+  target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+  const announcer=document.querySelector('#announcer');
+  if(announcer) announcer.textContent=`Jumped to ${trigger.getAttribute('data-document-label')||'section'}`;
+}, true);

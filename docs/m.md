@@ -73,7 +73,14 @@ A ground-up implementation of the WebAssembly specification written entirely in 
 
 ---
 
-### 4. `z-scanner` — Low-Level Memory & Pattern Scanner
+### 4. [`Proplam-menu`](https://github.com/n0thhhing/Proplam-menu) — Herx / JUDSN-era GameGuardian Menu
+> **Stack:** `Lua` • `GameGuardian` • `Android` • `Unity IL2CPP`
+
+I built the menu used by JUDSN during my Herx-era work in the Pixel Gun 3D scene. After someone scraped it, I stopped trying to keep it behind a sale and published my own version as Proplam-menu. The public repo preserves that device-first workflow; this is historical game-specific work, not a general-purpose Android framework.
+
+---
+
+### 5. `z-scanner` — Low-Level Memory & Pattern Scanner
 > **Stack:** `Zig` • `Systems Programming` • `Memory Inspection`
 
 A high-performance memory inspection and byte-pattern scanning utility written in Zig.
@@ -81,29 +88,29 @@ A high-performance memory inspection and byte-pattern scanning utility written i
 
 ---
 
-### 5. `ts-capstone` — Disassembly & Instruction Inspection Tooling
+### 6. `ts-capstone` — Disassembly & Instruction Inspection Tooling
 > **Stack:** `TypeScript` • `Capstone Disassembly Framework` • `Binary Analysis`
 
 Tooling and bindings around the **Capstone** disassembly engine for decoding raw machine code bytes into human-readable assembly instructions and inspecting instruction-level semantics across architectures.
 
 ---
 
-### 6. [`wallify`](https://github.com/n0thhhing/wallify) — Native macOS Widget & Desktop Application
+### 7. [`wallify`](https://github.com/n0thhhing/wallify) — Native macOS Widget & Desktop Application
 > **Stack:** `Zig` • `Swift` • `macOS Native APIs`  
 > **Branches:** [`native-macos-port`](https://github.com/n0thhhing/wallify/tree/native-macos-port) • [`combine`](https://github.com/n0thhhing/wallify/tree/combine)
 
-A native macOS desktop widget application combining low-level **Zig** systems logic with native **Swift** UI rendering.
+A native macOS desktop widget. The default branch documents a Zig renderer displayed through Kitty; the `combine` branch is the separate Swift/AppKit/SwiftUI/Metal implementation.
 - Bridges systems code and Apple's native widget/windowing APIs to render responsive desktop media and wallpaper interfaces with minimal resource consumption.
 
 ---
 
-### 7. Terminal, Editor & Media Ecosystem Tooling
+### 8. Terminal, Editor & Media Ecosystem Tooling
 > **Stack:** `Lua (Neovim API)` • `Python (Kitty API)` • `JSON / CSS (Spicetify & Spotifast)`
 
-I build and maintain my own daily-driver extensions to keep my development workflow fast, keyboard-driven, and visually cohesive:
-- **Neovim Spotify UI (`lua/spotify/ui.lua`):** Custom Lua floating windows, statusline integrations, and asynchronous media controls directly inside Neovim.
-- **Kitty Terminal Media & Audio Tab Bar:** A custom Python tab-bar script for the Kitty terminal emulator that polls active media playback and connected audio output devices in real time.
-- **Spotifast & Spicetify Gruvbox Themes:** Custom-authored JSON palettes and UI configurations bringing strict Gruvbox contrast and typography to Spotify clients.
+I build and keep refining tools around my daily workflow. Some older experiments were written for Neovim and Kitty; my current desktop workflow has moved to **Zed** and **Ghostty**. Across those iterations, the recurring ideas are keyboard-first control, live media state, lightweight scripts, and a consistent Gruvbox Material palette.
+- **Spotify / media tooling:** Integrations for playback state, album art, and terminal/editor context.
+- **Gruvbox themes:** Custom palette work for tools and clients that support them.
+- **Editor and terminal workflow:** Zed for editing, Ghostty for the terminal, and scripts/build systems that stay close to each project.
 
 ---
 
@@ -115,7 +122,7 @@ I build and maintain my own daily-driver extensions to keep my development workf
 | **Reverse Engineering & Security** | **IL2CPP**, **Capstone**, **Memory Scanners**, **Hex/Binary Inspection**, **LADB** | Offset updating, static/dynamic binary analysis, signature scanning, mobile app internals |
 | **Scripting, VMs & App Dev** | **Lua**, **Python**, **Go (Golang)**, **Swift**, **TypeScript**, **WebAssembly** | Bytecode interpreters (`lwasm`), test automation (`zeon`), macOS widgets (`wallify`), CLI tools |
 | **Mobile & AArch64 Workflows** | **Android 17 (Pixel 11 Pro)**, **Termux**, **`proot`**, **Shizuku**, **Tasker** | On-device AArch64 compilation, rootless privileged API automation, wireless ADB debugging |
-| **Developer Environment** | **Neovim**, **Kitty**, **Git / GitHub**, **macOS**, **Linux** | Custom Lua plugin architecture, terminal multiplexing, automated build systems (`build.zig`, `Make`) |
+| **Developer Environment** | **Zed**, **Ghostty**, **Git / GitHub**, **macOS**, **Linux** | Keyboard-driven editing, terminal workflows, automated builds (`build.zig`, `Make`), custom tooling |
 
 ---
 

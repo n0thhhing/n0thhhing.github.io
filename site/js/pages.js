@@ -1,4 +1,5 @@
 import { projects, profile, music, anime, repositoryLink, projectStatus, hackathons, ossContributions } from './content.js';
+import { projectPage } from './project-page.js';
 
 export const escapeHTML = value => String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
 const e = escapeHTML;
@@ -78,7 +79,7 @@ export function aboutPage() {
     <div class="inline-note">The question that drives everything I build: <strong>“Okay, but what is the CPU actually doing right now?”</strong></div>
 
     <h2>JUDSN, Proplam-menu, and engineering rigor in Lua.</h2>
-    <p>As Herx, I became a core contributor to <strong>JUDSN</strong>—one of the most recognized modding teams in the Pixel Gun 3D scene—where I architected and maintained its central mod menu engine. I later extracted, refined, and open-sourced that architecture as <a class="text-link" href="https://github.com/n0thhhing/Proplam-menu" target="_blank" rel="noopener noreferrer"><strong>Proplam-menu</strong> ↗</a>.</p>
+    <p>As Herx, I built the menu used by <strong>JUDSN</strong> in the Pixel Gun 3D scene. After someone scraped the menu, I stopped caring about trying to keep it behind a sale and published my own version openly as <a class="text-link" href="https://github.com/n0thhhing/Proplam-menu" target="_blank" rel="noopener noreferrer"><strong>Proplam-menu</strong> ↗</a>. The public repo preserves that era and my engineering approach, rather than pretending the work happened in isolation.</p>
     <p>The mobile modding scene was notoriously chaotic: most scripts were single monolithic 10,000-line Lua files riddled with copy-pasted snippets, global variable pollution, and fragile hardcoded magic numbers. I refused to write code like that. I treated game modding as serious software engineering:</p>
     <ul>
       <li><strong>Modular Architecture:</strong> Decoupled the UI rendering layer, memory search primitives, pointer dereferencing helpers, and feature modules into distinct, maintainable namespaces.</li>
@@ -247,59 +248,6 @@ export function projectsPage(category = 'All') {
       </a>`).join('')}
     </div>
   </section>`;
-}
-
-export function projectPage(project) {
-  const repo = repositoryLink(project);
-  return `<article class="page prose">
-    <a href="#projects" class="back-link">← All projects</a>
-    ${eyebrow(e(project.category.toUpperCase()) + ' / ARCHITECTURE DEEP DIVE')}
-    <h1 class="page-heading">${e(project.name)}</h1>
-    <p class="page-lead">${e(project.description)}</p>
-    <div class="project-detail-status">${e(projectStatus(project))}</div>
-    <div class="tech-tags">${project.tech.map(tech => `<span class="tech-tag">${e(tech)}</span>`).join('')}</div>
-
-    ${project.specs?.length ? `
-      <div class="spec-metrics">
-        ${project.specs.map(spec => `<span class="spec-metric">${e(spec)}</span>`).join('')}
-      </div>
-    ` : ''}
-
-    ${project.architectureFlow ? `
-      <h2>System Architecture & Execution Pipeline</h2>
-      <pre class="arch-diagram"><code>${e(project.architectureFlow)}</code></pre>
-    ` : ''}
-
-    ${project.subsystems?.length ? `
-      <h2>Modular Subsystems</h2>
-      <div class="subsystem-grid">
-        ${project.subsystems.map(sub => `
-          <div class="subsystem-card">
-            <h4>${e(sub.name)}</h4>
-            <p>${e(sub.description)}</p>
-          </div>
-        `).join('')}
-      </div>
-    ` : ''}
-
-    <h2>Technical Decisions & Implementation Rationale</h2>
-    <ul class="detail-list">${project.details.map(detail => `<li>${e(detail)}</li>`).join('')}</ul>
-
-    ${project.deepDive ? `
-      <h2>Deep Dive & Core Mechanics</h2>
-      <div class="project-deep-dive">${project.deepDive}</div>
-    ` : ''}
-
-    ${project.snippet ? `
-      <h2>Core Code Implementation</h2>
-      <pre class="code-block"><code>${e(project.snippet)}</code></pre>
-    ` : ''}
-
-    <div class="detail-footer">
-      ${repo ? `<a class="primary-link" href="${e(repo)}" target="_blank" rel="noopener noreferrer">View repository on GitHub <span aria-hidden="true">↗</span></a>` : '<span>Active in my local workspace. Not yet public.</span>'}
-      <a class="text-link" href="#projects">Keep exploring <span aria-hidden="true">→</span></a>
-    </div>
-  </article>`;
 }
 
 export function artPage() {

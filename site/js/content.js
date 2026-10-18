@@ -237,6 +237,50 @@ function maskInstruction(insn: Capstone.Instruction): string {
 }`,
   },
   {
+    "id": "proplam-menu",
+    "name": "Proplam-menu",
+    "category": "Reversing",
+    "description": "The GameGuardian Lua menu I built in the Herx/JUDSN era, later published openly.",
+    "tech": [
+      "Lua",
+      "GameGuardian",
+      "Android",
+      "Unity IL2CPP"
+    ],
+    "status": "Historical / open source",
+    "repoUrl": "https://github.com/n0thhhing/Proplam-menu",
+    "specs": [
+      "Herx / JUDSN Roots",
+      "GameGuardian Lua",
+      "Reusable Menu Helpers",
+      "Android Memory Workflows",
+      "Public Repository"
+    ],
+    "architectureFlow": "[GameGuardian Runtime]\n        │\n        ▼\n[Menu UI / Feature Selection]\n        │\n        ├──► [Memory Search Helpers]\n        ├──► [Pointer / Offset Helpers]\n        └──► [Feature-Specific Logic]\n                       │\n                       ▼\n             [Target Game Memory]",
+    "subsystems": [
+      {
+        "name": "Menu / UI layer",
+        "description": "Feature-facing menu for the original GameGuardian workflow."
+      },
+      {
+        "name": "Memory helpers",
+        "description": "Reusable search and pointer routines keep repeated low-level operations out of individual options."
+      },
+      {
+        "name": "Feature modules",
+        "description": "Game-specific operations are separated so an individual feature can change without rewriting the entire menu."
+      }
+    ],
+    "deepDive": "<p>Before the current systems projects, much of my learning happened in the Android game-modding scene under the handle Herx. I built the menu used by JUDSN for Pixel Gun 3D. It was device-first work: understanding the game's memory layout, tracing pointer chains, and iterating against an IL2CPP build.</p><p>After someone scraped the menu, I stopped caring about trying to keep it behind a sale and published my own version as Proplam-menu. The public repo preserves a snapshot of that work. It is historical, not a current commercial product, and its reuse terms should be read before adapting it.</p>",
+    "details": [
+      "Built for GameGuardian and a Unity IL2CPP mobile game.",
+      "Focused on separating menu rendering, reusable memory operations, pointer helpers, and feature logic.",
+      "The public README documents keeping files together and running proplam.lua.",
+      "The public version came after I chose open publication instead of pursuing sales after the menu was scraped."
+    ],
+    "snippet": "-- Simplified sketch of the menu responsibilities\nlocal menu = {\n  draw = function() end,\n  memory = {},\n  features = {},\n}\n-- Actual feature logic depends on the target game's memory layout."
+  },
+  {
     id: 'ts-capstone', name: 'ts-capstone', category: 'Reversing',
     description: 'Capstone 5.0 multi-architecture disassembly framework for TypeScript and Bun.',
     tech: ['TypeScript', 'Capstone 5.0', 'Emscripten', 'Wasm', 'Bun'], status: 'NPM package',
@@ -500,7 +544,7 @@ fn render_row(offset: usize, chunk: &[u8]) -> String {
   },
   {
     id: 'sse4-strstr-zig', name: 'sse4-strstr-zig', category: 'Systems',
-    description: 'Exploring substring search through x86 SSE4.2 instructions.',
+    description: 'A Zig substring-search experiment exploring vector operations and compiler-generated SIMD.',
     tech: ['Zig', 'x86_64', 'SSE4.2', 'SIMD Intrinsics'], status: 'Public project',
     repoUrl: 'https://github.com/n0thhhing/sse4-strstr-zig',
     specs: ['x86_64 SSE4.2 Intrinsics', 'PCMPESTRI / PCMPISTRI', '16-Byte Parallel Comparisons', 'Zero Branch Penalty', 'Hardware strstr'],
@@ -546,43 +590,44 @@ pub fn sse42_strstr(haystack: []const u8, needle: []const u8) ?usize {
 }`,
   },
   {
-    id: 'discord-rich-presence', name: 'Discord-rich-presence', category: 'Apps',
-    description: 'A custom Discord Rich Presence client.',
-    tech: ['JavaScript', 'Node.js', 'Unix Sockets', 'IPC'], status: 'Public project',
-    repoUrl: 'https://github.com/n0thhhing/Discord-rich-presence',
-    specs: ['Unix Domain Sockets (/tmp/discord-ipc-0)', 'Direct IPC Framing', 'Zero Electron Overhead', 'Sub-5MB Memory Footprint', 'Dynamic Status Updates'],
-    architectureFlow: `[Node.js Daemon Process] ──► [Connect to /tmp/discord-ipc-0 Unix Socket]
-                                           │
-                                           ▼
-                           [Opcode 0: Handshake Packet (Client ID)]
-                                           │
-                                           ▼
-                           [Receive Opcode 1: FRAME Handshake OK]
-                                           │
-                                           ▼
-                           [Opcode 1: SET_ACTIVITY Packet Loop]
-                           (State · Details · Timestamps · Assets)`,
-    subsystems: [
-      { name: 'src/ipc.js', description: 'Manages the low-level Unix domain socket connection, framing packets with 32-bit opcode and length headers.' },
-      { name: 'src/activity.js', description: 'Encodes presence activity JSON payloads with current project status, elapsed timers, and asset keys.' },
+    "id": "discord-rich-presence",
+    "name": "Discord Rich Presence",
+    "category": "Apps",
+    "description": "A custom Discord Rich Presence client and activity library.",
+    "tech": [
+      "JavaScript",
+      "Node.js",
+      "WebSocket",
+      "Discord Gateway"
     ],
-    deepDive: `<p>Rather than using heavy SDKs or Electron-based companion tools, this client speaks directly to Discord's local IPC daemon over Unix domain sockets (<code>/tmp/discord-ipc-0</code> on macOS/Linux) or named pipes on Windows.</p><p>Packets are manually framed using 8-byte headers (4-byte LE opcode, 4-byte LE payload length), establishing a zero-overhead connection that runs as a lightweight background daemon consuming under 5MB of memory.</p>`,
-    details: [
-      'Communicates directly with Discord local IPC socket via Unix domain sockets / named pipes.',
-      'Customizes profile activity with dynamic elapsed timestamps, customizable assets, and project status.',
-      'Eliminates heavy runtime wrappers in favor of lightweight native Node.js net.Socket streams.',
+    "status": "Public project",
+    "repoUrl": "https://github.com/n0thhhing/Discord-rich-presence",
+    "specs": [
+      "Gateway WebSocket Client",
+      "Custom Activity Payloads",
+      "Image Asset Normalization",
+      "Dynamic Timestamps",
+      "Up to 2 Presence Buttons"
     ],
-    snippet: `import net from 'node:net';
-
-// Encode Discord IPC packet: [Opcode (4B LE)] [Length (4B LE)] [JSON Payload]
-function encodePacket(opcode, payload) {
-  const json = JSON.stringify(payload);
-  const buffer = Buffer.alloc(8 + Buffer.byteLength(json));
-  buffer.writeInt32LE(opcode, 0);
-  buffer.writeInt32LE(Buffer.byteLength(json), 4);
-  buffer.write(json, 8);
-  return buffer;
-}`,
+    "architectureFlow": "[Node.js Client] ──► [Discord Gateway WebSocket]\n                           │\n                           ▼\n                 [Ready / Session Lifecycle]\n                           │\n                           ▼\n                 [Activity Payload Builder]\n                           │\n                           ▼\n         [Details · State · Timestamps · Assets]\n                           │\n                           ▼\n                  [Presence Update Loop]",
+    "subsystems": [
+      {
+        "name": "RichPresence.js",
+        "description": "Owns connection lifecycle and activity update methods documented in the README."
+      },
+      {
+        "name": "Activity payload",
+        "description": "Represents details, state, timestamps, assets, party data, and clickable buttons."
+      }
+    ],
+    "deepDive": "<p>The README describes a Node.js library connecting to Discord's Gateway API through a WebSocket to update Rich Presence activities in real time. Callers provide fields including details, state, timestamps, party information, image assets, and optional buttons.</p><p>Image handling accounts for Discord attachment/media URLs, media-proxy links, external URLs, and Developer Portal asset keys. The API is intentionally small: connect, set/update presence, and disconnect. Tokens and application identifiers must stay private.</p>",
+    "details": [
+      "Connects to Discord's Gateway API via WebSocket for real-time activity updates.",
+      "Supports activity details, state, elapsed timestamps, party metadata, image assets, and up to two buttons.",
+      "Normalizes Discord attachment/media URLs while preserving media-proxy links and Developer Portal asset keys.",
+      "Exposes connect(), setPresence()/updatePresence(), and disconnect() lifecycle methods."
+    ],
+    "snippet": "import { RichPresence } from \"./RichPresence.js\";\n\nconst rich = new RichPresence({\n  token: process.env.DISCORD_TOKEN,\n  clientId: process.env.DISCORD_CLIENT_ID,\n});\n\nawait rich.connect();\nawait rich.setPresence({\n  activities: [{ name: \"Coding\", details: \"Working on a project\",\n    timestamps: { start: Math.floor(Date.now() / 1000) } }],\n});"
   },
   {
     id: 'shizukuboothelper', name: 'ShizukuBootHelper', category: 'Apps',
