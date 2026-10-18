@@ -1030,3 +1030,34 @@ details[open] > summary > .folder-icon > .folder-open { display: block; }
   .project-document{color:#222;background:#fff}
   .project-document a{color:#222;text-decoration:underline}
 }
+
+
+/* Reading flow: a lightweight progress rail, active outline, and explicit adjacent-project navigation. */
+.project-reading-tools{position:relative;display:flex;align-items:center;flex-wrap:wrap;gap:6px;min-height:38px;padding:6px 12px 10px}
+.reading-tools-label{flex:0 0 auto;margin-right:2px;color:var(--accent);font-size:9px;letter-spacing:.12em}
+.reading-section-label{min-width:0;max-width:clamp(90px,18vw,220px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);font:11px var(--sans)}
+.reading-progress-percent{flex:0 0 auto;color:var(--muted);font:10px var(--mono);font-variant-numeric:tabular-nums}
+.reading-progress-track{position:absolute;bottom:0;left:0;right:0;height:2px;overflow:hidden;background:color-mix(in srgb,var(--border) 75%,transparent)}
+.reading-progress-track>span{display:block;width:0;height:100%;background:var(--accent);transition:width .12s linear}
+.project-reading-tools button{white-space:nowrap}
+.project-reading-tools button:disabled{opacity:.38;cursor:default}
+.project-document.outline-hidden .project-doc-grid{grid-template-columns:minmax(0,1fr)}
+.project-document.outline-hidden .project-doc-main{max-width:880px;width:100%;margin-inline:auto}
+.project-document.outline-hidden .project-outline{display:none}
+.project-doc-pagination{display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
+.project-prev-link,.project-next-link{color:var(--muted);font-size:12px;text-decoration:none}
+.project-prev-link:hover,.project-next-link:hover{color:var(--text)}
+.project-prev-link:focus-visible,.project-next-link:focus-visible{outline:1px solid var(--accent);outline-offset:4px}
+@media(max-width:760px){
+  .project-reading-tools{gap:5px;padding:7px 10px 11px}
+  .reading-tools-label{flex-basis:auto}
+  .reading-section-label{max-width:35vw}
+  .reading-progress-track{bottom:0}
+  .project-doc-pagination{width:100%;justify-content:space-between;gap:8px}
+  .project-prev-link,.project-next-link{max-width:49%;overflow-wrap:anywhere}
+}
+@media(prefers-reduced-motion:reduce){.reading-progress-track>span{transition:none}}
+@media print{
+  .project-reading-tools{display:none!important}
+  .project-doc-pagination{display:none!important}
+}
