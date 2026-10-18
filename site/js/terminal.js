@@ -4,7 +4,7 @@ import { escapeHTML as e } from './pages.js';
 
 const svg = path => `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="${path}"/></svg>`;
 
-export function initTerminal({ navigate, applyTheme }) {
+export function initTerminal({ navigate, applyTheme, unzoom }) {
   const terminal = document.querySelector('#terminal');
   const editor = terminal.parentElement;
   const host = document.querySelector('#terminal-layout');
@@ -73,6 +73,7 @@ export function initTerminal({ navigate, applyTheme }) {
     for (const pane of panes.values()) pane.classList.toggle('terminal-focused', pane.contains(target));
   }
   function setMaximized(value) {
+    if (value) unzoom?.();
     editor.classList.toggle('terminal-maximized', value);
     syncControls();
     activeSession().resizeInput();
@@ -192,11 +193,14 @@ export function initTerminal({ navigate, applyTheme }) {
     const button = event.target.closest('button'); if (!button) return;
     const route = button.closest('[data-session]')?.dataset.session;
     const session = sessions.get(route) ?? activeSession();
-    if (button.matches('[data-command]')) { terminal.hidden = false; syncControls(); session.execute(button.dataset.command); }
+    if (button.matches('[data-command]')) { terminal.hidden = false; unzoom?.(); syncControls(); session.execute(button.dataset.command); }
     if (button.matches('[data-complete]')) session.complete(button.dataset.complete);
     if (button.matches('[data-terminal-toggle]')) {
       const wasFocused = terminal.contains(document.activeElement);
-      setMaximized(false); terminal.hidden = !terminal.hidden; syncControls();
+      const willOpen = terminal.hidden;
+      setMaximized(false); terminal.hidden = !terminal.hidden;
+      if (willOpen) unzoom?.();
+      syncControls();
       if (!terminal.hidden) activeSession().focus(); else if (wasFocused) document.querySelector('#content').focus();
     }
   });

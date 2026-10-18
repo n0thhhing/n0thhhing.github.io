@@ -5,13 +5,15 @@ Zero-dependency personal portfolio website and low-level systems showcase for **
 ## Features
 
 - **Zero External Dependencies**: Pure modern HTML5, CSS3, and vanilla ES6 modules. No npm, no node_modules, no webpack/vite bundle step needed.
-- **Cyber-Glass Aesthetics**: Dark void palette, neon cyan & electric emerald accents, CRT scanlines, memory address gutters, and glassmorphism.
-- **Interactive Low-Level Sandbox**:
-  - **Live ARM64 Disassembler & Hex Inspector**: Real disassembly from `rarm64`, `zeon`, and `il2cpp` with interactive opcode breakdown and register inspectors.
-  - **Terminal CLI**: Interactive command prompt supporting `help`, `about`, `projects`, `skills`, `disasm`, `simd`, and `clear`.
-  - **NEON SIMD Vector Visualizer**: 4x32-bit vector lane computer simulating parallel arithmetic from `zeon`.
-- **Featured Projects Grid**: Interactive filtering across `rarm64`, `zeon`, `il2cpp`, `lwasm`, `wallify`, `hexer`, `Offset-updater`, and `Discord-rich-presence`.
-- **GitHub Profile README**: Ready-to-use matching profile markdown in [`github-profile/README.md`](github-profile/README.md).
+- **Pixel-Accurate Zed Workspace**: Faithful reproduction of the Zed editor interface with nested pane splitting, history navigation, tab management, symbol outlines, buffer search, hairline pane dividers, and Starship terminal prompt.
+- **Monaspace Argon Typography**: Styled with GitHub's humanistic coding font Monaspace Argon with texture healing (`calt`) and programming ligatures.
+- **Curated Theme System**: Live theme switching across 6 hand-tuned palettes: Gruvbox Material (default favorite), Gruvbox, Panda, Dracula, Monokai Pro, and Catppuccin Frappé.
+- **Interactive Multi-Pane Terminal**: Fully split-aware terminal dock with Starship prompt, tab navigation, history, autocomplete, and portfolio commands (`zeon`, `hackathons`, `bun`, `stack`, `ls`, `cat`, `theme`).
+- **Comprehensive Systems Portfolio**:
+  - **`zeon`**: 2,806+ ARM/ARM64 NEON SIMD intrinsics in pure Zig 0.16+ with Big-Endian QEMU test suite.
+  - **`wallify`**: Native macOS music widget in Swift, AppKit, and Metal on active branch `combine`.
+  - **`Offset-updater`**: Disassembler-guided wildcard masking engine with Capstone 5.0 and IL2CPP auto-anchoring.
+  - **Hackathons & OSS**: 3-year Catawba College podium streak and upstream Bun compiler diagnostics.
 
 ## Local Preview
 

@@ -8,7 +8,7 @@ const icon = path => `<svg viewBox="0 0 16 16" width="13" height="13" fill="none
 const closeIcon = icon('M4 4l8 8M12 4l-8 8').replace('<svg ', '<svg class="tab-close-icon" ');
 const names = route => projects.find(p => `projects/${p.id}` === route)?.name + '.md';
 const fileName = route => pages.find(p => p.id === route)?.file ?? (route ? names(route) : 'No open files');
-const headings = { home: 'Levi (@n0thhhing) - Personal Portfolio & Systems Showcase', about: 'A little about the person.', projects: 'From bits to little worlds.', art: 'I think in color, too.', interests: 'Usually, there’s music on.' };
+const headings = { home: 'Levi (@n0thhhing) - Personal Portfolio & Systems Showcase', about: 'A little about the person.', projects: 'From bits to little worlds.', achievements: 'Hackathons, runtimes & craft.', art: 'I think in color, too.', interests: 'Usually, there’s music on.' };
 
 export function initEditor({ announce, onActive, openFiles }) {
   const host = document.querySelector('#pane-layout');
@@ -78,6 +78,7 @@ export function initEditor({ announce, onActive, openFiles }) {
     for (const [id, element] of elements) element.hidden = single && id !== state.activeId;
     for (const group of host.querySelectorAll('.pane-group')) group.hidden = single && !group.querySelector(`[data-pane-id="${state.activeId}"]`);
     host.classList.toggle('pane-zoomed', state.zoomed);
+    document.querySelector('.editor')?.classList.toggle('pane-zoomed', state.zoomed);
   }
   function renderPane(p) {
     let element = elements.get(p.id);
@@ -92,7 +93,12 @@ export function initEditor({ announce, onActive, openFiles }) {
     tabs.innerHTML = p.tabs.map(t => `<div class="pane-tab ${p.route === t.route ? 'selected' : ''} ${t.preview ? 'preview-tab' : ''}" draggable="true" data-tab-route="${e(t.route)}"><a class="tab ${p.route === t.route ? 'active' : ''}" href="#${e(t.route)}" ${t.route.startsWith('projects/') ? `data-project-tab="${e(t.route.slice(9))}"` : ''}><span class="file-icon" aria-hidden="true">${icon('M4 2h5l3 3v9H4zM9 2v4h3')}</span><span class="tab-name">${e(nameFor(t.route))}</span></a><button class="tab-close" data-close-tab="${e(t.route)}" aria-label="Close ${e(nameFor(t.route))}">${closeIcon}</button></div>`).join('');
     role(element, 'history-back').disabled = p.historyIndex <= 0;
     role(element, 'history-forward').disabled = p.historyIndex >= p.history.length - 1;
-    role(element, 'editor-maximize-btn').setAttribute('aria-pressed', String(state.zoomed && state.activeId === p.id));
+    const maxBtn = role(element, 'editor-maximize-btn');
+    const isZoomed = Boolean(state.zoomed && state.activeId === p.id);
+    maxBtn.setAttribute('aria-pressed', String(isZoomed));
+    maxBtn.setAttribute('aria-label', isZoomed ? 'Zoom out' : 'Zoom in');
+    maxBtn.title = isZoomed ? 'Zoom Out' : 'Zoom In';
+    maxBtn.innerHTML = `<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" aria-hidden="true"><path d="${isZoomed ? 'M9 2v5h5M7 14V9H2M14 2L9 7M2 14l5-5' : 'M10 2h4v4M6 14H2v-4M14 2l-4 4M2 14l4-4'}" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     const content = role(element, 'content');
     const tab = p.tabs.find(t => t.route === p.route);
     const buffer = state.buffers.get(p.route);
@@ -347,7 +353,7 @@ export function initEditor({ announce, onActive, openFiles }) {
     if (name === 'history-back') travel(-1);
     if (name === 'history-forward') travel(1);
     if (name === 'editor-split-btn') showMenu(button, [...['left', 'right', 'up', 'down'].map(direction => [`Split ${direction}`, () => split(direction)]), ...(state.panes().length > 1 ? [['Close pane', () => { capture(); state.removePane(); updateHash(); render(true); }]] : [])]);
-    if (name === 'editor-maximize-btn') { capture(); state.zoomed = !state.zoomed; render(true); }
+    if (name === 'editor-maximize-btn') { capture(); document.querySelector('.editor')?.classList.remove('terminal-maximized'); state.zoomed = !state.zoomed; render(true); }
     if (name === 'buffer-search-btn') showSearch();
     if (name === 'outline-btn') showOutline();
     if (button.matches('[data-close-search]')) closeSearch();
@@ -451,7 +457,7 @@ export function initEditor({ announce, onActive, openFiles }) {
       const direction = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' }[event.key];
       if (direction) { event.preventDefault(); split(direction); return; }
     }
-    if (!inTerminal && event.shiftKey && event.key === 'Escape') { event.preventDefault(); state.zoomed = !state.zoomed; capture(); render(true); return; }
+    if (!inTerminal && event.shiftKey && event.key === 'Escape') { event.preventDefault(); document.querySelector('.editor')?.classList.remove('terminal-maximized'); state.zoomed = !state.zoomed; capture(); render(true); return; }
     if (!inTerminal && mod && /^[1-9]$/.test(key)) {
       const pane = state.panes()[Number(key) - 1];
       if (pane) { event.preventDefault(); activate(pane.id); activeContent().focus(); }
@@ -469,5 +475,5 @@ export function initEditor({ announce, onActive, openFiles }) {
   });
   render(true);
   window.history.replaceState({ pane: state.activeId, navigationIndex: 0 }, '', location.href);
-  return { state, navigate, split };
+  return { state, navigate, split, render, unzoom: () => { if (state.zoomed) { state.zoomed = false; render(true); } } };
 }

@@ -1,12 +1,21 @@
-import { pages, projects, profile, repositoryLink, projectStatus, music, anime } from './content.js';
+import { pages, projects, profile, repositoryLink, projectStatus, music, anime, hackathons, ossContributions } from './content.js';
 import { themes } from './themes.js';
 
-export const commands = ['help', 'ls', 'cd', 'pwd', 'cat', 'open', 'git', 'fetch', 'neofetch', 'fastfetch', 'whoami', 'about', 'projects', 'project', 'art', 'music', 'anime', 'themes', 'theme', 'history', 'echo', 'clear'];
+export const commands = [
+  'help', 'ls', 'cd', 'pwd', 'cat', 'open', 'git', 'fetch', 'neofetch', 'fastfetch',
+  'whoami', 'herx', 'about', 'achievements', 'hackathons', 'awards', 'zeon', 'bun', 'oss', 'stack',
+  'projects', 'project', 'art', 'music', 'anime', 'themes', 'theme', 'history', 'echo', 'clear'
+];
+
 const help = [
   ['ls', 'list files in the current directory'], ['cd projects', 'move around the workspace'],
   ['cat about.md', 'read a file right here'], ['open README.md', 'open a file in the editor'],
   ['git', 'repository and working tree status'],
   ['pwd', 'show the current directory'], ['fetch', 'the short version of me'],
+  ['herx', 'modding roots, GameGuardian & AArch64 reversing'],
+  ['hackathons', '3-year hackathon podium record'], ['zeon', 'SIMD intrinsics architecture breakdown'],
+  ['bun', 'upstream runtime bug isolation'], ['stack', 'primary engineering toolchain'],
+  ['achievements', 'open achievements.md'],
   ['projects', 'browse all projects'], ['project zeon', 'inspect a specific project'],
   ['about', 'the longer introduction'], ['art', 'art, color & Instagram'],
   ['music', 'what’s on repeat'], ['anime', 'favorite stories'],
@@ -75,7 +84,7 @@ export function runCommand(input, context = {}) {
       return { text: entries.map(entry => entry.name).join('\n'), entries };
     }
     case 'cat': {
-      if (!value) return failure('Usage: cat <file>\nTry cat about.md, or cd projects and cat rarm64.md.');
+      if (!value) return failure('Usage: cat <file>\nTry cat about.md, cat achievements.md, or cd projects and cat zeon.md.');
       const path = resolvePath(value, cwd);
       if (directory(path)) return failure(`cat: ${value}: is a directory. Try ls ${value}.`);
       const file = fileAt(path);
@@ -96,9 +105,10 @@ export function runCommand(input, context = {}) {
       const theme = themes.find(theme => theme.id === context.theme) ?? themes[0];
       const rows = [
         ['handle', `@${profile.handle}`],
+        ['alias', profile.alias],
         ['github', `@${profile.githubHandle}`],
-        ['focus', 'systems · reverse engineering · art'],
-        ['code', 'Zig · Rust · TypeScript · Lua · Swift'],
+        ['focus', 'systems · reversing · native apps'],
+        ['code', 'Zig · Rust · ARM64 · TypeScript · Swift'],
         ['editor', 'Zed'],
         ['theme', theme.name],
         ['art', 'Clip Studio Paint / @levi.napz'],
@@ -108,7 +118,33 @@ export function runCommand(input, context = {}) {
     case 'history': return { text: (context.history ?? []).map((line, index) => `${String(index + 1).padStart(3)}  ${line}`).join('\n') || 'No commands yet.' };
     case 'echo': return { text: value };
     case 'whoami': return { text: `${profile.name} (@${profile.handle}) · GitHub: @${profile.githubHandle}\n${profile.intro}`, route: 'home' };
+    case 'herx': {
+      return {
+        text: `Herx · Early Modding & Reverse Engineering Roots\n\n  Origins:     Rooted Android, GameGuardian, LADB, and Pixel Gun 3D (PG3D)\n  Targets:     Unity libil2cpp.so (ARM64 / AArch64)\n  Techniques:  Multi-level pointer chains, static class offsets, live memory patching\n  Projects:    JUDSN mod menu core, Proplam-menu (open-source), ts-capstone, Offset-updater\n  Engineering: Introduced .luacheckrc, .prettierrc, modular architecture, and Bun tooling to Lua modding\n  Evolution:   Manual Ghidra offset hunting → automated Capstone disassembly pipelines → bare-metal ARM NEON intrinsics (zeon)`,
+        route: 'about',
+      };
+    }
     case 'about': return { text: 'Opening about.md. Systems, sketches, and figuring things out.', route: 'about' };
+    case 'achievements': return { text: 'Opening achievements.md. Hackathon podiums, upstream Bun runtime bugs, and releases.', route: 'achievements' };
+    case 'hackathons': case 'awards': {
+      const rows = hackathons.map(h => `${h.year} · ${h.placement}\n  ${h.event} (${h.context})\n  ${h.summary}`);
+      return { text: `Catawba College Hackathon Series (2024–2026)\n\n${rows.join('\n\n')}`, route: 'achievements' };
+    }
+    case 'zeon': {
+      return {
+        text: `zeon · ARM & ARM64 NEON SIMD in pure Zig 0.16+ and inline assembly\n\n  Intrinsics: 2,806+ implemented across 10 modular domains\n  Tests:      2,815+ passing unit tests\n  Targets:    native, arm-linux, aarch64-linux, aarch64_be-linux (Big-Endian), x86_64-macos\n  Execution:  LLVM builtins → inline assembly → pure Zig @Vector fallback\n  Simulations: 2D wave, Mandelbrot, 3D cube, matrix operations, bufferToHex\n\nVector Lane Example (vaddq_f32):\n  Lane 0: [ 1.0 ] + [ 5.0 ] = [  6.0 ]\n  Lane 1: [ 2.0 ] + [ 6.0 ] = [  8.0 ]\n  Lane 2: [ 3.0 ] + [ 7.0 ] = [ 10.0 ]\n  Lane 3: [ 4.0 ] + [ 8.0 ] = [ 12.0 ]\n  All 4 float32 lanes computed simultaneously in a single vector register.`,
+        route: 'projects/zeon',
+      };
+    }
+    case 'bun': case 'oss': {
+      const rows = ossContributions.map(oss => `${oss.project} (${oss.issue}) - ${oss.title}\n  ${oss.impact}\n  ${oss.url}`);
+      return { text: `Upstream Open-Source Runtime Diagnostics\n\n${rows.join('\n\n')}`, route: 'achievements' };
+    }
+    case 'stack': {
+      return {
+        text: `Primary Engineering Stack\n\n  Languages:   Zig (0.16+), ARM64 Assembly, Rust, TypeScript (Bun), Swift\n  Low-Level:   NEON Vector Intrinsics, LLVM Builtins, QEMU Emulation\n  Reversing:   Capstone 5.0, ts-capstone, ELF/Mach-O/IL2CPP Parsing\n  Native App:  AppKit, Metal, SwiftUI (Wallify)\n  Platforms:   Linux (Arch, Debian), macOS, Android aarch64 via Termux (proot)\n  Editor:      Zed (wearing Gruvbox Material)`,
+      };
+    }
     case 'projects': return { text: projects.map(project => `${project.id.padEnd(23)} ${projectStatus(project)}`).join('\n'), route: 'projects' };
     case 'project': {
       if (!arg) return failure('Usage: project <name>\nTry project zeon, or use Tab to complete a name.');
@@ -135,7 +171,7 @@ export function runCommand(input, context = {}) {
       if (sub === 'branch') return { text: '* main' };
       if (sub === 'log') {
         return {
-          text: `commit 3c118f8 (HEAD -> main, origin/main)\nAuthor: Levi <levi.napz>\n\n    fix(ui): format titlebar as project/worktree/branch and remove duplicate git from statusbar\n\ncommit e3c9bf0\nAuthor: Levi <levi.napz>\n\n    fix: adjust explorer scrollbar and add breathing room for...\n\ncommit 5d95593\nAuthor: Levi <levi.napz>\n\n    fix: indent projects tree, add movable windows/resizers...`
+          text: `commit 229b5f8 (HEAD -> main, origin/main)\nAuthor: Levi <levi.napz>\n\n    feat: align workspace with Zed architecture, hairline split dividers, and Starship terminal\n\ncommit 3c118f8\nAuthor: Levi <levi.napz>\n\n    fix(ui): format titlebar as project/worktree/branch and remove duplicate git from statusbar\n\ncommit e3c9bf0\nAuthor: Levi <levi.napz>\n\n    fix: adjust explorer scrollbar and add breathing room for...`
         };
       }
       return failure(`git: '${value}' is not a git command. Try: git status, git branch, git log`);

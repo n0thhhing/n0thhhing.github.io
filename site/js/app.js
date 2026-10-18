@@ -140,12 +140,15 @@ function closeDrawer(restore = true) {
 
 function toggleExplorer(trigger) {
   if (!matchMedia('(max-width: 760px)').matches) {
+    const willOpen = document.body.classList.contains('explorer-hidden');
     document.body.classList.toggle('explorer-hidden');
+    if (willOpen) editor.unzoom?.();
     syncControls();
     return;
   }
   if (drawer === 'explorer') { closeDrawer(); return; }
   if (drawer) closeDrawer(false);
+  editor.unzoom?.();
   drawer = 'explorer';
   drawerTrigger = trigger;
   const element = $('#explorer');
@@ -166,6 +169,7 @@ function toggleGitPanel(trigger) {
     const willOpen = panel.hidden;
     panel.hidden = !willOpen;
     document.body.classList.toggle('git-panel-open', willOpen);
+    if (willOpen) editor.unzoom?.();
     syncControls();
     if (willOpen) panel.querySelector('a, button')?.focus();
     else if (trigger?.focus) trigger.focus();
@@ -173,6 +177,7 @@ function toggleGitPanel(trigger) {
   }
   if (drawer === 'git-panel') { closeDrawer(); return; }
   if (drawer) closeDrawer(false);
+  editor.unzoom?.();
   drawer = 'git-panel';
   drawerTrigger = trigger;
   panel.hidden = false;
@@ -263,6 +268,7 @@ document.querySelectorAll('dialog').forEach(picker => picker.addEventListener('c
 initTerminal({
   navigate: route => editor.navigate(route),
   applyTheme,
+  unzoom: () => editor.unzoom?.(),
 });
 
 function initExplorerResizer() {
