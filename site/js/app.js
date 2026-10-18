@@ -610,3 +610,216 @@ document.addEventListener('keydown', event => {
   event.preventDefault();
   buttons[(index + (event.key === 'ArrowRight' ? 1 : -1) + buttons.length) % buttons.length].focus();
 });
+
+
+// Project-specific execution flow explorer: switch paths, inspect individual stages, and play the trace.
+const executionFlowTimers = new WeakMap();
+
+function stopExecutionFlow(root) {
+  const timer = executionFlowTimers.get(root);
+  if (timer) window.clearInterval(timer);
+  executionFlowTimers.delete(root);
+  root.dataset.flowPlaying = 'false';
+  const playButton = root.querySelector('[data-flow-action="play"]');
+  if (playButton) {
+    playButton.textContent = '▶ Play trace';
+    playButton.setAttribute('aria-pressed', 'false');
+    playButton.setAttribute('aria-label', 'Play execution trace');
+  }
+}
+
+function getExecutionFlowPath(root) {
+  const selected = root.querySelector('[data-flow-scenario="' + CSS.escape(root.dataset.flowActiveScenario || '') + '"]');
+  return selected ? (selected.dataset.flowSteps || '').split('>').filter(Boolean) : [];
+}
+
+function updateExecutionFlow(root) {
+  if (!root || !root.isConnected) return;
+  const path = getExecutionFlowPath(root);
+  if (!path.length) return;
+  let step = Number.parseInt(root.dataset.flowStep || '0', 10);
+  step = Math.max(0, Math.min(path.length - 1, Number.isFinite(step) ? step : 0));
+  root.dataset.flowStep = String(step);
+  const currentId = path[step];
+  const selectedId = root.dataset.flowSelected || currentId;
+  const scenarioButton = root.querySelector('[data-flow-scenario].is-selected');
+  const totalProgress = path.length > 1 ? Math.round(step / (path.length - 1) * 100) : 100;
+
+  root.querySelectorAll('[data-flow-scenario]').forEach(button => {
+    const active = button.dataset.flowScenario === root.dataset.flowActiveScenario;
+    button.classList.toggle('is-selected', active);
+    button.setAttribute('aria-pressed', String(active));
+  });
+  const scenarioDescription = root.querySelector('[data-flow-scenario-description]');
+  if (scenarioDescription && scenarioButton) scenarioDescription.textContent = scenarioButton.dataset.flowSummary || '';
+
+  const nodeButtons = [...root.querySelectorAll('[data-flow-node]')];
+  nodeButtons.forEach(button => {
+    const id = button.dataset.flowNode;
+    const pathIndex = path.indexOf(id);
+    const onPath = pathIndex >= 0;
+    button.classList.toggle('is-on-path', onPath);
+    button.classList.toggle('is-off-path', !onPath);
+    button.classList.toggle('is-visited', onPath && pathIndex < step);
+    button.classList.toggle('is-current-step', id === currentId);
+    button.classList.toggle('is-inspected', id === selectedId);
+    button.setAttribute('aria-pressed', String(id === selectedId));
+  });
+
+  root.querySelectorAll('[data-flow-edge]').forEach(group => {
+    const parts = (group.dataset.flowEdge || '').split('>');
+    const edgeIndex = path.findIndex((id, index) => id === parts[0] && path[index + 1] === parts[1]);
+    const onPath = edgeIndex >= 0;
+    group.classList.toggle('is-traced', onPath);
+    group.classList.toggle('is-traversed', onPath && edgeIndex < step);
+    group.classList.toggle('is-current-edge', onPath && edgeIndex === step - 1);
+  });
+
+  const selectedNode = nodeButtons.find(button => button.dataset.flowNode === selectedId) ||
+    nodeButtons.find(button => button.dataset.flowNode === currentId);
+  if (selectedNode) {
+    const selectedOnPath = path.includes(selectedNode.dataset.flowNode);
+    const selectedStep = path.indexOf(selectedNode.dataset.flowNode);
+    const kicker = root.querySelector('[data-flow-inspector-kicker]');
+    if (kicker) {
+      kicker.textContent = selectedOnPath
+        ? 'STEP ' + (selectedStep + 1) + ' / ' + path.length + ' · ' + (selectedNode.dataset.flowKind || 'STAGE').toUpperCase()
+        : 'INSPECTING ANOTHER BRANCH · ' + (selectedNode.dataset.flowKind || 'STAGE').toUpperCase();
+    }
+    const valueMap = {
+      '[data-flow-inspector-title]': 'flowNodeTitle',
+      '[data-flow-inspector-detail]': 'flowDetail',
+      '[data-flow-inspector-input]': 'flowInput',
+      '[data-flow-inspector-output]': 'flowOutput',
+      '[data-flow-inspector-why]': 'flowWhy'
+    };
+    for (const [selector, key] of Object.entries(valueMap)) {
+      const target = root.querySelector(selector);
+      if (target) target.textContent = selectedNode.dataset[key] || '';
+    }
+  }
+
+  const counter = root.querySelector('[data-flow-step-counter]');
+  if (counter) counter.textContent = 'Step ' + (step + 1) + ' of ' + path.length;
+  const progress = root.querySelector('[data-flow-progress]');
+  if (progress) progress.setAttribute('aria-valuenow', String(totalProgress));
+  const fill = root.querySelector('[data-flow-progress-fill]');
+  if (fill) fill.style.width = totalProgress + '%';
+  const previous = root.querySelector('[data-flow-action="prev"]');
+  const next = root.querySelector('[data-flow-action="next"]');
+  if (previous) previous.disabled = step <= 0;
+  if (next) next.disabled = step >= path.length - 1;
+}
+
+function setExecutionFlowStep(root, nextStep, announceChange = false) {
+  const path = getExecutionFlowPath(root);
+  if (!path.length) return;
+  const step = Math.max(0, Math.min(path.length - 1, nextStep));
+  root.dataset.flowStep = String(step);
+  root.dataset.flowSelected = path[step];
+  updateExecutionFlow(root);
+  if (announceChange) {
+    const announcer = document.querySelector('#announcer');
+    if (announcer) announcer.textContent = 'Execution step ' + (step + 1) + ' of ' + path.length + ': ' +
+      (root.querySelector('[data-flow-node="' + CSS.escape(path[step]) + '"]')?.dataset.flowNodeTitle || path[step]);
+  }
+}
+
+document.addEventListener('click', event => {
+  const target = event.target instanceof Element
+    ? event.target.closest('[data-flow-scenario], [data-flow-node], [data-flow-action]')
+    : null;
+  if (!target) return;
+  const root = target.closest('[data-execution-flow]');
+  if (!root) return;
+
+  if (target.matches('[data-flow-scenario]')) {
+    stopExecutionFlow(root);
+    root.dataset.flowActiveScenario = target.dataset.flowScenario;
+    root.dataset.flowStep = '0';
+    root.dataset.flowSelected = (target.dataset.flowSteps || '').split('>').filter(Boolean)[0] || '';
+    updateExecutionFlow(root);
+    const announcer = document.querySelector('#announcer');
+    if (announcer) announcer.textContent = 'Execution path selected: ' + target.textContent.trim();
+    return;
+  }
+  if (target.matches('[data-flow-node]')) {
+    stopExecutionFlow(root);
+    root.dataset.flowSelected = target.dataset.flowNode;
+    const path = getExecutionFlowPath(root);
+    const pathIndex = path.indexOf(target.dataset.flowNode);
+    if (pathIndex >= 0) root.dataset.flowStep = String(pathIndex);
+    updateExecutionFlow(root);
+    const announcer = document.querySelector('#announcer');
+    if (announcer) announcer.textContent = 'Inspecting ' + (target.dataset.flowNodeTitle || 'execution stage');
+    return;
+  }
+
+  const action = target.dataset.flowAction;
+  const step = Number.parseInt(root.dataset.flowStep || '0', 10) || 0;
+  if (action === 'prev') {
+    stopExecutionFlow(root);
+    setExecutionFlowStep(root, step - 1, true);
+  } else if (action === 'next') {
+    stopExecutionFlow(root);
+    setExecutionFlowStep(root, step + 1, true);
+  } else if (action === 'reset') {
+    stopExecutionFlow(root);
+    setExecutionFlowStep(root, 0, true);
+  } else if (action === 'play') {
+    if (root.dataset.flowPlaying === 'true') {
+      stopExecutionFlow(root);
+      return;
+    }
+    let path = getExecutionFlowPath(root);
+    if (!path.length) return;
+    if (step >= path.length - 1) setExecutionFlowStep(root, 0, false);
+    root.dataset.flowPlaying = 'true';
+    target.textContent = 'Ⅱ Pause';
+    target.setAttribute('aria-pressed', 'true');
+    target.setAttribute('aria-label', 'Pause execution trace');
+    const timer = window.setInterval(() => {
+      if (!root.isConnected) {
+        stopExecutionFlow(root);
+        return;
+      }
+      path = getExecutionFlowPath(root);
+      const current = Number.parseInt(root.dataset.flowStep || '0', 10) || 0;
+      if (!path.length || current >= path.length - 1) {
+        stopExecutionFlow(root);
+        return;
+      }
+      setExecutionFlowStep(root, current + 1, false);
+      if (current + 1 >= path.length - 1) stopExecutionFlow(root);
+    }, 1050);
+    executionFlowTimers.set(root, timer);
+  }
+});
+
+document.addEventListener('keydown', event => {
+  const nodeButton = event.target instanceof Element ? event.target.closest('[data-flow-node]') : null;
+  if (!nodeButton || !['ArrowLeft', 'ArrowRight'].includes(event.key) || event.metaKey || event.ctrlKey || event.altKey) return;
+  const root = nodeButton.closest('[data-execution-flow]');
+  if (!root) return;
+  const path = getExecutionFlowPath(root);
+  const index = path.indexOf(nodeButton.dataset.flowNode);
+  if (index < 0) return;
+  event.preventDefault();
+  stopExecutionFlow(root);
+  const nextIndex = Math.max(0, Math.min(path.length - 1, index + (event.key === 'ArrowRight' ? 1 : -1)));
+  const nextNode = root.querySelector('[data-flow-node="' + CSS.escape(path[nextIndex]) + '"]');
+  if (nextNode) nextNode.focus();
+  setExecutionFlowStep(root, nextIndex, true);
+});
+
+function refreshExecutionFlows() {
+  document.querySelectorAll('[data-execution-flow]').forEach(updateExecutionFlow);
+}
+const executionFlowObserver = new MutationObserver(records => {
+  const addedFlow = records.some(record => [...record.addedNodes].some(node =>
+    node instanceof Element && (node.matches('[data-execution-flow]') || node.querySelector('[data-execution-flow]'))
+  ));
+  if (addedFlow) requestAnimationFrame(refreshExecutionFlows);
+});
+executionFlowObserver.observe(document.body, { childList: true, subtree: true });
+requestAnimationFrame(refreshExecutionFlows);
