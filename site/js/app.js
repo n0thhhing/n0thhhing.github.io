@@ -498,3 +498,103 @@ document.addEventListener('click', event => {
   const announcer=document.querySelector('#announcer');
   if(announcer) announcer.textContent=`Jumped to ${trigger.getAttribute('data-document-label')||'section'}`;
 }, true);
+
+
+// Reading flow for the rendered project documents. Each editor pane keeps its own progress and active section.
+function updateProjectReader(contentPane) {
+  if (!(contentPane instanceof Element)) return;
+  const article = contentPane.querySelector('.project-document');
+  if (!article) return;
+  const sections = [...article.querySelectorAll('[data-doc-section]')];
+  if (!sections.length) return;
+
+  const progressTrack = article.querySelector('[data-doc-reading-track]');
+  const progressFill = article.querySelector('[data-doc-reading-progress]');
+  const progressCount = article.querySelector('[data-doc-reading-count]');
+  const currentLabel = article.querySelector('[data-doc-reading-section]');
+  const maxScroll = contentPane.scrollHeight - contentPane.clientHeight;
+  const progress = maxScroll > 1 ? Math.max(0, Math.min(100, Math.round(contentPane.scrollTop / maxScroll * 100))) : 100;
+  if (progressTrack) progressTrack.setAttribute('aria-valuenow', String(progress));
+  if (progressFill) progressFill.style.width = `${progress}%`;
+  if (progressCount) progressCount.textContent = `${progress}%`;
+
+  const marker = contentPane.getBoundingClientRect().top + 112;
+  let active = sections[0];
+  for (const section of sections) {
+    if (section.getBoundingClientRect().top <= marker) active = section;
+    else break;
+  }
+  const activeId = active.dataset.docSection;
+  article.dataset.activeDocSection = activeId;
+  const activeLink = [...article.querySelectorAll('[data-document-target]')].find(link => link.dataset.documentTarget === activeId);
+  article.querySelectorAll('.project-outline-link').forEach(link => {
+    if (link === activeLink) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+  if (currentLabel) currentLabel.textContent = activeLink?.dataset.documentLabel || active.querySelector('h1, h2')?.textContent?.trim() || 'Overview';
+
+  const nextButton = article.querySelector('[data-doc-next-section]');
+  if (nextButton) {
+    const index = sections.indexOf(active);
+    const hasNext = index >= 0 && index < sections.length - 1;
+    nextButton.disabled = !hasNext;
+    nextButton.title = hasNext ? `Jump to ${sections[index + 1].querySelector('h1, h2')?.textContent?.trim() || 'next section'}` : 'You are at the last section';
+  }
+  const outlineButton = article.querySelector('[data-doc-outline]');
+  if (outlineButton) {
+    const hidden = article.classList.contains('outline-hidden') || article.classList.contains('reading-focus');
+    outlineButton.setAttribute('aria-pressed', String(hidden));
+    outlineButton.textContent = hidden ? 'Show outline' : 'Hide outline';
+  }
+}
+
+function refreshProjectReaders() {
+  document.querySelectorAll('.content').forEach(updateProjectReader);
+}
+
+let readerRefreshFrame = 0;
+const readerMutationObserver = new MutationObserver(records => {
+  const projectDocumentAdded = records.some(record => [...record.addedNodes].some(node =>
+    node instanceof Element && (node.matches('.project-document') || node.querySelector('.project-document'))
+  ));
+  if (projectDocumentAdded && !readerRefreshFrame) {
+    readerRefreshFrame = requestAnimationFrame(() => {
+      readerRefreshFrame = 0;
+      refreshProjectReaders();
+    });
+  }
+});
+readerMutationObserver.observe(document.body, { childList: true, subtree: true });
+
+document.addEventListener('scroll', event => {
+  const scroller = event.target instanceof Element ? event.target.closest('.content') : null;
+  if (scroller) updateProjectReader(scroller);
+}, true);
+window.addEventListener('resize', refreshProjectReaders);
+requestAnimationFrame(refreshProjectReaders);
+
+document.addEventListener('click', event => {
+  const button = event.target instanceof Element ? event.target.closest('[data-doc-outline], [data-doc-next-section]') : null;
+  if (!button) return;
+  const article = button.closest('.project-document');
+  if (!article) return;
+
+  if (button.hasAttribute('data-doc-outline')) {
+    const outlineIsHidden = article.classList.contains('outline-hidden') || article.classList.contains('reading-focus');
+    article.classList.remove('reading-focus');
+    article.classList.toggle('outline-hidden', !outlineIsHidden);
+    updateProjectReader(article.closest('.content'));
+    announce(outlineIsHidden ? 'Document outline shown' : 'Document outline hidden');
+    return;
+  }
+
+  const sections = [...article.querySelectorAll('[data-doc-section]')];
+  const currentIndex = sections.findIndex(section => section.dataset.docSection === article.dataset.activeDocSection);
+  const next = sections[Math.min(sections.length - 1, Math.max(0, currentIndex + 1))];
+  if (!next || next === sections[currentIndex]) return;
+  next.scrollIntoView({
+    behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    block: 'start'
+  });
+  announce(`Jumped to ${next.querySelector('h1, h2')?.textContent?.trim() || 'next section'}`);
+});
