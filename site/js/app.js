@@ -711,6 +711,21 @@ function updateExecutionFlow(root) {
   if (next) next.disabled = step >= path.length - 1;
 }
 
+function keepExecutionFlowNodeVisible(root, nodeId) {
+  const viewport = root.querySelector('.execution-flow-graph-scroll');
+  const button = root.querySelector('[data-flow-node="' + CSS.escape(nodeId) + '"]');
+  if (!viewport || !button) return;
+  const view = viewport.getBoundingClientRect();
+  const item = button.getBoundingClientRect();
+  let delta = 0;
+  if (item.left < view.left + 8) delta = item.left - view.left - 18;
+  else if (item.right > view.right - 8) delta = item.right - view.right + 18;
+  if (delta) viewport.scrollTo({
+    left: viewport.scrollLeft + delta,
+    behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+  });
+}
+
 function setExecutionFlowStep(root, nextStep, announceChange = false) {
   const path = getExecutionFlowPath(root);
   if (!path.length) return;
@@ -718,6 +733,7 @@ function setExecutionFlowStep(root, nextStep, announceChange = false) {
   root.dataset.flowStep = String(step);
   root.dataset.flowSelected = path[step];
   updateExecutionFlow(root);
+  keepExecutionFlowNodeVisible(root, path[step]);
   if (announceChange) {
     const announcer = document.querySelector('#announcer');
     if (announcer) announcer.textContent = 'Execution step ' + (step + 1) + ' of ' + path.length + ': ' +
