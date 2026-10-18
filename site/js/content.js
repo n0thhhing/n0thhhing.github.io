@@ -634,20 +634,30 @@ pub fn sse42_strstr(haystack: []const u8, needle: []const u8) ?usize {
     description: 'An experimental Shizuku-startup investigation that began on a non-rooted phone and relied on VPhoneGaGa as a virtualized workaround.',
     tech: ['Java', 'Android', 'VPhoneGaGa', 'Termux', 'Wireless ADB'], status: 'Experimental', repoUrl: null,
     specs: ['Started on a non-rooted phone', 'VPhoneGaGa virtualized workaround', 'Termux automation + Wireless ADB', 'Dynamic ADB endpoint discovery', 'SELinux / privilege-boundary investigation'],
-    architectureFlow: `[Device Boot / Network Event] ──► [Termux Automation Trigger]
-                                             │
-                                             ▼
-                              [Verify Active Wi-Fi Connection]
-                              (Wireless ADB disabled on Hotspot/Cellular)
-                                             │
-                                             ▼
-                              [Query ADB Daemon Port via adb mdns]
-                                             │
-                                             ▼
-                              [Execute sh /sdcard/Android/data/.../start.sh]
-                                             │
-                                             ▼
-                              [Shizuku Daemon Spawned with UID 2000]`,
+    architectureFlow: `[Non-rooted Android phone]
+             │
+             ▼
+[VPhoneGaGa virtualized Android workaround]
+             │
+             ▼
+[Termux / manual startup attempt]
+             │
+             ▼
+[Check Wi-Fi + wireless-debugging state]
+             │
+             ├── unavailable ──► [Stop; report blocked condition]
+             │
+             ▼
+[Discover current ADB endpoint via mDNS]
+             │
+             ▼
+[Connect through existing authorization]
+             │
+             ▼
+[Attempt Shizuku startup script]
+             │
+             ▼
+[Check actual service result]`,
     subsystems: [
       { name: 'scripts/helper.sh', description: 'Shell script testing wireless ADB daemon availability on localhost, resolving dynamic mDNS pairing ports.' },
       { name: 'docs/limits.md', description: 'Technical investigation documenting Android 17 SELinux restrictions, ADB wireless loopback constraints, and background service execution limits.' },
