@@ -1000,3 +1000,33 @@ details[open] > summary > .folder-icon > .folder-open { display: block; }
 @media(max-width:1000px){.project-doc-grid{grid-template-columns:minmax(0,1fr) 150px;gap:22px}.page.project-document{max-width:100%}}
 @media(max-width:760px){.project-doc-filebar{align-items:flex-start}.project-doc-mode{font-size:10px}.project-doc-grid{display:flex;flex-direction:column;gap:20px}.project-doc-main{order:1;width:100%}.project-outline{position:static;order:0;width:100%;padding:8px 0 12px;border-left:0;border-bottom:1px solid var(--border)}.project-outline nav{display:flex;gap:4px;overflow-x:auto;padding-bottom:5px;scrollbar-width:thin}.project-outline-link{display:inline-flex;flex:0 0 auto;gap:6px;padding:6px 8px;border:1px solid var(--border);white-space:nowrap}.project-outline-foot{display:none}.doc-frontmatter-row{grid-template-columns:54px minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){.project-document *{scroll-behavior:auto!important}}
+
+
+/* Project documents: a calmer Zed-inspired reading surface, without pretending every page must be raw Markdown. */
+.project-reading-tools{display:flex;align-items:center;gap:6px;min-height:34px;padding:4px 14px;border-bottom:1px solid var(--border);background:var(--panel);font:10px var(--mono);color:var(--muted)}
+.reading-tools-label{margin-right:auto;letter-spacing:.1em;font-size:9px}
+.project-reading-tools button{border:1px solid var(--border);border-radius:4px;padding:5px 8px;background:var(--surface);color:var(--text);font:inherit;cursor:pointer}
+.project-reading-tools button:hover,.project-reading-tools button:focus-visible{border-color:var(--accent);outline:none}
+.project-reading-tools button[aria-pressed=true]{background:color-mix(in srgb,var(--accent) 13%,var(--surface));border-color:var(--accent)}
+.project-document .project-doc-main{min-width:0}
+.project-document .project-doc-section{scroll-margin-top:18px}
+.project-document .project-doc-section h2{letter-spacing:-.025em}
+.project-document .project-doc-overview .page-heading{letter-spacing:-.055em;line-height:1.08}
+.project-document .project-doc-summary{max-width:72ch;font-size:14px;line-height:1.85;color:var(--text)}
+.project-document .project-doc-section>p,.project-document .project-doc-section>ul{max-width:76ch;line-height:1.85}
+.project-document .project-doc-card p,.project-document .subsystem-card p{line-height:1.75}
+.project-document .doc-frontmatter{font-family:var(--mono)}
+.project-document .project-outline{align-self:stretch}
+.project-document .project-outline nav{position:sticky;top:12px}
+.project-document.reading-focus .project-doc-grid{grid-template-columns:minmax(0, min(100%, 900px))}
+.project-document.reading-focus .project-doc-main{max-width:900px;margin-inline:auto;width:100%}
+.project-document.reading-focus .project-outline{display:none}
+@media(max-width:760px){.project-reading-tools{flex-wrap:wrap;padding:6px 10px}.reading-tools-label{flex-basis:100%;margin:0}.project-document .project-outline nav{position:static}}
+@media print{
+  .project-reading-tools,.project-doc-filebar,.project-outline,.project-doc-footer,.statusbar,.terminal-dock,.explorer,.activity-bar{display:none!important}
+  .project-document,.project-document .project-doc-main{max-width:none!important;width:100%!important}
+  .project-document .project-doc-grid{display:block!important}
+  .project-document .project-doc-section,.project-document .project-doc-overview{break-inside:avoid}
+  .project-document{color:#222;background:#fff}
+  .project-document a{color:#222;text-decoration:underline}
+}
