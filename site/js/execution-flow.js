@@ -117,7 +117,7 @@ export const executionFlows = {
   "z-scanner": {
     title: "From wildcard signature to candidate offsets",
     intro: "The pattern is compiled once into values and masks, then a preprocessed search loop scans the target buffer and reports candidate locations.",
-    width: 1200, height: 610,
+    width: 1400, height: 610,
     scenarios: [
       scenario("match", "Signature found", ["pattern", "compile", "preprocess", "scan", "compare", "decision", "matches"], "A candidate window satisfies every exact-byte constraint and every wildcard position."),
       scenario("none", "No remaining match", ["pattern", "compile", "preprocess", "scan", "compare", "decision", "advance", "no-match"], "A failed comparison advances using preprocessed matching state until the buffer is exhausted.")
@@ -128,19 +128,19 @@ export const executionFlows = {
       node("compile", "Compile pattern", "Transform", 230, 75, "Turn tokens into a compact value/mask representation so exact bytes and wildcard bytes can be checked without reparsing the string for every candidate.", "Parsed pattern tokens", "Byte array and mask bits", "Separate pattern parsing from the hot loop so the search stays predictable."),
       node("preprocess", "Build failure table", "Processing", 440, 75, "Precompute KMP-style prefix/shift information adapted to the pattern's matching rules, so a mismatch can reuse earlier comparisons.", "Compiled pattern and wildcard rules", "Preprocessed shift table", "Wildcard-aware preprocessing is the tricky correctness boundary; algorithm names alone do not guarantee the invariant."),
       node("scan", "Scan candidate windows", "Search", 440, 370, "Move through the target buffer and compare candidate windows against the compiled pattern without allocating for each attempted offset.", "Target bytes + compiled pattern", "Candidate comparisons", "Zero allocation in the inner loop helps predictable throughput over large buffers."),
-      node("compare", "Masked comparison", "Decision", 650, 370, "Compare exact positions against expected byte values and ignore positions explicitly marked as wildcards.", "Candidate byte window + value/mask arrays", "Match or mismatch", "The exact mask semantics must be consistent between preprocessing and candidate comparison."),
-      node("decision", "Any match?", "Decision", 850, 370, "A match yields a candidate offset. A mismatch or exhaustion path advances the search instead of restarting all work from scratch.", "Comparison result and current offset", "Found candidate or next-search action", "Treat matches as candidate locations that downstream analysis may need to validate."),
+      node("compare", "Masked comparison", "Decision", 630, 370, "Compare exact positions against expected byte values and ignore positions explicitly marked as wildcards.", "Candidate byte window + value/mask arrays", "Match or mismatch", "The exact mask semantics must be consistent between preprocessing and candidate comparison."),
+      node("decision", "Any match?", "Decision", 830, 370, "A match yields a candidate offset. A mismatch or exhaustion path advances the search instead of restarting all work from scratch.", "Comparison result and current offset", "Found candidate or next-search action", "Treat matches as candidate locations that downstream analysis may need to validate."),
       node("matches", "Report offsets", "Output", 1020, 75, "Collect the offsets at which the signature matches the buffer, preserving the address/offset convention used by the caller.", "Successful match positions", "A list of candidate offsets", "Offsets are not automatically resolved function addresses or proof of semantic identity."),
       node("advance", "Advance via shift state", "Processing", 1020, 370, "Use the preprocessed information to choose the next viable search position. Continue until the input ends or another candidate is found.", "Mismatch position and failure-table state", "Next search position or exhaustion", "The shift logic must preserve valid overlapping matches."),
-      node("no-match", "Search exhausted", "Output", 1020, 500, "If no further candidate window remains, report that the signature was not found in this buffer.", "Exhausted search state", "An empty/no-match result", "An empty result is different from a malformed pattern or failed input read.")
+      node("no-match", "Search exhausted", "Output", 1220, 500, "If no further candidate window remains, report that the signature was not found in this buffer.", "Exhausted search state", "An empty/no-match result", "An empty result is different from a malformed pattern or failed input read.")
     ],
-    edges: [edge("pattern", "compile"), edge("compile", "preprocess"), edge("preprocess", "scan"), edge("buffer", "scan", "bytes to scan", 250, 355), edge("scan", "compare"), edge("compare", "decision"), edge("decision", "matches", "match", 1010, 225), edge("decision", "advance", "mismatch", 980, 405), edge("advance", "no-match", "end of buffer", 1105, 475)]
+    edges: [edge("pattern", "compile"), edge("compile", "preprocess"), edge("preprocess", "scan"), edge("buffer", "scan", "bytes to scan", 250, 355), edge("scan", "compare"), edge("compare", "decision"), edge("decision", "matches"), edge("decision", "advance"), edge("advance", "no-match", "end of buffer", 1200, 480)]
   },
 
   "rarm64": {
     title: "From Mach-O container to decoded ARM64e instructions",
     intro: "The disassembler identifies the Mach-O slice and its load commands, then extracts meaningful code ranges before decoding fixed-width AArch64 instructions.",
-    width: 1200, height: 580,
+    width: 1430, height: 580,
     scenarios: [
       scenario("thin", "Thin Mach-O", ["binary", "container", "thin", "commands", "sections", "decode", "report"], "A single-architecture Mach-O proceeds directly to its load commands and executable sections."),
       scenario("universal", "Universal / fat binary", ["binary", "container", "fat", "commands", "sections", "decode", "report"], "A universal container needs a selected architecture slice before its Mach-O commands can be interpreted.")
@@ -153,7 +153,7 @@ export const executionFlows = {
       node("commands", "Dispatch load commands", "Parsing", 645, 230, "Interpret commands such as LC_SEGMENT_64, LC_SYMTAB, LC_DYSYMTAB, and LC_BUILD_VERSION to locate code, symbols, and build metadata.", "Mach-O header and command bytes", "Segment, section, symbol, and target records", "Load commands describe how offsets map into the file and process image."),
       node("sections", "Map code + symbols", "Analysis", 830, 230, "Extract sections such as __TEXT,__text and resolve available symbols, function starts, or indirect stubs to create useful disassembly regions.", "Section table and symbol/stub records", "Code ranges with addresses/labels", "Stripped binaries may lack enough information for perfect function boundaries."),
       node("decode", "Decode 32-bit opcodes", "Processing", 1020, 230, "Decode fixed-width AArch64 instructions and expose branch targets and ARM64e pointer-authentication-related forms where supported.", "Instruction words + virtual address", "Structured instruction records", "Instruction decoding does not itself emulate pointer authentication or recover unavailable symbols."),
-      node("report", "Inspect the result", "Output", 1020, 410, "Present instructions with addresses, labels, branch destinations, and relevant ARM64e details for further analysis.", "Decoded records and available symbols", "Readable disassembly", "Report uncertainty when function boundaries or symbol information are missing.")
+      node("report", "Inspect the result", "Output", 1220, 230, "Present instructions with addresses, labels, branch destinations, and relevant ARM64e details for further analysis.", "Decoded records and available symbols", "Readable disassembly", "Report uncertainty when function boundaries or symbol information are missing.")
     ],
     edges: [edge("binary", "container"), edge("container", "thin", "thin", 415, 145), edge("container", "fat", "fat / universal", 415, 360), edge("thin", "commands"), edge("fat", "commands"), edge("commands", "sections"), edge("sections", "decode"), edge("decode", "report")]
   },
@@ -222,7 +222,7 @@ export const executionFlows = {
   "shizukuboothelper": {
     title: "The startup attempt and where Android can block it",
     intro: "This is an exploratory startup chain, not an authorization bypass. It discovers wireless-debugging state, then attempts the documented helper path only when the required conditions are present.",
-    width: 1200, height: 600,
+    width: 1220, height: 600,
     scenarios: [
       scenario("ready", "Wi-Fi + debugging ready", ["trigger", "check", "discover", "connect", "script", "spawn"], "When wireless debugging is available and the current ADB service can be discovered and authorized, the helper can attempt startup."),
       scenario("blocked", "Required condition missing", ["trigger", "check", "blocked"], "If wireless debugging or a usable Wi-Fi/ADB endpoint is unavailable, stop and report the limitation rather than claiming successful startup.")
@@ -232,11 +232,11 @@ export const executionFlows = {
       node("check", "Check Wi-Fi + ADB", "Gate", 240, 235, "Verify active Wi-Fi and wireless-debugging availability instead of assuming the ADB endpoint or port persists across reboots.", "Current network/debugging state", "Ready to discover or blocked", "Wireless debugging availability depends on system settings and device state; mobile data alone may not satisfy this path."),
       node("blocked", "Stop with a clear reason", "Blocked", 465, 430, "If the required endpoint is unavailable, end this attempt and report what condition is missing. Do not attempt to bypass Android's authorization or privilege model.", "Missing Wi-Fi/debugging/endpoint", "A blocked/retryable state", "This project documents platform limitations rather than defeating them."),
       node("discover", "Discover current ADB port", "Discovery", 465, 235, "Query the currently advertised ADB wireless service, including mDNS where available, instead of hard-coding a port that may change.", "ADB daemon state and local discovery", "Current endpoint candidate", "Discovery may fail while wireless debugging is disabled, the device is offline, or the service is not published."),
-      node("connect", "Connect + authorize", "Security", 690, 235, "Attempt the authorized local ADB/helper connection using the endpoint and credentials already established through Android's supported workflow.", "Discovered endpoint and existing authorization", "Authorized shell session or failure", "No step grants root; the helper remains within the privileges of its authorized execution context."),
-      node("script", "Run helper script", "Execution", 830, 95, "Only after the connection is usable, invoke the existing startup script that launches the Shizuku daemon through its supported shell path.", "Authorized command channel and script path", "Daemon launch attempt", "File access, SELinux, shell permissions, and background restrictions can still prevent launch."),
-      node("spawn", "Shizuku start result", "Output", 1020, 95, "Confirm the helper's observed result instead of assuming a spawn command means the service is ready.", "Daemon process/startup result", "Started, failed, or unconfirmed state", "Report only what was observed; a successful command invocation is not the same as persistent service availability.")
+      node("connect", "Connect + authorize", "Security", 660, 235, "Attempt the authorized local ADB/helper connection using the endpoint and credentials already established through Android's supported workflow.", "Discovered endpoint and existing authorization", "Authorized shell session or failure", "No step grants root; the helper remains within the privileges of its authorized execution context."),
+      node("script", "Run helper script", "Execution", 850, 95, "Only after the connection is usable, invoke the existing startup script that launches the Shizuku daemon through its supported shell path.", "Authorized command channel and script path", "Daemon launch attempt", "File access, SELinux, shell permissions, and background restrictions can still prevent launch."),
+      node("spawn", "Shizuku start result", "Output", 1040, 95, "Confirm the helper's observed result instead of assuming a spawn command means the service is ready.", "Daemon process/startup result", "Started, failed, or unconfirmed state", "Report only what was observed; a successful command invocation is not the same as persistent service availability.")
     ],
-    edges: [edge("trigger", "check"), edge("check", "blocked", "missing requirement", 425, 385), edge("check", "discover", "ready", 435, 220), edge("discover", "connect"), edge("connect", "script", "authorized", 850, 150), edge("script", "spawn")]
+    edges: [edge("trigger", "check"), edge("check", "blocked", "missing requirement", 425, 385), edge("check", "discover", "ready", 435, 220), edge("discover", "connect"), edge("connect", "script"), edge("script", "spawn")]
   }
 };
 
