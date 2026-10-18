@@ -1219,8 +1219,8 @@ details[open] > summary > .folder-icon > .folder-open { display: block; }
 .project-document .reading-progress-track>span{display:block;height:100%;border-radius:4px}
 .project-document .reading-toolbar-actions{
   display:flex;align-items:center;flex-wrap:wrap;gap:6px;
-  min-width:0;margin:0 0 22px;padding:8px 0 10px;
-  border-bottom:1px solid var(--border);
+  min-width:0;margin:0 0 20px;padding:8px 0 0;
+  border-bottom:0;
 }
 .project-document .reading-toolbar-actions button{
   min-width:0;padding:5px 9px;border:1px solid var(--border);border-radius:4px;
@@ -1278,17 +1278,10 @@ details[open] > summary > .folder-icon > .folder-open { display: block; }
 .execution-flow-graph-scroll::-webkit-scrollbar-thumb{background:var(--border);border:2px solid var(--panel);border-radius:6px}
 .execution-flow-graph-scroll::-webkit-scrollbar-track{background:transparent}
 @media(max-width:760px){
-  .project-document .reading-toolbar-context{grid-template-columns:auto auto minmax(0,1fr) auto;gap:7px;padding:9px 10px}
-  .project-document .reading-progress-track{grid-column:1/-1;height:3px;margin-top:2px}
-  .project-document .reading-toolbar-actions{gap:5px;padding:8px 9px}
-  .project-document .reading-toolbar-actions button{flex:1 1 calc(50% - 5px);white-space:normal;text-align:center}
   .execution-flow-header{gap:12px}
   .execution-flow-key{flex:1 1 100%;gap:7px 11px}
 }
-@media(max-width:430px){.project-document .reading-toolbar-actions button{flex:1 1 100%}}
-@media(prefers-reduced-motion:reduce){.project-document .reading-progress-track>span{transition:none}}
 @media print{
-  .project-document .project-reading-tools{display:none!important}
   .execution-flow-graph{min-width:0!important;width:100%!important}
   .flow-node{overflow:hidden}
 }
