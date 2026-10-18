@@ -1270,9 +1270,16 @@ details[open] > summary > .folder-icon > .folder-open { display: block; }
   letter-spacing:.1em;
   white-space:nowrap;
 }
-.project-document .project-reading-tools,
+/* The entire toolbar follows the document scroll; its label stays inside the same solid bar. */
+.project-document .project-reading-tools{
+  position:sticky!important;
+  top:0!important;
+  z-index:20!important;
+  transform:none!important;
+  box-shadow:none!important;
+}
 .project-document .reading-toolbar-context,
 .project-document .reading-toolbar-actions{
-  position:static!important;
+  position:relative!important;
   transform:none!important;
 }
