@@ -1162,15 +1162,15 @@ details[open] > summary > .folder-icon > .folder-open { display: block; }
 @media(max-width:760px){.project-document .project-doc-grid{grid-template-columns:minmax(0,1fr)}}
 
 
-/* Integrate reading status and document actions into the existing breadcrumb bar. */
+/* Reading status lives in the breadcrumb row; actions remain a separate normal-flow row. */
 .project-document .project-doc-filebar{
   position:relative;
   display:grid;
-  grid-template-columns:minmax(150px,1fr) minmax(220px,.9fr) auto;
+  grid-template-columns:minmax(0,1fr) minmax(190px,270px) auto;
   align-items:center;
   gap:10px 18px;
   min-height:31px;
-  margin:-2px 0 24px;
+  margin:-2px 0 0;
   padding:0 0 10px;
   border-bottom:1px solid var(--border);
   color:var(--muted);
@@ -1209,15 +1209,18 @@ details[open] > summary > .folder-icon > .folder-open { display: block; }
 }
 .project-document .reading-progress-percent{color:var(--muted);font:10px/1.4 var(--mono);white-space:nowrap}
 .project-document .reading-progress-track{
-  position:relative;grid-column:1/-1;left:auto;right:auto;bottom:auto;
+  position:relative;
+  grid-column:1/-1;
+  left:auto;right:auto;bottom:auto;
   display:block;width:100%;height:2px;min-width:0;margin-top:1px;
-  overflow:hidden;border-radius:4px;background:color-mix(in srgb,var(--border) 85%,transparent);
+  overflow:hidden;border-radius:4px;
+  background:color-mix(in srgb,var(--border) 85%,transparent);
 }
 .project-document .reading-progress-track>span{display:block;height:100%;border-radius:4px}
 .project-document .reading-toolbar-actions{
-  grid-column:1/-1;
   display:flex;align-items:center;flex-wrap:wrap;gap:6px;
-  min-width:0;padding:8px 0 0;border-top:1px solid var(--border);
+  min-width:0;margin:0 0 22px;padding:8px 0 10px;
+  border-bottom:1px solid var(--border);
 }
 .project-document .reading-toolbar-actions button{
   min-width:0;padding:5px 9px;border:1px solid var(--border);border-radius:4px;
@@ -1237,8 +1240,8 @@ details[open] > summary > .folder-icon > .folder-open { display: block; }
   }
   .project-document .project-doc-filepath{grid-column:1;grid-row:1}
   .project-document .project-doc-mode{grid-column:2;grid-row:1;font-size:10px}
-  .project-document .reading-toolbar-context{grid-column:1/-1;grid-row:2;gap:7px}
-  .project-document .reading-toolbar-actions{grid-row:3;gap:5px;padding-top:8px}
+  .project-document .reading-toolbar-context{grid-column:1/-1;grid-row:2;width:min(100%,420px);gap:7px}
+  .project-document .reading-toolbar-actions{gap:5px;padding-top:8px}
   .project-document .reading-toolbar-actions button{flex:1 1 calc(50% - 5px);white-space:normal;text-align:center}
 }
 @media(max-width:430px){
@@ -1248,7 +1251,8 @@ details[open] > summary > .folder-icon > .folder-open { display: block; }
 }
 @media(prefers-reduced-motion:reduce){.project-document .reading-progress-track>span{transition:none}}
 @media print{
-  .project-document .project-doc-filebar{display:none!important}
+  .project-document .project-doc-filebar,
+  .project-document .reading-toolbar-actions{display:none!important}
   .execution-flow-graph{min-width:0!important;width:100%!important}
   .flow-node{overflow:hidden}
 }
