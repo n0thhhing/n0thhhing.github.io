@@ -599,3 +599,14 @@ document.addEventListener('click', event => {
   });
   announce(`Jumped to ${next.querySelector('h1, h2')?.textContent?.trim() || 'next section'}`);
 });
+
+
+document.addEventListener('keydown', event => {
+  const toolbar = event.target instanceof Element ? event.target.closest('.project-reading-tools') : null;
+  if (!toolbar || !['ArrowLeft', 'ArrowRight'].includes(event.key) || event.metaKey || event.ctrlKey || event.altKey) return;
+  const buttons = [...toolbar.querySelectorAll('button:not(:disabled)')].filter(button => button.getClientRects().length);
+  const index = buttons.indexOf(document.activeElement);
+  if (index < 0 || buttons.length < 2) return;
+  event.preventDefault();
+  buttons[(index + (event.key === 'ArrowRight' ? 1 : -1) + buttons.length) % buttons.length].focus();
+});
